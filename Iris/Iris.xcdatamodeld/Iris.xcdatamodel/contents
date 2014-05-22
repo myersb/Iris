@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5063" systemVersion="13C1021" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13C1021" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="InventoryAction" representedClassName="InventoryAction" syncable="YES">
         <attribute name="actionDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="actionID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="actionLongValue" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="actionShortValue" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="inventoryObjectID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userActionID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="userAuthorizingAction" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userPerformingAction" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userPerformingActionExt" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <relationship name="inventoryObjectID" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="InventoryObject" syncable="YES"/>
+        <relationship name="object" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="InventoryObject" inverseName="action" inverseEntity="InventoryObject" syncable="YES"/>
     </entity>
     <entity name="InventoryObject" representedClassName="InventoryItem" syncable="YES">
         <attribute name="allowsActions" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -20,10 +21,10 @@
         <attribute name="quantity" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="retired" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="serialNumber" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="action" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="InventoryAction" syncable="YES"/>
+        <relationship name="action" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="InventoryAction" inverseName="object" inverseEntity="InventoryAction" syncable="YES"/>
     </entity>
     <elements>
-        <element name="InventoryAction" positionX="-63" positionY="54" width="128" height="193"/>
-        <element name="InventoryObject" positionX="-63" positionY="-18" width="128" height="163"/>
+        <element name="InventoryAction" positionX="-63" positionY="54" width="128" height="208"/>
+        <element name="InventoryObject" positionX="-317" positionY="98" width="128" height="163"/>
     </elements>
 </model>

@@ -4,10 +4,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Iris Menu View Controller-->
         <scene sceneID="X6c-UG-2EA">
             <objects>
-                <viewController id="lL6-yj-Bge" sceneMemberID="viewController">
+                <viewController id="lL6-yj-Bge" customClass="iris_MenuViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="sAD-gx-apg"/>
                         <viewControllerLayoutGuide type="bottom" id="7eI-XP-siA"/>
@@ -33,7 +33,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="Y42-Xr-PPP" kind="modal" id="8BX-LY-DPy"/>
+                                    <action selector="doSomethingAwesome:" destination="lL6-yj-Bge" eventType="touchUpInside" id="V1g-cy-5Yj"/>
                                 </connections>
                             </button>
                         </subviews>

@@ -2,7 +2,7 @@
 //  InventoryItem.h
 //  Iris
 //
-//  Created by Benjamin Myers on 5/21/14.
+//  Created by Benjamin Myers on 5/22/14.
 //  Copyright (c) 2014 claytonhomes.com. All rights reserved.
 //
 
@@ -15,11 +15,19 @@
 
 @property (nonatomic, retain) NSNumber * allowsActions;
 @property (nonatomic, retain) NSNumber * assetID;
+@property (nonatomic, retain) NSNumber * inventoryObjectID;
 @property (nonatomic, retain) NSString * objectDescription;
 @property (nonatomic, retain) NSNumber * quantity;
 @property (nonatomic, retain) NSNumber * retired;
 @property (nonatomic, retain) NSString * serialNumber;
-@property (nonatomic, retain) NSNumber * inventoryObjectID;
-@property (nonatomic, retain) InventoryAction *action;
+@property (nonatomic, retain) NSSet *action;
+@end
+
+@interface InventoryItem (CoreDataGeneratedAccessors)
+
+- (void)addActionObject:(InventoryAction *)value;
+- (void)removeActionObject:(InventoryAction *)value;
+- (void)addAction:(NSSet *)values;
+- (void)removeAction:(NSSet *)values;
 
 @end
