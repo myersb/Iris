@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="KJV-3A-RDb">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5053" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="KJV-3A-RDb">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
-        <!--Iris Main View Controller-->
+        <!--Iris Menu View Controller-->
         <scene sceneID="CLK-oo-98Y">
             <objects>
-                <viewController id="KJV-3A-RDb" customClass="iris_MainViewController" sceneMemberID="viewController">
+                <viewController id="KJV-3A-RDb" customClass="iris_MenuViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="XPa-Ti-tOx"/>
                         <viewControllerLayoutGuide type="bottom" id="IYt-bk-Hze"/>

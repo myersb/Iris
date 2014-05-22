@@ -2,7 +2,7 @@
 //  InventoryAction.m
 //  Iris
 //
-//  Created by Benjamin Myers on 5/20/14.
+//  Created by Benjamin Myers on 5/21/14.
 //  Copyright (c) 2014 claytonhomes.com. All rights reserved.
 //
 
@@ -12,15 +12,15 @@
 
 @implementation InventoryAction
 
-@dynamic actionID;
-@dynamic userPerformingActionExt;
-@dynamic userActionID;
 @dynamic actionDate;
-@dynamic userPerformingAction;
-@dynamic userAuthorizingAction;
-@dynamic notes;
-@dynamic actionShortValue;
 @dynamic actionLongValue;
+@dynamic actionShortValue;
+@dynamic notes;
+@dynamic userActionID;
+@dynamic userAuthorizingAction;
+@dynamic userPerformingAction;
+@dynamic userPerformingActionExt;
+@dynamic actionID;
 @dynamic inventoryObjectID;
 
 @end

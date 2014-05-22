@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B56DD1DF192BDD810078E28B /* InventoryAction.m in Sources */ = {isa = PBXBuildFile; fileRef = B56DD1DE192BDD810078E28B /* InventoryAction.m */; };
-		B56DD1E2192BDD820078E28B /* InventoryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = B56DD1E1192BDD820078E28B /* InventoryItem.m */; };
 		B5B91EC219100D86008388D5 /* iris_ItemDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B91EC119100D86008388D5 /* iris_ItemDetailsViewController.m */; };
 		B5EB7CE3190952FE004FEDD2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5EB7CE2190952FE004FEDD2 /* Foundation.framework */; };
 		B5EB7CE5190952FE004FEDD2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5EB7CE4190952FE004FEDD2 /* CoreGraphics.framework */; };
@@ -29,6 +27,10 @@
 		B5EB7D1D1909545E004FEDD2 /* iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5EB7D1C1909545E004FEDD2 /* iPhone.storyboard */; };
 		B5EB7D22190955F8004FEDD2 /* iris_MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5EB7D21190955F8004FEDD2 /* iris_MainViewController.m */; };
 		B5EB7D2E190963CF004FEDD2 /* iris_InventoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5EB7D2D190963CF004FEDD2 /* iris_InventoryTableViewController.m */; };
+		D7CC54D8192CE7DC005AFA5D /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D7CC54D7192CE7DC005AFA5D /* Reachability.m */; };
+		D7CC54DC192CE933005AFA5D /* iris_MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D7CC54DB192CE933005AFA5D /* iris_MenuViewController.m */; };
+		D7CC54DF192D01A9005AFA5D /* InventoryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D7CC54DE192D01A9005AFA5D /* InventoryItem.m */; };
+		D7CC54E2192D01AA005AFA5D /* InventoryAction.m in Sources */ = {isa = PBXBuildFile; fileRef = D7CC54E1192D01AA005AFA5D /* InventoryAction.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,10 +44,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		B56DD1DD192BDD810078E28B /* InventoryAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InventoryAction.h; path = Iris/InventoryAction.h; sourceTree = "<group>"; };
-		B56DD1DE192BDD810078E28B /* InventoryAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InventoryAction.m; path = Iris/InventoryAction.m; sourceTree = "<group>"; };
-		B56DD1E0192BDD820078E28B /* InventoryItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InventoryItem.h; path = Iris/InventoryItem.h; sourceTree = "<group>"; };
-		B56DD1E1192BDD820078E28B /* InventoryItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InventoryItem.m; path = Iris/InventoryItem.m; sourceTree = "<group>"; };
 		B5B91EC019100D86008388D5 /* iris_ItemDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iris_ItemDetailsViewController.h; path = Iris/iris_ItemDetailsViewController.h; sourceTree = "<group>"; };
 		B5B91EC119100D86008388D5 /* iris_ItemDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iris_ItemDetailsViewController.m; path = Iris/iris_ItemDetailsViewController.m; sourceTree = "<group>"; };
 		B5EB7CDF190952FE004FEDD2 /* Iris.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Iris.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -72,6 +70,14 @@
 		B5EB7D21190955F8004FEDD2 /* iris_MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iris_MainViewController.m; path = Iris/iris_MainViewController.m; sourceTree = "<group>"; };
 		B5EB7D2C190963CF004FEDD2 /* iris_InventoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iris_InventoryTableViewController.h; path = Iris/iris_InventoryTableViewController.h; sourceTree = "<group>"; };
 		B5EB7D2D190963CF004FEDD2 /* iris_InventoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iris_InventoryTableViewController.m; path = Iris/iris_InventoryTableViewController.m; sourceTree = "<group>"; };
+		D7CC54D6192CE7DC005AFA5D /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		D7CC54D7192CE7DC005AFA5D /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		D7CC54DA192CE933005AFA5D /* iris_MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iris_MenuViewController.h; path = Iris/iris_MenuViewController.h; sourceTree = "<group>"; };
+		D7CC54DB192CE933005AFA5D /* iris_MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iris_MenuViewController.m; path = Iris/iris_MenuViewController.m; sourceTree = "<group>"; };
+		D7CC54DD192D01A9005AFA5D /* InventoryItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InventoryItem.h; path = Iris/InventoryItem.h; sourceTree = "<group>"; };
+		D7CC54DE192D01A9005AFA5D /* InventoryItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InventoryItem.m; path = Iris/InventoryItem.m; sourceTree = "<group>"; };
+		D7CC54E0192D01AA005AFA5D /* InventoryAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InventoryAction.h; path = Iris/InventoryAction.h; sourceTree = "<group>"; };
+		D7CC54E1192D01AA005AFA5D /* InventoryAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InventoryAction.m; path = Iris/InventoryAction.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +146,7 @@
 				B5EB7D17190953B8004FEDD2 /* Data */,
 				B5EB7D18190953BE004FEDD2 /* Models */,
 				B5EB7D19190953C6004FEDD2 /* Controllers */,
+				D7CC54D9192CE7E6005AFA5D /* Utilities */,
 				B5EB7CF3190952FE004FEDD2 /* iris_AppDelegate.h */,
 				B5EB7CF4190952FE004FEDD2 /* iris_AppDelegate.m */,
 				B5EB7CF9190952FE004FEDD2 /* Images.xcassets */,
@@ -180,10 +187,10 @@
 		B5EB7D17190953B8004FEDD2 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				B56DD1DD192BDD810078E28B /* InventoryAction.h */,
-				B56DD1DE192BDD810078E28B /* InventoryAction.m */,
-				B56DD1E0192BDD820078E28B /* InventoryItem.h */,
-				B56DD1E1192BDD820078E28B /* InventoryItem.m */,
+				D7CC54E0192D01AA005AFA5D /* InventoryAction.h */,
+				D7CC54E1192D01AA005AFA5D /* InventoryAction.m */,
+				D7CC54DD192D01A9005AFA5D /* InventoryItem.h */,
+				D7CC54DE192D01A9005AFA5D /* InventoryItem.m */,
 			);
 			name = Data;
 			path = ..;
@@ -206,9 +213,20 @@
 				B5B91EC119100D86008388D5 /* iris_ItemDetailsViewController.m */,
 				B5EB7D20190955F8004FEDD2 /* iris_MainViewController.h */,
 				B5EB7D21190955F8004FEDD2 /* iris_MainViewController.m */,
+				D7CC54DA192CE933005AFA5D /* iris_MenuViewController.h */,
+				D7CC54DB192CE933005AFA5D /* iris_MenuViewController.m */,
 			);
 			name = Controllers;
 			path = ..;
+			sourceTree = "<group>";
+		};
+		D7CC54D9192CE7E6005AFA5D /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				D7CC54D6192CE7DC005AFA5D /* Reachability.h */,
+				D7CC54D7192CE7DC005AFA5D /* Reachability.m */,
+			);
+			name = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -311,12 +329,14 @@
 			files = (
 				B5EB7CF8190952FE004FEDD2 /* Iris.xcdatamodeld in Sources */,
 				B5EB7CF1190952FE004FEDD2 /* main.m in Sources */,
-				B56DD1DF192BDD810078E28B /* InventoryAction.m in Sources */,
 				B5EB7D22190955F8004FEDD2 /* iris_MainViewController.m in Sources */,
+				D7CC54DF192D01A9005AFA5D /* InventoryItem.m in Sources */,
+				D7CC54E2192D01AA005AFA5D /* InventoryAction.m in Sources */,
+				D7CC54DC192CE933005AFA5D /* iris_MenuViewController.m in Sources */,
 				B5EB7CF5190952FE004FEDD2 /* iris_AppDelegate.m in Sources */,
 				B5B91EC219100D86008388D5 /* iris_ItemDetailsViewController.m in Sources */,
 				B5EB7D2E190963CF004FEDD2 /* iris_InventoryTableViewController.m in Sources */,
-				B56DD1E2192BDD820078E28B /* InventoryItem.m in Sources */,
+				D7CC54D8192CE7DC005AFA5D /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
