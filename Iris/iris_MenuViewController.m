@@ -94,7 +94,7 @@
                    newAction.actionDate = [NSDate dateWithTimeIntervalSince1970:[NSLocalizedString([actionItem objectForKey:@"ActionDate"], nil) intValue]];
                    newAction.userPerformingAction = NSLocalizedString([actionItem objectForKey:@"UserPerformingAction"], nil);
                    newAction.userAuthorizingAction =  NSLocalizedString([actionItem objectForKey:@"UserAuthorizingAction"], nil);
-				   if (NSLocalizedString([actionItem objectForKey:@"Notes"], nil) == [NSNull null]) {
+				   if (NSLocalizedString([actionItem objectForKey:@"Notes"], nil) == (NSString *)[NSNull null]) {
 					   newAction.notes = @"";
 				   } else {
 					   newAction.notes = NSLocalizedString([actionItem objectForKey:@"Notes"], nil);
@@ -126,7 +126,8 @@
 	_fetchedObjects = [[self managedObjectContext] executeFetchRequest:_fetchRequest error:&error];
 	for (InventoryItem *inventoryItem in _fetchedObjects) {
 		NSLog(@"Object Description: %@", [inventoryItem valueForKey:@"objectDescription"]);
-		NSManagedObject *action = inventoryItem.action;
+		NSLog(@"Object ID: %@", [inventoryItem valueForKey:@"inventoryObjectID"]);
+		InventoryAction *action = (InventoryAction *)inventoryItem.action;
 		NSLog(@"Action Long Value: %@", [action valueForKey:@"actionLongValue"]);
 		NSLog(@"Notes: %@", [action valueForKey:@"notes"]);
 
