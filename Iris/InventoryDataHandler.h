@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "InventoryItem.h"
 
 @interface InventoryDataHandler : NSObject
 
@@ -19,11 +20,13 @@
 
 // Variable Properties
 @property (nonatomic, strong) NSArray *fetchedInventory;
+@property (strong, nonatomic) NSArray *sortedActions;
 
 // Actions
 - (void)downloadInventoryAndActions;
 - (void)updateInventoryObjectWithID:(NSNumber *)inventoryObjectId;
 - (NSArray *)loadInventory;
+- (NSArray *)loadInventoryActionsByInventoryItem:(InventoryItem *)inventoryItem;
 - (NSFetchedResultsController *)loadInventoryWithFetchedResultsController;
 
 @end

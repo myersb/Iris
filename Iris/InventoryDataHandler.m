@@ -11,7 +11,6 @@
 #import "CoreDataHandler.h"
 
 //Data Import
-#import "InventoryItem.h"
 #import "InventoryAction.h"
 
 // Utilities Import
@@ -139,6 +138,16 @@
 //	}
 	
 	return _fetchedInventory;
+}
+
+- (NSArray *)loadInventoryActionsByInventoryItem:(InventoryItem *)inventoryItem
+{
+	InventoryItem *selectedInventoryItem = inventoryItem;
+	NSSet *actions = selectedInventoryItem.action;
+	NSSortDescriptor *actionsSort = [NSSortDescriptor sortDescriptorWithKey:@"actionID" ascending:YES];
+	_sortedActions = [actions sortedArrayUsingDescriptors:[NSArray arrayWithObject:actionsSort]];
+	
+	return _sortedActions;
 }
 
 - (void)updateInventoryObjectWithID:(NSNumber *)inventoryObjectId

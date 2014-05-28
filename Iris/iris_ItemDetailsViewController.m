@@ -41,8 +41,6 @@
 {
 	_lblItemDescription.text = _currentInventoryItem.objectDescription;
 	_lblAssetTag.text = [NSString stringWithFormat:@"Asset ID: %@", _currentInventoryItem.assetID];
-	
-	
 }
 
 
