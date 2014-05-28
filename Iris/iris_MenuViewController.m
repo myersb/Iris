@@ -127,9 +127,15 @@
 	for (InventoryItem *inventoryItem in _fetchedObjects) {
 		NSLog(@"Object Description: %@", [inventoryItem valueForKey:@"objectDescription"]);
 		NSLog(@"Object ID: %@", [inventoryItem valueForKey:@"inventoryObjectID"]);
-		InventoryAction *action = (InventoryAction *)inventoryItem.action;
-		NSLog(@"Action Long Value: %@", [action valueForKey:@"actionLongValue"]);
-		NSLog(@"Notes: %@", [action valueForKey:@"notes"]);
+		NSSet *actions = inventoryItem.action;
+		NSSortDescriptor *actionsSort = [NSSortDescriptor sortDescriptorWithKey:@"actionID" ascending:YES];
+		NSArray *sortedActions = [actions sortedArrayUsingDescriptors:[NSArray arrayWithObject:actionsSort]];
+		NSLog(@"/*********** ACTIONS ***********/");
+		for (InventoryAction *action in sortedActions) {
+			NSLog(@"Action Long Value: %@", [action valueForKey:@"actionLongValue"]);
+			NSLog(@"Notes: %@", [action valueForKey:@"notes"]);
+			NSLog(@"Action ID: %@", [action valueForKey:@"actionID"]);
+		}
 
 	}
 }

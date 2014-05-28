@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "InventoryItem.h"
 
 @interface iris_ItemDetailsViewController : UIViewController
 
@@ -18,7 +19,7 @@
 @property (weak, nonatomic) IBOutlet UIPickerView *actionPicker;
 
 // Variable Properties
+@property (strong, nonatomic) InventoryItem *currentInventoryItem;
 
-
-// Action
+// Actions
 @end
