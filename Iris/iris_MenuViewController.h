@@ -10,14 +10,4 @@
 
 @interface iris_MenuViewController : UIViewController
 
-// CoreData Properties
-@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic, strong) NSFetchRequest *fetchRequest;
-@property (nonatomic, strong) NSEntityDescription *entity;
-@property (nonatomic, strong) NSSortDescriptor *sort;
-@property (nonatomic, strong) NSArray *sortDescriptors;
-
-// Variable Properties
-@property (nonatomic, strong) NSArray *fetchedObjects;
-
 @end

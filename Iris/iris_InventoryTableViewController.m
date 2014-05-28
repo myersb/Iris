@@ -9,9 +9,12 @@
 #import "iris_InventoryTableViewController.h"
 #import "InventoryItem.h"
 #import "iris_ItemDetailsViewController.h"
+#import "iris_InventoryDataHandler.h"
 
 @interface iris_InventoryTableViewController ()
-
+{
+	iris_InventoryDataHandler *dataHandler;
+}
 @end
 
 @implementation NSString (FetchedGroupByString)
@@ -40,12 +43,15 @@
     id delegate = [[UIApplication sharedApplication]delegate];
 	self.managedObjectContext = [delegate managedObjectContext];
 	
+	dataHandler = [[iris_InventoryDataHandler alloc] init];
+	
 	NSError *error;
-	if (![[self loadInventory] performFetch:&error]) {
+	if (![[dataHandler loadInventoryWithFetchedResultsController] performFetch:&error]) {
 		NSLog(@"An error has occurred: %@", error);
 		abort();
 	}
 	
+	_fetchedInventory = [dataHandler loadInventory];
 	_filteredFetchedInventory = [NSMutableArray arrayWithCapacity:[_fetchedInventory count]];
 	
 	[self.tableView reloadData];
@@ -55,31 +61,6 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (NSFetchedResultsController *) loadInventory
-{
-	if (_fetchedInventoryController != nil)
-	{
-		return _fetchedInventoryController;
-	}
-	
-	_fetchRequest = [[NSFetchRequest alloc]init];
-	_entity = [NSEntityDescription entityForName:@"InventoryObject" inManagedObjectContext:[self managedObjectContext]];
-	_sort = [NSSortDescriptor sortDescriptorWithKey:@"objectDescription" ascending:YES];
-	_sortDescriptors = [[NSArray alloc]initWithObjects:_sort, nil];
-	[_fetchRequest setEntity:_entity];
-	[_fetchRequest setSortDescriptors:_sortDescriptors];
-    
-    NSError *error = nil;
-    
-    _fetchedInventory = [[self managedObjectContext] executeFetchRequest:_fetchRequest error:&error];
-	
-	_fetchedInventoryController = [[NSFetchedResultsController alloc]initWithFetchRequest:_fetchRequest managedObjectContext:[self managedObjectContext] sectionNameKeyPath:@"objectDescription.stringGroupByFirstInitial" cacheName:nil];
-	
-	return _fetchedInventoryController;
-	
-	[self.tableView reloadData];
 }
 
 #pragma mark - Table view data source
@@ -99,7 +80,6 @@
 		return [_fetchedInventory count];
 	}
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -138,7 +118,7 @@
 	//tempLabel.font = [UIFont boldSystemFontOfSize:fontSizeForHeaders];
 	
 	NSString *sectionTitle;
-	sectionTitle = [[[self.fetchedInventoryController sections]objectAtIndex:section]name];
+	sectionTitle = [[[dataHandler.fetchedInventoryController sections]objectAtIndex:section]name];
 	
 	tempLabel.text = [NSString stringWithFormat:@"  %@", sectionTitle];
 	
@@ -147,7 +127,6 @@
 	//[tempLabel release];
 	return tempView;
 }
-
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -158,6 +137,7 @@
 }
 
 
+#pragma mark - Search Bar Methods
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope{
     [self.filteredFetchedInventory removeAllObjects];
     
@@ -180,7 +160,6 @@
     // Return YES to cause the search result table view to be reloaded.
     return YES;
 }
-
 
 /*
 // Override to support conditional editing of the table view.
