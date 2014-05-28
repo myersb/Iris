@@ -6,16 +6,20 @@
 //  Copyright (c) 2014 claytonhomes.com. All rights reserved.
 //
 
-#import "iris_InventoryDataHandler.h"
+// Models Import
+#import "InventoryDataHandler.h"
+#import "CoreDataHandler.h"
+
+//Data Import
 #import "InventoryItem.h"
 #import "InventoryAction.h"
-#import "CoreDataHandler.h"
+
+// Utilities Import
 #import "Reachability.h"
 
-#define getInventoryAndActionsWebservice @"http://cmhinfo.pubdev.com/api/mediainventory"
-#define updateInventoryObjectWebserivce @"http:http://cmhinfo.pubdev.com/api/mediainventory/"
+#define inventoryAndActionsWebservice @"http://cmhinfo.pubdev.com/api/mediainventory"
 
-@implementation iris_InventoryDataHandler
+@implementation InventoryDataHandler
 {
 	CoreDataHandler *coreDataHandler;
 	Reachability *internetReachable;
@@ -30,7 +34,7 @@
 	[coreDataHandler clearEntity:@"InventoryObject" withFetchRequest:_fetchRequest];
 	[coreDataHandler clearEntity:@"InventoryAction" withFetchRequest:_fetchRequest];
 	
-	NSString *urlString = [NSString stringWithFormat:@"%@", getInventoryAndActionsWebservice];
+	NSString *urlString = [NSString stringWithFormat:@"%@", inventoryAndActionsWebservice];
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"GET"];
@@ -139,7 +143,7 @@
 
 - (void)updateInventoryObjectWithID:(NSNumber *)inventoryObjectId
 {
-	NSString *urlString = [NSString stringWithFormat:@"%@%@", updateInventoryObjectWebserivce, inventoryObjectId];
+	NSString *urlString = [NSString stringWithFormat:@"%@%@", inventoryAndActionsWebservice, inventoryObjectId];
 	NSURL *url = [NSURL URLWithString:urlString];
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
 	//NSData *data [NSData data]

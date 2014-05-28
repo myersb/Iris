@@ -6,14 +6,17 @@
 //  Copyright (c) 2014 claytonhomes.com. All rights reserved.
 //
 
+// Controllers Import
 #import "iris_InventoryTableViewController.h"
-#import "InventoryItem.h"
 #import "iris_ItemDetailsViewController.h"
-#import "iris_InventoryDataHandler.h"
+
+// Models Import
+#import "InventoryItem.h"
+#import "InventoryDataHandler.h"
 
 @interface iris_InventoryTableViewController ()
 {
-	iris_InventoryDataHandler *dataHandler;
+	InventoryDataHandler *dataHandler;
 }
 @end
 
@@ -43,7 +46,7 @@
     id delegate = [[UIApplication sharedApplication]delegate];
 	self.managedObjectContext = [delegate managedObjectContext];
 	
-	dataHandler = [[iris_InventoryDataHandler alloc] init];
+	dataHandler = [[InventoryDataHandler alloc] init];
 	
 	NSError *error;
 	if (![[dataHandler loadInventoryWithFetchedResultsController] performFetch:&error]) {

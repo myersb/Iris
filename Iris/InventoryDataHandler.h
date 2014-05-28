@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface iris_InventoryDataHandler : NSObject
+@interface InventoryDataHandler : NSObject
 
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong) NSFetchRequest *fetchRequest;

@@ -11,12 +11,12 @@
 #import "InventoryAction.h"
 #import "InventoryItem.h"
 #import "CoreDataHandler.h"
-#import "iris_InventoryDataHandler.h"
+#import "InventoryDataHandler.h"
 
 @interface iris_MenuViewController ()
 {
     Reachability *internetReachable;
-	iris_InventoryDataHandler *dataHandler;
+	InventoryDataHandler *dataHandler;
 	CoreDataHandler *coreDataHandler;
 }
 @end
@@ -38,12 +38,14 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 	
+	// Instantiations
     internetReachable = [[Reachability alloc] init];
+	dataHandler = [[InventoryDataHandler alloc] init];
+	
+	// Run Methods
     [internetReachable checkConnection];
 	
-	dataHandler = [[iris_InventoryDataHandler alloc] init];
-	coreDataHandler = [[CoreDataHandler alloc] init];
-	
+	// Check for internet availability
     if (internetReachable.isConnected) {
         NSLog(@"Now witness the firepower of this fully ARMED and OPERATIONAL battle station!");
         [dataHandler downloadInventoryAndActions];
