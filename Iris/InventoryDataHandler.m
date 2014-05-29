@@ -79,6 +79,7 @@
 			 }
 			 NSError *error;
 			 [self.managedObjectContext save:&error];
+			 [self updateInventoryObjectWithID:1 andAssetID:15 andQuantity:24 andSerialNumber:@"R2D3PO" andDescription:@"Test Camera 12" andAllowAction:true andRetired:false];
 		 }
 	 }];
 }
@@ -100,7 +101,7 @@
 	[_fetchRequest setEntity:_entity];
 	[_fetchRequest setSortDescriptors:_sortDescriptors];
 	
-	_fetchedInventoryController = [[NSFetchedResultsController alloc]initWithFetchRequest:_fetchRequest managedObjectContext:[self managedObjectContext] sectionNameKeyPath:@"objectDescription.stringGroupByFirstInitial" cacheName:nil];
+	_fetchedInventoryController = [[NSFetchedResultsController alloc] initWithFetchRequest:_fetchRequest managedObjectContext:[self managedObjectContext] sectionNameKeyPath:@"objectDescription.stringGroupByFirstInitial" cacheName:nil];
 	
 	return _fetchedInventoryController;
 }
@@ -150,13 +151,27 @@
 	return _sortedActions;
 }
 
-- (void)updateInventoryObjectWithID:(NSNumber *)inventoryObjectId
+- (void)updateInventoryObjectWithID:(int)inventoryObjectId andAssetID:(int)assetID andQuantity:(int)quantity andSerialNumber:(NSString *)serialNumber andDescription:(NSString *)description andAllowAction:(BOOL)allowActions andRetired:(BOOL)retired
 {
-	NSString *urlString = [NSString stringWithFormat:@"%@%@", inventoryAndActionsWebservice, inventoryObjectId];
-	NSURL *url = [NSURL URLWithString:urlString];
-	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-	//NSData *data [NSData data]
-	[request setHTTPMethod:@"POST"];
+	// Setup jSON String
+	NSString *jSONString = [NSString stringWithFormat:@"{\"MediaInventoryObjectsId\":%d,\"AssetId\":%d,\"Quantity\":%d,\"SerialNumber\":\"%@\",\"Description\":\"%@\",\"AllowActions\":%d,\"Retired\":%d}",inventoryObjectId, assetID, quantity, serialNumber, description, allowActions, retired];
+	
+	// Convert jSON string to data
+	NSData *putData = [jSONString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+	
+	// Instantiate a url request
+	NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+	
+	// Set the request url format
+	[request setURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%d", inventoryAndActionsWebservice, inventoryObjectId]]];
+	[request setHTTPMethod:@"PUT"];
+	[request setHTTPBody:putData];
+	[request setValue:@"application/json" forHTTPHeaderField:@"content-type"];
+	
+	
+	// Send data to the webservice
+	NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+	NSString *result = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
 }
 
 @end

@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "InventoryItem.h"
 
-@interface InventoryDataHandler : NSObject
+@interface InventoryDataHandler : NSObject <NSURLConnectionDelegate>
 
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong) NSFetchRequest *fetchRequest;
@@ -24,7 +24,7 @@
 
 // Actions
 - (void)downloadInventoryAndActions;
-- (void)updateInventoryObjectWithID:(NSNumber *)inventoryObjectId;
+- (void)updateInventoryObjectWithID:(int)inventoryObjectId andAssetID:(int)assetID andQuantity:(int)quantity andSerialNumber:(NSString *)serialNumber andDescription:(NSString *)description andAllowAction:(BOOL)allowActions andRetired:(BOOL)retired;
 - (NSArray *)loadInventory;
 - (NSArray *)loadInventoryActionsByInventoryItem:(InventoryItem *)inventoryItem;
 - (NSFetchedResultsController *)loadInventoryWithFetchedResultsController;
