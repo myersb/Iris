@@ -51,6 +51,8 @@
         [dataHandler downloadInventoryAndActions];
     } else {
         NSLog(@"WHERE IS THE INTERWEBS?");
+		_alert = [[UIAlertView alloc]initWithTitle:@"Connection Not Available" message:@"To download and/or update the inventory list you must have a working internet connection. Please check your internet connection and try again" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil, nil];
+		[_alert show];
     }
 }
 

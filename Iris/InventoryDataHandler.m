@@ -24,6 +24,7 @@
 	Reachability *internetReachable;
 }
 
+// This is only called if there is internect connectivity
 - (void)downloadInventoryAndActions
 {
 	id delegate = [[UIApplication sharedApplication]delegate];
@@ -79,7 +80,6 @@
 			 }
 			 NSError *error;
 			 [self.managedObjectContext save:&error];
-			 [self updateInventoryObjectWithID:1 andAssetID:15 andQuantity:24 andSerialNumber:@"R2D3PO" andDescription:@"Test Camera 12" andAllowAction:true andRetired:false];
 		 }
 	 }];
 }
