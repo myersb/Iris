@@ -12,12 +12,14 @@
 #import "InventoryItem.h"
 #import "CoreDataHandler.h"
 #import "InventoryDataHandler.h"
+#import "MD5Hasher.h"
 
 @interface iris_MenuViewController ()
 {
     Reachability *internetReachable;
 	InventoryDataHandler *dataHandler;
 	CoreDataHandler *coreDataHandler;
+	MD5Hasher *hashGenerator;
 }
 @end
 
@@ -41,6 +43,7 @@
 	// Instantiations
     internetReachable = [[Reachability alloc] init];
 	dataHandler = [[InventoryDataHandler alloc] init];
+	hashGenerator = [[MD5Hasher alloc] init];
 	
 	// Run Methods
     [internetReachable checkConnection];
@@ -54,6 +57,11 @@
 		_alert = [[UIAlertView alloc]initWithTitle:@"Connection Not Available" message:@"To download and/or update the inventory list you must have a working internet connection. Please check your internet connection and try again" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil, nil];
 		[_alert show];
     }
+	
+	NSString *userInput = [NSString stringWithFormat:@"KickTh0z3C4tz%@", [NSDate date]];
+	NSString *salt = @"broMed!$InvLee2014";
+	NSString *generatedInput = [hashGenerator createHashWithUserInput:userInput andSalt:salt];
+	NSLog(@"GeneratedInput: %@", generatedInput);
 }
 
 - (void)didReceiveMemoryWarning

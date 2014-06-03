@@ -15,6 +15,7 @@
 
 // Utilities Import
 #import "Reachability.h"
+#import "MD5Hasher.h"
 
 #define inventoryAndActionsWebservice @"http://cmhinfo.pubdev.com/api/mediainventory"
 
@@ -22,6 +23,7 @@
 {
 	CoreDataHandler *coreDataHandler;
 	Reachability *internetReachable;
+	MD5Hasher *hashGenerator;
 }
 
 // This is only called if there is internect connectivity
@@ -153,8 +155,14 @@
 
 - (void)updateInventoryObjectWithID:(int)inventoryObjectId andAssetID:(int)assetID andQuantity:(int)quantity andSerialNumber:(NSString *)serialNumber andDescription:(NSString *)description andAllowAction:(BOOL)allowActions andRetired:(BOOL)retired
 {
+	// Create values for encryption
+	NSString *userInput = [NSString stringWithFormat:@"KickTh0z3C4tz%@", [NSDate date]];
+	NSString *salt = @"broMed!$InvLee2014";
+	NSString *generatedInput = [hashGenerator createHashWithUserInput:userInput andSalt:salt];
+	
 	// Setup jSON String
-	NSString *jSONString = [NSString stringWithFormat:@"{\"MediaInventoryObjectsId\":%d,\"AssetId\":%d,\"Quantity\":%d,\"SerialNumber\":\"%@\",\"Description\":\"%@\",\"AllowActions\":%d,\"Retired\":%d}",inventoryObjectId, assetID, quantity, serialNumber, description, allowActions, retired];
+	NSString *jSONString = [NSString stringWithFormat:@"{\"MediaInventoryObjectsId\":%d,\"AssetId\":%d,\"Quantity\":%d,\"SerialNumber\":\"%@\",\"Description\":\"%@\",\"AllowActions\":%d,\"Retired\":%d, \"UserInput\":%@, \"GeneratedInput\":%@}",inventoryObjectId, assetID, quantity, serialNumber, description, allowActions, retired, userInput, generatedInput];
+	
 	
 	// Convert jSON string to data
 	NSData *putData = [jSONString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
@@ -172,6 +180,11 @@
 	// Send data to the webservice
 	NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
 	NSString *result = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
+}
+
+- (void)insertInventoryObjectWithAssetID:(int)assetID andQuantity:(int)quantity andSerialNumber:(NSString *)serialNumber andDescription:(NSString *)description andAllowAction:(BOOL)allowActions andRetired:(BOOL)retired
+{
+
 }
 
 @end

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B516422F193E5D1D00CB358B /* MD5Hasher.m in Sources */ = {isa = PBXBuildFile; fileRef = B516422E193E5D1D00CB358B /* MD5Hasher.m */; };
 		B56DD277192E7A500078E28B /* InventoryAction.m in Sources */ = {isa = PBXBuildFile; fileRef = B56DD276192E7A500078E28B /* InventoryAction.m */; };
 		B56DD27A192E7A500078E28B /* InventoryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = B56DD279192E7A500078E28B /* InventoryItem.m */; };
 		B5AD4F5919361D5000217486 /* iris_InventoryActionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5AD4F5819361D5000217486 /* iris_InventoryActionsTableViewController.m */; };
@@ -47,6 +48,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B516421D193E119200CB358B /* libcommonCrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcommonCrypto.dylib; path = usr/lib/system/libcommonCrypto.dylib; sourceTree = SDKROOT; };
+		B516422B193E175800CB358B /* libcorecrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcorecrypto.dylib; path = usr/lib/system/libcorecrypto.dylib; sourceTree = SDKROOT; };
+		B516422D193E5D1D00CB358B /* MD5Hasher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MD5Hasher.h; sourceTree = "<group>"; };
+		B516422E193E5D1D00CB358B /* MD5Hasher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MD5Hasher.m; sourceTree = "<group>"; };
 		B56DD275192E7A500078E28B /* InventoryAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InventoryAction.h; path = Iris/InventoryAction.h; sourceTree = "<group>"; };
 		B56DD276192E7A500078E28B /* InventoryAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InventoryAction.m; path = Iris/InventoryAction.m; sourceTree = "<group>"; };
 		B56DD278192E7A500078E28B /* InventoryItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InventoryItem.h; path = Iris/InventoryItem.h; sourceTree = "<group>"; };
@@ -137,6 +142,8 @@
 		B5EB7CE1190952FE004FEDD2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B516422B193E175800CB358B /* libcorecrypto.dylib */,
+				B516421D193E119200CB358B /* libcommonCrypto.dylib */,
 				B5EB7CE2190952FE004FEDD2 /* Foundation.framework */,
 				B5EB7CE4190952FE004FEDD2 /* CoreGraphics.framework */,
 				B5EB7CE6190952FE004FEDD2 /* UIKit.framework */,
@@ -240,6 +247,8 @@
 			children = (
 				D7CC54D6192CE7DC005AFA5D /* Reachability.h */,
 				D7CC54D7192CE7DC005AFA5D /* Reachability.m */,
+				B516422D193E5D1D00CB358B /* MD5Hasher.h */,
+				B516422E193E5D1D00CB358B /* MD5Hasher.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -355,6 +364,7 @@
 				B5B91EC219100D86008388D5 /* iris_ItemDetailsViewController.m in Sources */,
 				B5EB7D2E190963CF004FEDD2 /* iris_InventoryTableViewController.m in Sources */,
 				D7CC54D8192CE7DC005AFA5D /* Reachability.m in Sources */,
+				B516422F193E5D1D00CB358B /* MD5Hasher.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -476,6 +486,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Iris/Iris-Prefix.pch";
 				INFOPLIST_FILE = "Iris/Iris-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/system",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -489,6 +503,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Iris/Iris-Prefix.pch";
 				INFOPLIST_FILE = "Iris/Iris-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/system",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
