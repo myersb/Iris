@@ -10,6 +10,6 @@
 
 @interface MD5Hasher : NSObject
 
-- (NSString *)createHashWithUserInput:(NSString *)userInput andSalt:(NSString *)salt;
+- (NSDictionary *)createHash;
 
 @end

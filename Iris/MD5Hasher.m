@@ -9,6 +9,9 @@
 #import "MD5Hasher.h"
 #import <CommonCrypto/CommonDigest.h>
 
+#define salt @"broMed!$InvLee2014"
+#define userSaltConst @"|<ickTh0z3C4tz"
+
 @implementation NSString (ConvertString)
 
 
@@ -30,12 +33,13 @@
 
 @implementation MD5Hasher
 
-- (NSString *)createHashWithUserInput:(NSString *)userInput andSalt:(NSString *)salt
+- (NSDictionary *)createHash
 {
+	NSString *userInput = [NSString stringWithFormat:@"%@ %@",userSaltConst, [NSDate date]];
 	NSString *userInputPlusSalt = [NSString stringWithFormat:@"%@%@", userInput, salt];
 	NSString *generatedInput = [userInputPlusSalt MD5String];
-	
-	return generatedInput;
+	NSDictionary *hashDictionary = [NSDictionary dictionaryWithObjectsAndKeys:generatedInput,@"generatedInput", userInput, @"userInput", nil];
+	return hashDictionary;
 }
 
 @end

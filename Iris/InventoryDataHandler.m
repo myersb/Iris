@@ -58,7 +58,7 @@
 				 newItem.allowsActions = [NSNumber numberWithBool:[NSLocalizedString([inventoryItem objectForKey:@"AllowActions"], nil) boolValue]];
 				 newItem.retired = [NSNumber numberWithBool:[NSLocalizedString([inventoryItem objectForKey:@"Retired"], nil) boolValue]];
 				 
-				 NSDictionary *actions = [inventoryItem objectForKey:@"Actions"];
+				 NSDictionary *actions = [inventoryItem objectForKey:@"MediaInventoryActions"];
 				 for (id actionItem in actions)
 				 {
 					 InventoryAction *newAction = [NSEntityDescription insertNewObjectForEntityForName:@"InventoryAction" inManagedObjectContext:[self managedObjectContext]];
@@ -146,6 +146,7 @@
 - (NSArray *)loadInventoryActionsByInventoryItem:(InventoryItem *)inventoryItem
 {
 	InventoryItem *selectedInventoryItem = inventoryItem;
+	
 	NSSet *actions = selectedInventoryItem.action;
 	NSSortDescriptor *actionsSort = [NSSortDescriptor sortDescriptorWithKey:@"actionID" ascending:YES];
 	_sortedActions = [actions sortedArrayUsingDescriptors:[NSArray arrayWithObject:actionsSort]];
@@ -156,13 +157,10 @@
 - (void)updateInventoryObjectWithID:(int)inventoryObjectId andAssetID:(int)assetID andQuantity:(int)quantity andSerialNumber:(NSString *)serialNumber andDescription:(NSString *)description andAllowAction:(BOOL)allowActions andRetired:(BOOL)retired
 {
 	// Create values for encryption
-	NSString *userInput = [NSString stringWithFormat:@"KickTh0z3C4tz%@", [NSDate date]];
-	NSString *salt = @"broMed!$InvLee2014";
-	NSString *generatedInput = [hashGenerator createHashWithUserInput:userInput andSalt:salt];
+	NSDictionary *hashDict = [hashGenerator createHash];
 	
 	// Setup jSON String
-	NSString *jSONString = [NSString stringWithFormat:@"{\"MediaInventoryObjectsId\":%d,\"AssetId\":%d,\"Quantity\":%d,\"SerialNumber\":\"%@\",\"Description\":\"%@\",\"AllowActions\":%d,\"Retired\":%d, \"UserInput\":%@, \"GeneratedInput\":%@}",inventoryObjectId, assetID, quantity, serialNumber, description, allowActions, retired, userInput, generatedInput];
-	
+	NSString *jSONString = [NSString stringWithFormat:@"{\"MediaInventoryObjectsId\":%d,\"AssetId\":%d,\"Quantity\":%d,\"SerialNumber\":\"%@\",\"Description\":\"%@\",\"AllowActions\":%d,\"Retired\":%d, \"UserInput\":%@, \"GeneratedInput\":%@}",inventoryObjectId, assetID, quantity, serialNumber, description, allowActions, retired, hashDict[@"userInput"], hashDict[@"generatedInput"]];
 	
 	// Convert jSON string to data
 	NSData *putData = [jSONString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
@@ -175,7 +173,6 @@
 	[request setHTTPMethod:@"PUT"];
 	[request setHTTPBody:putData];
 	[request setValue:@"application/json" forHTTPHeaderField:@"content-type"];
-	
 	
 	// Send data to the webservice
 	NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];

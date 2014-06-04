@@ -14,9 +14,13 @@
 #import "InventoryItem.h"
 #import "InventoryDataHandler.h"
 
+// Utilities Import
+#import "Reachability.h"
+
 @interface iris_InventoryTableViewController ()
 {
 	InventoryDataHandler *dataHandler;
+	Reachability *internetReachable;
 }
 @end
 
@@ -47,6 +51,7 @@
 	self.managedObjectContext = [delegate managedObjectContext];
 	
 	dataHandler = [[InventoryDataHandler alloc] init];
+	internetReachable = [[Reachability alloc] init];
 	
 	NSError *error;
 	if (![[dataHandler loadInventoryWithFetchedResultsController] performFetch:&error]) {
@@ -204,16 +209,25 @@
 }
 */
 
-/*
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+	if ([identifier isEqualToString: @"segueFromInventoryListToNewInventory"]) {
+	
+		// Run Methods
+		[internetReachable checkConnection];
+		
+		// Check for internet availability
+		if (!internetReachable.isConnected)
+		{
+			return NO;
+			_alert = [[UIAlertView alloc]initWithTitle:@"Connection Not Available" message:@"To download and/or update the inventory list you must have a working internet connection. Please check your internet connection and try again" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil, nil];
+			[_alert show];
+		}
+	}
+	return YES;
 }
-*/
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {

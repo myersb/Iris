@@ -58,10 +58,9 @@
 		[_alert show];
     }
 	
-	NSString *userInput = [NSString stringWithFormat:@"KickTh0z3C4tz%@", [NSDate date]];
-	NSString *salt = @"broMed!$InvLee2014";
-	NSString *generatedInput = [hashGenerator createHashWithUserInput:userInput andSalt:salt];
-	NSLog(@"GeneratedInput: %@", generatedInput);
+	NSDictionary *hashDict = [hashGenerator createHash];
+	NSLog(@"GeneratedInput: %@", hashDict[@"generatedInput"]);
+	NSLog(@"UserInput: %@", hashDict[@"userInput"]);
 }
 
 - (void)didReceiveMemoryWarning

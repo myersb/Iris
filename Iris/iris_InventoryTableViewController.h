@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface iris_InventoryTableViewController : UITableViewController <UISearchBarDelegate, UISearchDisplayDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface iris_InventoryTableViewController : UITableViewController <UISearchBarDelegate, UISearchDisplayDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
 
 // CoreData Properties
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
@@ -20,6 +20,7 @@
 
 // UI Properties
 @property (nonatomic, weak) IBOutlet UISearchBar *searchBar;
+@property (nonatomic, strong) UIAlertView *alert;
 
 // Variable Properties
 @property (nonatomic, strong) NSArray *fetchedInventory;

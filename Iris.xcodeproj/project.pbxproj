@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B516422F193E5D1D00CB358B /* MD5Hasher.m in Sources */ = {isa = PBXBuildFile; fileRef = B516422E193E5D1D00CB358B /* MD5Hasher.m */; };
+		B5164232193F5C3D00CB358B /* iris_NewInventoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5164231193F5C3D00CB358B /* iris_NewInventoryViewController.m */; };
 		B56DD277192E7A500078E28B /* InventoryAction.m in Sources */ = {isa = PBXBuildFile; fileRef = B56DD276192E7A500078E28B /* InventoryAction.m */; };
 		B56DD27A192E7A500078E28B /* InventoryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = B56DD279192E7A500078E28B /* InventoryItem.m */; };
 		B5AD4F5919361D5000217486 /* iris_InventoryActionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5AD4F5819361D5000217486 /* iris_InventoryActionsTableViewController.m */; };
@@ -52,6 +53,8 @@
 		B516422B193E175800CB358B /* libcorecrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcorecrypto.dylib; path = usr/lib/system/libcorecrypto.dylib; sourceTree = SDKROOT; };
 		B516422D193E5D1D00CB358B /* MD5Hasher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MD5Hasher.h; sourceTree = "<group>"; };
 		B516422E193E5D1D00CB358B /* MD5Hasher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MD5Hasher.m; sourceTree = "<group>"; };
+		B5164230193F5C3D00CB358B /* iris_NewInventoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iris_NewInventoryViewController.h; path = Iris/iris_NewInventoryViewController.h; sourceTree = "<group>"; };
+		B5164231193F5C3D00CB358B /* iris_NewInventoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iris_NewInventoryViewController.m; path = Iris/iris_NewInventoryViewController.m; sourceTree = "<group>"; };
 		B56DD275192E7A500078E28B /* InventoryAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InventoryAction.h; path = Iris/InventoryAction.h; sourceTree = "<group>"; };
 		B56DD276192E7A500078E28B /* InventoryAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InventoryAction.m; path = Iris/InventoryAction.m; sourceTree = "<group>"; };
 		B56DD278192E7A500078E28B /* InventoryItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InventoryItem.h; path = Iris/InventoryItem.h; sourceTree = "<group>"; };
@@ -237,6 +240,8 @@
 				B5EB7D21190955F8004FEDD2 /* iris_MainViewController.m */,
 				D7CC54DA192CE933005AFA5D /* iris_MenuViewController.h */,
 				D7CC54DB192CE933005AFA5D /* iris_MenuViewController.m */,
+				B5164230193F5C3D00CB358B /* iris_NewInventoryViewController.h */,
+				B5164231193F5C3D00CB358B /* iris_NewInventoryViewController.m */,
 			);
 			name = Controllers;
 			path = ..;
@@ -364,6 +369,7 @@
 				B5B91EC219100D86008388D5 /* iris_ItemDetailsViewController.m in Sources */,
 				B5EB7D2E190963CF004FEDD2 /* iris_InventoryTableViewController.m in Sources */,
 				D7CC54D8192CE7DC005AFA5D /* Reachability.m in Sources */,
+				B5164232193F5C3D00CB358B /* iris_NewInventoryViewController.m in Sources */,
 				B516422F193E5D1D00CB358B /* MD5Hasher.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

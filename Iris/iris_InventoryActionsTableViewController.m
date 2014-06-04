@@ -37,7 +37,6 @@
     [super viewDidLoad];
     
     dataHandler = [[InventoryDataHandler alloc] init];
-	
 	_sortedActions = [dataHandler loadInventoryActionsByInventoryItem:_currentItem];
 }
 
