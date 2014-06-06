@@ -11,14 +11,15 @@
 @interface iris_NewInventoryViewController : UIViewController
 
 // UI Properties
-@property (weak, nonatomic) IBOutlet UITextField *lblDescription;
-@property (weak, nonatomic) IBOutlet UITextField *lblAssetTag;
-@property (weak, nonatomic) IBOutlet UITextField *lblQuantity;
-@property (weak, nonatomic) IBOutlet UITextField *lblSerialNumber;
-@property (weak, nonatomic) IBOutlet UITextField *lblPurchaseDate;
-@property (weak, nonatomic) IBOutlet UITextField *lblPurchasePrice;
+@property (weak, nonatomic) IBOutlet UITextField *tfDescription;
+@property (weak, nonatomic) IBOutlet UITextField *tfAssetTag;
+@property (weak, nonatomic) IBOutlet UITextField *tfQuantity;
+@property (weak, nonatomic) IBOutlet UITextField *tfSerialNumber;
+@property (weak, nonatomic) IBOutlet UITextField *tfPurchaseDate;
+@property (weak, nonatomic) IBOutlet UITextField *tfPurchasePrice;
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
 
 // Actions
 - (IBAction)showDatePicker:(id)sender;
+- (IBAction)addItem:(id)sender;
 @end

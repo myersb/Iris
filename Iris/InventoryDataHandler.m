@@ -12,6 +12,7 @@
 
 //Data Import
 #import "InventoryAction.h"
+#import "InventoryItem.h"
 
 // Utilities Import
 #import "Reachability.h"
@@ -40,23 +41,37 @@
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"GET"];
-	
+
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError)
 	 {
 		 if (data.length > 0 && connectionError == nil)
 		 {
 			 NSLog(@"WE HAS THE DATAS");
 			 NSDictionary *inventory = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
+			 NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+			 [formatter setDateFormat:@"yyyy-MM-dd"];
+			 NSString *dateStr;
 			 for (NSDictionary *inventoryItem in inventory)
 			 {
 				 InventoryItem *newItem = [NSEntityDescription insertNewObjectForEntityForName:@"InventoryObject" inManagedObjectContext:[self managedObjectContext]];
+				 dateStr = NSLocalizedString([inventoryItem objectForKey:@"PurchaseDate"], nil);
 				 newItem.inventoryObjectID = [NSNumber numberWithInt:[NSLocalizedString([inventoryItem objectForKey:@"MediaInventoryObjectsId"], nil) intValue]];
-				 newItem.assetID = [NSNumber numberWithInt:[NSLocalizedString([inventoryItem objectForKey:@"AssetId"], nil) intValue]];
+				 newItem.assetID = NSLocalizedString([inventoryItem objectForKey:@"AssetId"], nil);
 				 newItem.quantity = [NSNumber numberWithInt:[NSLocalizedString([inventoryItem objectForKey:@"Quantity"], nil) intValue]];
 				 newItem.serialNumber =  NSLocalizedString([inventoryItem objectForKey:@"SerialNumber"], nil);
 				 newItem.objectDescription = NSLocalizedString([inventoryItem objectForKey:@"Description"], nil);
 				 newItem.allowsActions = [NSNumber numberWithBool:[NSLocalizedString([inventoryItem objectForKey:@"AllowActions"], nil) boolValue]];
 				 newItem.retired = [NSNumber numberWithBool:[NSLocalizedString([inventoryItem objectForKey:@"Retired"], nil) boolValue]];
+				 if (NSLocalizedString([inventoryItem objectForKey:@"PurchasePrice"], nil) == (NSString *)[NSNull null]) {
+					 newItem.purchasePrice = 0;
+				 } else {
+					 newItem.purchasePrice = [NSNumber numberWithFloat:[NSLocalizedString([inventoryItem objectForKey:@"PurchasePrice"], nil) floatValue]];
+				 }
+				 if (NSLocalizedString([inventoryItem objectForKey:@"PurchaseDate"], nil) == (NSString *)[NSNull null]) {
+					 newItem.purchaseDate = [NSDate date];
+				 } else {
+					 newItem.purchaseDate = [formatter dateFromString:dateStr];
+				 }
 				 
 				 NSDictionary *actions = [inventoryItem objectForKey:@"MediaInventoryActions"];
 				 for (id actionItem in actions)
@@ -154,34 +169,77 @@
 	return _sortedActions;
 }
 
-- (void)updateInventoryObjectWithID:(int)inventoryObjectId andAssetID:(int)assetID andQuantity:(int)quantity andSerialNumber:(NSString *)serialNumber andDescription:(NSString *)description andAllowAction:(BOOL)allowActions andRetired:(BOOL)retired
+- (void)updateInventoryObjectWithID:(int)inventoryObjectId andAssetID:(NSString *)assetID andQuantity:(int)quantity andSerialNumber:(NSString *)serialNumber andDescription:(NSString *)description andAllowAction:(BOOL)allowActions andRetired:(BOOL)retired andPurchaseDate:(NSDate *)purchaseDate andPurchasePrice:(float)purchasePrice
 {
 	// Create values for encryption
+	hashGenerator = [[MD5Hasher alloc] init];
 	NSDictionary *hashDict = [hashGenerator createHash];
 	
 	// Setup jSON String
-	NSString *jSONString = [NSString stringWithFormat:@"{\"MediaInventoryObjectsId\":%d,\"AssetId\":%d,\"Quantity\":%d,\"SerialNumber\":\"%@\",\"Description\":\"%@\",\"AllowActions\":%d,\"Retired\":%d, \"UserInput\":%@, \"GeneratedInput\":%@}",inventoryObjectId, assetID, quantity, serialNumber, description, allowActions, retired, hashDict[@"userInput"], hashDict[@"generatedInput"]];
-	
+	NSString *jSONString = [NSString stringWithFormat:@"{\"MediaInventoryObjectsId\":%d,\"Quantity\":%d,\"AssetId\":\"%@\",\"SerialNumber\":\"%@\",\"Description\":\"%@\",\"AllowActions\":%d,\"Retired\":%d,\"PurchaseDate\":\"%@\",\"PurchasePrice\":%f,\"UserInput\":\"%@\",\"GeneratedInput\":\"%@\"}",inventoryObjectId, quantity, assetID, serialNumber, description, allowActions, retired, @"2014-06-05T13:43:45.03", purchasePrice, hashDict[@"userInput"], hashDict[@"generatedInput"]];
+	NSLog(@"jSONString: %@", jSONString);
 	// Convert jSON string to data
 	NSData *putData = [jSONString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
 	
 	// Instantiate a url request
 	NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-	
+	NSLog(@"request: %@", request);
 	// Set the request url format
 	[request setURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%d", inventoryAndActionsWebservice, inventoryObjectId]]];
 	[request setHTTPMethod:@"PUT"];
 	[request setHTTPBody:putData];
 	[request setValue:@"application/json" forHTTPHeaderField:@"content-type"];
 	
+	NSLog(@"request: %@", request);
 	// Send data to the webservice
 	NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
 	NSString *result = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
+	NSLog(@"result: %@", result);
 }
 
-- (void)insertInventoryObjectWithAssetID:(int)assetID andQuantity:(int)quantity andSerialNumber:(NSString *)serialNumber andDescription:(NSString *)description andAllowAction:(BOOL)allowActions andRetired:(BOOL)retired
+- (void)insertInventoryObjectWithAssetID:(NSString *)assetID andQuantity:(int)quantity andSerialNumber:(NSString *)serialNumber andDescription:(NSString *)description andAllowAction:(BOOL)allowActions andRetired:(BOOL)retired andPurchaseDate:(NSDate *)purchaseDate andPurchasePrice:(float)purchasePrice
 {
-
+	// Create values for encryption
+	hashGenerator = [[MD5Hasher alloc] init];
+	NSDictionary *hashDict = [hashGenerator createHash];
+	
+	// Setup jSON String
+	NSString *jSONString = [NSString stringWithFormat:@"{\"Quantity\":%d,\"AssetId\":\"%@\",\"SerialNumber\":\"%@\",\"Description\":\"%@\",\"AllowActions\":%d,\"Retired\":%d,\"PurchaseDate\":\"%@\",\"PurchasePrice\":%f,\"UserInput\":\"%@\",\"GeneratedInput\":\"%@\"}", quantity, assetID, serialNumber, description, allowActions, retired, @"2014-06-05T13:43:45.03", purchasePrice, hashDict[@"userInput"], hashDict[@"generatedInput"]];
+	NSLog(@"%@", jSONString);
+	// Convert jSON string to data
+	NSData *postData = [jSONString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+	NSLog(@"%@", postData);
+	// Instantiate a url request
+	NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+	NSLog(@"Request: %@", request);
+	// Set the request url format
+	[request setURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", inventoryAndActionsWebservice]]];
+	[request setHTTPMethod:@"POST"];
+	[request setHTTPBody:postData];
+	[request setValue:@"application/json" forHTTPHeaderField:@"content-type"];
+	NSLog(@"Request: %@", request);
+	
+	// Send data to the webservice
+	NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+	NSLog(@"returnData: %@", returnData);
+	NSString *result = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
+	NSLog(@"result: %@", result);
+	
+	// Insert Into CoreData
+	id delegate = [[UIApplication sharedApplication]delegate];
+	self.managedObjectContext = [delegate managedObjectContext];
+	
+	InventoryItem *newItem = [NSEntityDescription insertNewObjectForEntityForName:@"InventoryObject" inManagedObjectContext:[self managedObjectContext]];
+	newItem.objectDescription = description;
+	newItem.assetID = assetID;
+	newItem.quantity = [NSNumber numberWithInt:quantity];
+	newItem.serialNumber = serialNumber;
+	newItem.allowsActions = [NSNumber numberWithBool:allowActions];
+	newItem.retired = [NSNumber numberWithBool:retired];
+	newItem.purchaseDate = [NSDate date];
+	newItem.purchasePrice = [NSNumber numberWithFloat:purchasePrice];
+	[self.managedObjectContext save:nil];
+	
 }
 
 @end

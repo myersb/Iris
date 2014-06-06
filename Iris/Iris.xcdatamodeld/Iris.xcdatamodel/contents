@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13C1021" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13D65" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="InventoryAction" representedClassName="InventoryAction" syncable="YES">
         <attribute name="actionDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="actionID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -15,9 +15,11 @@
     </entity>
     <entity name="InventoryObject" representedClassName="InventoryItem" syncable="YES">
         <attribute name="allowsActions" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="assetID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="assetID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="inventoryObjectID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="objectDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="purchaseDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="purchasePrice" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="quantity" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="retired" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="serialNumber" optional="YES" attributeType="String" syncable="YES"/>
@@ -25,6 +27,6 @@
     </entity>
     <elements>
         <element name="InventoryAction" positionX="-63" positionY="54" width="128" height="208"/>
-        <element name="InventoryObject" positionX="-317" positionY="98" width="128" height="163"/>
+        <element name="InventoryObject" positionX="-317" positionY="98" width="128" height="195"/>
     </elements>
 </model>

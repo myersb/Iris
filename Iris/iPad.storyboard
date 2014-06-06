@@ -148,6 +148,9 @@
                                 <state key="normal" title="Add Item">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="addItem:" destination="CSA-au-0mu" eventType="touchUpInside" id="Ji7-8U-Avq"/>
+                                </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Purchase Date" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="259-yb-zLf">
                                 <rect key="frame" x="20" y="224" width="158" height="30"/>
@@ -165,7 +168,7 @@
                                     <!--2014-06-04 17:34:57 +0000-->
                                 </date>
                                 <timeZone key="timeZone" name="America/Los_Angeles">
-                                    <mutableData key="data">
+                                    <data key="data">
 VFppZgAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAC5AAAABAAAABCepkign7sVkKCGKqChmveQ
 y4kaoNIj9HDSYSYQ1v50INiArZDa/tGg28CQENzes6DdqayQ3r6VoN+JjpDgnneg4WlwkOJ+WaDjSVKQ
 5F47oOUpNJDmR1gg5xJREOgnOiDo8jMQ6gccIOrSFRDr5v4g7LH3EO3G4CDukdkQ76/8oPBxuxDxj96g
@@ -183,7 +186,7 @@ f5gqkAABAAECAwEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEA
 AQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEA
 AQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEA
 AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
-</mutableData>
+</data>
                                 </timeZone>
                             </datePicker>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Purchase Price" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="THu-ma-VMZ">
@@ -198,12 +201,12 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                     <navigationItem key="navigationItem" title="New Inventory" id="jUq-Pt-ZZE"/>
                     <connections>
                         <outlet property="datePicker" destination="q85-Hy-rfj" id="DGX-9o-XKk"/>
-                        <outlet property="lblAssetTag" destination="6E1-kc-SzR" id="Ygu-A5-E1o"/>
-                        <outlet property="lblDescription" destination="R0t-jH-Lmz" id="p8H-XC-TbO"/>
-                        <outlet property="lblPurchaseDate" destination="259-yb-zLf" id="E8J-OM-IDR"/>
-                        <outlet property="lblPurchasePrice" destination="THu-ma-VMZ" id="liE-ej-P40"/>
-                        <outlet property="lblQuantity" destination="q9c-Ux-eik" id="dRh-7B-1RA"/>
-                        <outlet property="lblSerialNumber" destination="eM7-xg-X9s" id="TiD-lL-M0W"/>
+                        <outlet property="tfAssetTag" destination="6E1-kc-SzR" id="8Up-xp-bsd"/>
+                        <outlet property="tfDescription" destination="R0t-jH-Lmz" id="r3R-Li-lYo"/>
+                        <outlet property="tfPurchaseDate" destination="259-yb-zLf" id="xfw-av-4t6"/>
+                        <outlet property="tfPurchasePrice" destination="THu-ma-VMZ" id="sbC-Mi-Loq"/>
+                        <outlet property="tfQuantity" destination="q9c-Ux-eik" id="jlq-4P-NRH"/>
+                        <outlet property="tfSerialNumber" destination="eM7-xg-X9s" id="DRk-LO-dRL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="guQ-E0-Igd" userLabel="First Responder" sceneMemberID="firstResponder"/>

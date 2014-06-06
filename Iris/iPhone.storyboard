@@ -132,7 +132,7 @@
                                     <!--2014-06-04 17:34:57 +0000-->
                                 </date>
                                 <timeZone key="timeZone" name="America/Los_Angeles">
-                                    <mutableData key="data">
+                                    <data key="data">
 VFppZgAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAC5AAAABAAAABCepkign7sVkKCGKqChmveQ
 y4kaoNIj9HDSYSYQ1v50INiArZDa/tGg28CQENzes6DdqayQ3r6VoN+JjpDgnneg4WlwkOJ+WaDjSVKQ
 5F47oOUpNJDmR1gg5xJREOgnOiDo8jMQ6gccIOrSFRDr5v4g7LH3EO3G4CDukdkQ76/8oPBxuxDxj96g
@@ -150,7 +150,7 @@ f5gqkAABAAECAwEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEA
 AQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEA
 AQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEA
 AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
-</mutableData>
+</data>
                                 </timeZone>
                             </datePicker>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Purchase Price" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PdZ-kH-YOU">
@@ -189,12 +189,12 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                     <navigationItem key="navigationItem" title="New Inventory" id="vfK-BU-mZQ"/>
                     <connections>
                         <outlet property="datePicker" destination="cvN-cK-TE3" id="Ajy-aL-VRE"/>
-                        <outlet property="lblAssetTag" destination="TnY-07-wg6" id="pvX-nc-7Qo"/>
-                        <outlet property="lblDescription" destination="rn2-sC-gkw" id="aac-bq-TxS"/>
-                        <outlet property="lblPurchaseDate" destination="9X3-yg-T1G" id="SWD-zX-Kwy"/>
-                        <outlet property="lblPurchasePrice" destination="PdZ-kH-YOU" id="itN-ff-Xsh"/>
-                        <outlet property="lblQuantity" destination="Igx-F6-mPe" id="uUX-1S-42I"/>
-                        <outlet property="lblSerialNumber" destination="aoS-Ff-BxW" id="4jG-NL-tU8"/>
+                        <outlet property="tfAssetTag" destination="TnY-07-wg6" id="Gsk-s3-VAD"/>
+                        <outlet property="tfDescription" destination="rn2-sC-gkw" id="Crf-TL-cjZ"/>
+                        <outlet property="tfPurchaseDate" destination="9X3-yg-T1G" id="zoq-SI-gSS"/>
+                        <outlet property="tfPurchasePrice" destination="PdZ-kH-YOU" id="6Oa-A2-cER"/>
+                        <outlet property="tfQuantity" destination="Igx-F6-mPe" id="12m-ep-37o"/>
+                        <outlet property="tfSerialNumber" destination="aoS-Ff-BxW" id="x2O-A6-nwq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fsY-Vs-wdf" userLabel="First Responder" sceneMemberID="firstResponder"/>

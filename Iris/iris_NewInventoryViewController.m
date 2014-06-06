@@ -6,10 +6,16 @@
 //  Copyright (c) 2014 claytonhomes.com. All rights reserved.
 //
 
+// Controllers Import
 #import "iris_NewInventoryViewController.h"
 
-@interface iris_NewInventoryViewController ()
+// Models Import
+#import "InventoryDataHandler.h"
 
+@interface iris_NewInventoryViewController ()
+{
+	InventoryDataHandler *dataHandler;
+}
 @end
 
 @implementation iris_NewInventoryViewController
@@ -27,6 +33,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+	
+	dataHandler = [[InventoryDataHandler alloc] init];
 	
 	_datePicker.hidden = YES;
 }
@@ -51,5 +59,14 @@
 - (IBAction)showDatePicker:(id)sender
 {
 	_datePicker.hidden = NO;
+}
+
+- (IBAction)addItem:(id)sender
+{
+	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+	[dateFormatter setDateFormat:@"YYYY-dd-MM"];
+	NSDate *date = [dateFormatter dateFromString:_tfPurchaseDate.text];
+	[dataHandler insertInventoryObjectWithAssetID:_tfAssetTag.text andQuantity:[_tfQuantity.text intValue] andSerialNumber:_tfSerialNumber.text andDescription:_tfDescription.text andAllowAction:true andRetired:false andPurchaseDate:date andPurchasePrice:[_tfPurchasePrice.text floatValue]];
+	//[dataHandler updateInventoryObjectWithID:1 andAssetID:_tfAssetTag.text andQuantity:[_tfQuantity.text intValue] andSerialNumber:_tfSerialNumber.text andDescription:_tfDescription.text andAllowAction:true andRetired:false andPurchaseDate:date andPurchasePrice:[_tfPurchasePrice.text floatValue]];
 }
 @end

@@ -62,6 +62,11 @@
 	_fetchedInventory = [dataHandler loadInventory];
 	_filteredFetchedInventory = [NSMutableArray arrayWithCapacity:[_fetchedInventory count]];
 	
+	//[self.tableView reloadData];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
 	[self.tableView reloadData];
 }
 

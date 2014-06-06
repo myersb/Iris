@@ -24,8 +24,8 @@
 
 // Actions
 - (void)downloadInventoryAndActions;
-- (void)updateInventoryObjectWithID:(int)inventoryObjectId andAssetID:(int)assetID andQuantity:(int)quantity andSerialNumber:(NSString *)serialNumber andDescription:(NSString *)description andAllowAction:(BOOL)allowActions andRetired:(BOOL)retired;
-- (void)insertInventoryObjectWithAssetID:(int)assetID andQuantity:(int)quantity andSerialNumber:(NSString *)serialNumber andDescription:(NSString *)description andAllowAction:(BOOL)allowActions andRetired:(BOOL)retired;
+- (void)updateInventoryObjectWithID:(int)inventoryObjectId andAssetID:(NSString *)assetID andQuantity:(int)quantity andSerialNumber:(NSString *)serialNumber andDescription:(NSString *)description andAllowAction:(BOOL)allowActions andRetired:(BOOL)retired andPurchaseDate:(NSDate *)purchaseDate andPurchasePrice:(float)purchasePrice;
+- (void)insertInventoryObjectWithAssetID:(NSString *)assetID andQuantity:(int)quantity andSerialNumber:(NSString *)serialNumber andDescription:(NSString *)description andAllowAction:(BOOL)allowActions andRetired:(BOOL)retired andPurchaseDate:(NSDate *)purchaseDate andPurchasePrice:(float)purchasePrice;
 - (NSArray *)loadInventory;
 - (NSArray *)loadInventoryActionsByInventoryItem:(InventoryItem *)inventoryItem;
 - (NSFetchedResultsController *)loadInventoryWithFetchedResultsController;

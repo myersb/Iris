@@ -10,7 +10,7 @@
 #import <CommonCrypto/CommonDigest.h>
 
 #define salt @"broMed!$InvLee2014"
-#define userSaltConst @"|<ickTh0z3C4tz"
+#define userSaltConst @"KickTh0z3C4tz"
 
 @implementation NSString (ConvertString)
 
@@ -21,7 +21,7 @@
     CC_MD5(cstr, strlen(cstr), result);
 	
     return [NSString stringWithFormat:
-			@"%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X",
+			@"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
 			result[0], result[1], result[2], result[3],
 			result[4], result[5], result[6], result[7],
 			result[8], result[9], result[10], result[11],
@@ -35,8 +35,8 @@
 
 - (NSDictionary *)createHash
 {
-	NSString *userInput = [NSString stringWithFormat:@"%@ %@",userSaltConst, [NSDate date]];
-	NSString *userInputPlusSalt = [NSString stringWithFormat:@"%@%@", userInput, salt];
+	NSString *userInput = userSaltConst;
+	NSString *userInputPlusSalt = [NSString stringWithFormat:@"%@%@", salt, userInput];
 	NSString *generatedInput = [userInputPlusSalt MD5String];
 	NSDictionary *hashDictionary = [NSDictionary dictionaryWithObjectsAndKeys:generatedInput,@"generatedInput", userInput, @"userInput", nil];
 	return hashDictionary;
