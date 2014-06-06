@@ -57,10 +57,6 @@
 		_alert = [[UIAlertView alloc]initWithTitle:@"Connection Not Available" message:@"To download and/or update the inventory list you must have a working internet connection. Please check your internet connection and try again" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil, nil];
 		[_alert show];
     }
-	
-	NSDictionary *hashDict = [hashGenerator createHash];
-	NSLog(@"GeneratedInput: %@", hashDict[@"generatedInput"]);
-	NSLog(@"UserInput: %@", hashDict[@"userInput"]);
 }
 
 - (void)didReceiveMemoryWarning
