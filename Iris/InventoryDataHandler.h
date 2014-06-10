@@ -17,6 +17,7 @@
 @property (nonatomic, strong) NSFetchedResultsController *fetchedInventoryController;
 @property (nonatomic, strong) NSSortDescriptor *sort;
 @property (nonatomic, strong) NSArray *sortDescriptors;
+@property (nonatomic, strong) NSPredicate *predicate;
 
 // Variable Properties
 @property (nonatomic, strong) NSArray *fetchedInventory;
@@ -29,5 +30,6 @@
 - (NSArray *)loadInventory;
 - (NSArray *)loadInventoryActionsByInventoryItem:(InventoryItem *)inventoryItem;
 - (NSFetchedResultsController *)loadInventoryWithFetchedResultsController;
+- (NSFetchedResultsController *) loadInventoryWithFetchedResultsControllerWithPredicate:(NSPredicate *)predicate;
 
 @end

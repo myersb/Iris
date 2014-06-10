@@ -262,18 +262,44 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                     <segue destination="lUT-jQ-3B9" kind="push" identifier="segueToActionHistory" id="tW7-L9-bM5"/>
                                 </connections>
                             </button>
+                            <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Item Description" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zGh-68-P7J">
+                                <rect key="frame" x="241" y="137" width="356" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Asset Tag" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gL0-wK-n2r">
+                                <rect key="frame" x="241" y="170" width="272" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Quantity" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QDn-eW-u5N">
+                                <rect key="frame" x="578" y="200" width="97" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Purchase Price" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IQy-HW-HmL">
+                                <rect key="frame" x="241" y="277" width="170" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Inventory Details" id="cDs-py-DQA">
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="gBk-Gb-Wdg"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Inventory Details" id="cDs-py-DQA"/>
                     <connections>
                         <outlet property="actionPicker" destination="sAc-27-a0F" id="9LA-3C-gy9"/>
                         <outlet property="itemImageView" destination="5PS-66-Bhd" id="0ry-5N-LyY"/>
                         <outlet property="lblAssetTag" destination="oV9-qD-s65" id="QrR-eR-JbQ"/>
                         <outlet property="lblItemDescription" destination="25L-4Q-cRn" id="RcL-1E-uxO"/>
                         <outlet property="lblItemStatus" destination="U05-MG-d59" id="HVo-iJ-dg7"/>
+                        <outlet property="tfAssetTag" destination="gL0-wK-n2r" id="kOe-3h-wlj"/>
+                        <outlet property="tfItemDescription" destination="zGh-68-P7J" id="0nQ-5c-DgZ"/>
+                        <outlet property="tfPurchasePrice" destination="IQy-HW-HmL" id="H6D-J7-9WT"/>
+                        <outlet property="tfQuantity" destination="QDn-eW-u5N" id="Toa-aZ-SJM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uFV-11-iHS" userLabel="First Responder" sceneMemberID="firstResponder"/>

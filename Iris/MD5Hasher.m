@@ -35,7 +35,7 @@
 
 - (NSDictionary *)createHash
 {
-	NSString *userInput = userSaltConst;
+	NSString *userInput = [NSString stringWithFormat:@"%@ %@", userSaltConst, [NSDate date]];
 	NSString *userInputPlusSalt = [NSString stringWithFormat:@"%@%@", salt, userInput];
 	NSString *generatedInput = [userInputPlusSalt MD5String];
 	NSDictionary *hashDictionary = [NSDictionary dictionaryWithObjectsAndKeys:generatedInput,@"generatedInput", userInput, @"userInput", nil];

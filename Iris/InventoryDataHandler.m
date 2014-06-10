@@ -41,18 +41,21 @@
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"GET"];
-
+	
+	// Use Main thread to download inventory data
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError)
 	 {
 		 if (data.length > 0 && connectionError == nil)
 		 {
 			 NSLog(@"WE HAS THE DATAS");
+			 // Place all jSON data into a dictioanry
 			 NSDictionary *inventory = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
 			 NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
 			 [formatter setDateFormat:@"yyyy-MM-dd"];
 			 NSString *dateStr;
 			 for (NSDictionary *inventoryItem in inventory)
 			 {
+				 // Insert all inventory items into CoreData
 				 InventoryItem *newItem = [NSEntityDescription insertNewObjectForEntityForName:@"InventoryObject" inManagedObjectContext:[self managedObjectContext]];
 				 dateStr = NSLocalizedString([inventoryItem objectForKey:@"PurchaseDate"], nil);
 				 newItem.inventoryObjectID = [NSNumber numberWithInt:[NSLocalizedString([inventoryItem objectForKey:@"MediaInventoryObjectsId"], nil) intValue]];
@@ -76,6 +79,7 @@
 				 NSDictionary *actions = [inventoryItem objectForKey:@"MediaInventoryActions"];
 				 for (id actionItem in actions)
 				 {
+					 // Insert all actions associated with inventory items into CoreData
 					 InventoryAction *newAction = [NSEntityDescription insertNewObjectForEntityForName:@"InventoryAction" inManagedObjectContext:[self managedObjectContext]];
 					 newAction.actionID = [NSNumber numberWithInt:[NSLocalizedString([actionItem objectForKey:@"MediaInventoryActionsId"], nil) intValue]];
 					 newAction.inventoryObjectID = [NSNumber numberWithInt:[NSLocalizedString([actionItem objectForKey:@"MediaInventoryObjectsId"], nil) intValue]];
@@ -115,10 +119,34 @@
 	_entity = [NSEntityDescription entityForName:@"InventoryObject" inManagedObjectContext:[self managedObjectContext]];
 	_sort = [NSSortDescriptor sortDescriptorWithKey:@"objectDescription" ascending:YES];
 	_sortDescriptors = [[NSArray alloc]initWithObjects:_sort, nil];
+	
 	[_fetchRequest setEntity:_entity];
 	[_fetchRequest setSortDescriptors:_sortDescriptors];
 	
-	_fetchedInventoryController = [[NSFetchedResultsController alloc] initWithFetchRequest:_fetchRequest managedObjectContext:[self managedObjectContext] sectionNameKeyPath:@"objectDescription.stringGroupByFirstInitial" cacheName:nil];
+	_fetchedInventoryController = [[NSFetchedResultsController alloc] initWithFetchRequest:_fetchRequest managedObjectContext:[self managedObjectContext] sectionNameKeyPath:@"objectDescription.stringGroupByFirstInitial" cacheName:@"Default Search"];
+	
+	return _fetchedInventoryController;
+}
+
+- (NSFetchedResultsController *) loadInventoryWithFetchedResultsControllerWithPredicate:(NSPredicate *)predicate
+{
+	id delegate = [[UIApplication sharedApplication]delegate];
+	self.managedObjectContext = [delegate managedObjectContext];
+	
+	if (_fetchedInventoryController != nil)
+	{
+		return _fetchedInventoryController;
+	}
+	
+	_fetchRequest = [[NSFetchRequest alloc]init];
+	_entity = [NSEntityDescription entityForName:@"InventoryObject" inManagedObjectContext:[self managedObjectContext]];
+	_sort = [NSSortDescriptor sortDescriptorWithKey:@"objectDescription" ascending:YES];
+	_sortDescriptors = [[NSArray alloc]initWithObjects:_sort, nil];
+	
+	[_fetchRequest setEntity:_entity];
+	[_fetchRequest setSortDescriptors:_sortDescriptors];
+	
+	_fetchedInventoryController = [[NSFetchedResultsController alloc] initWithFetchRequest:_fetchRequest managedObjectContext:[self managedObjectContext] sectionNameKeyPath:@"objectDescription.stringGroupByFirstInitial" cacheName:@"Default Search"];
 	
 	return _fetchedInventoryController;
 }
@@ -132,7 +160,7 @@
 	
 	_fetchRequest = [[NSFetchRequest alloc] init];
 	_entity = [NSEntityDescription entityForName:@"InventoryObject" inManagedObjectContext:[self managedObjectContext]];
-	_sort = [NSSortDescriptor sortDescriptorWithKey:@"inventoryObjectID" ascending:YES];
+	_sort = [NSSortDescriptor sortDescriptorWithKey:@"objectDescription" ascending:YES];
 	_sortDescriptors = [[NSArray alloc]initWithObjects:_sort, nil];
 	
 	[_fetchRequest setEntity:_entity];
@@ -140,20 +168,6 @@
 	
 	NSError *error;
 	_fetchedInventory = [[self managedObjectContext] executeFetchRequest:_fetchRequest error:&error];
-//	for (InventoryItem *inventoryItem in _fetchedInventory) {
-//		NSLog(@"Object Description: %@", [inventoryItem valueForKey:@"objectDescription"]);
-//		NSLog(@"Object ID: %@", [inventoryItem valueForKey:@"inventoryObjectID"]);
-//		NSSet *actions = inventoryItem.action;
-//		NSSortDescriptor *actionsSort = [NSSortDescriptor sortDescriptorWithKey:@"actionID" ascending:YES];
-//		NSArray *sortedActions = [actions sortedArrayUsingDescriptors:[NSArray arrayWithObject:actionsSort]];
-//		NSLog(@"/*********** ACTIONS ***********/");
-//		for (InventoryAction *action in sortedActions) {
-//			NSLog(@"Action Long Value: %@", [action valueForKey:@"actionLongValue"]);
-//			NSLog(@"Notes: %@", [action valueForKey:@"notes"]);
-//			NSLog(@"Action ID: %@", [action valueForKey:@"actionID"]);
-//		}
-//		
-//	}
 	
 	return _fetchedInventory;
 }
@@ -178,23 +192,47 @@
 	// Setup jSON String
 	NSString *jSONString = [NSString stringWithFormat:@"{\"MediaInventoryObjectsId\":%d,\"Quantity\":%d,\"AssetId\":\"%@\",\"SerialNumber\":\"%@\",\"Description\":\"%@\",\"AllowActions\":%d,\"Retired\":%d,\"PurchaseDate\":\"%@\",\"PurchasePrice\":%f,\"UserInput\":\"%@\",\"GeneratedInput\":\"%@\"}",inventoryObjectId, quantity, assetID, serialNumber, description, allowActions, retired, @"2014-06-05T13:43:45.03", purchasePrice, hashDict[@"userInput"], hashDict[@"generatedInput"]];
 	NSLog(@"jSONString: %@", jSONString);
+	
 	// Convert jSON string to data
 	NSData *putData = [jSONString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
 	
 	// Instantiate a url request
 	NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
 	NSLog(@"request: %@", request);
+	
 	// Set the request url format
 	[request setURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%d", inventoryAndActionsWebservice, inventoryObjectId]]];
 	[request setHTTPMethod:@"PUT"];
 	[request setHTTPBody:putData];
 	[request setValue:@"application/json" forHTTPHeaderField:@"content-type"];
-	
 	NSLog(@"request: %@", request);
+	
 	// Send data to the webservice
 	NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
 	NSString *result = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
 	NSLog(@"result: %@", result);
+	
+	// Setup ManagedObjectContext
+	id delegate = [[UIApplication sharedApplication]delegate];
+	self.managedObjectContext = [delegate managedObjectContext];
+	
+	// Fetch specific record
+	_fetchRequest = [[NSFetchRequest alloc] init];
+	_entity = [NSEntityDescription entityForName:@"InventoryObject" inManagedObjectContext:[self managedObjectContext]];
+	_predicate = [NSPredicate predicateWithFormat:@"inventoryObjectID = %d", inventoryObjectId];
+	
+	[_fetchRequest setEntity:_entity];
+	[_fetchRequest setPredicate:_predicate];
+	
+	NSError *error = nil;
+	NSArray *inventoryResult = [[self managedObjectContext] executeFetchRequest:_fetchRequest error:&error];
+	
+	// Update record
+	InventoryItem *inventoryItem = [inventoryResult objectAtIndex:0];
+	inventoryItem.objectDescription = description;
+	inventoryItem.assetID = assetID;
+	inventoryItem.quantity = [NSNumber numberWithInt:quantity];
+	inventoryItem.purchasePrice = [NSNumber numberWithFloat:purchasePrice];
 }
 
 - (void)insertInventoryObjectWithAssetID:(NSString *)assetID andQuantity:(int)quantity andSerialNumber:(NSString *)serialNumber andDescription:(NSString *)description andAllowAction:(BOOL)allowActions andRetired:(BOOL)retired andPurchaseDate:(NSDate *)purchaseDate andPurchasePrice:(float)purchasePrice
@@ -206,12 +244,15 @@
 	// Setup jSON String
 	NSString *jSONString = [NSString stringWithFormat:@"{\"Quantity\":%d,\"AssetId\":\"%@\",\"SerialNumber\":\"%@\",\"Description\":\"%@\",\"AllowActions\":%d,\"Retired\":%d,\"PurchaseDate\":\"%@\",\"PurchasePrice\":%f,\"UserInput\":\"%@\",\"GeneratedInput\":\"%@\"}", quantity, assetID, serialNumber, description, allowActions, retired, @"2014-06-05T13:43:45.03", purchasePrice, hashDict[@"userInput"], hashDict[@"generatedInput"]];
 	NSLog(@"%@", jSONString);
+	
 	// Convert jSON string to data
 	NSData *postData = [jSONString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
 	NSLog(@"%@", postData);
+	
 	// Instantiate a url request
 	NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
 	NSLog(@"Request: %@", request);
+	
 	// Set the request url format
 	[request setURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", inventoryAndActionsWebservice]]];
 	[request setHTTPMethod:@"POST"];

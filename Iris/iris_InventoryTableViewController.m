@@ -58,15 +58,15 @@
 		NSLog(@"An error has occurred: %@", error);
 		abort();
 	}
-	
+	_fetchedInventoryController = dataHandler.fetchedInventoryController;
 	_fetchedInventory = [dataHandler loadInventory];
 	_filteredFetchedInventory = [NSMutableArray arrayWithCapacity:[_fetchedInventory count]];
-	
-	//[self.tableView reloadData];
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
+	_fetchedInventoryController = [dataHandler loadInventoryWithFetchedResultsController];
+	//_filteredFetchedInventory = [NSMutableArray arrayWithCapacity:[_fetchedInventory count]];
 	[self.tableView reloadData];
 }
 
@@ -81,17 +81,20 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 1;
+	
+	return [[dataHandler.fetchedInventoryController sections]count];
+    //return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    if (tableView == self.searchDisplayController.searchResultsTableView) {
-		return [_filteredFetchedInventory count];
-	} else {
-		return [_fetchedInventory count];
-	}
+//    if (tableView == self.searchDisplayController.searchResultsTableView) {
+//		return [_filteredFetchedInventory count];
+//	} else {
+		return [[[dataHandler.fetchedInventoryController sections] objectAtIndex:section]
+				numberOfObjects];
+//	}
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -106,11 +109,11 @@
 	}
 	//Term *term = [self.fetchedResultsController objectAtIndexPath:indexPath];
 	InventoryItem *inventory = nil;
-	if (tableView == self.searchDisplayController.searchResultsTableView) {
-		inventory = [_filteredFetchedInventory objectAtIndex:indexPath.row];
-	} else {
-		inventory = [_fetchedInventory objectAtIndex:indexPath.row];
-	}
+//	if (tableView == self.searchDisplayController.searchResultsTableView) {
+//		inventory = [_filteredFetchedInventory objectAtIndex:indexPath.row];
+//	} else {
+		inventory = [dataHandler.fetchedInventoryController objectAtIndexPath:indexPath];
+	//}
 	cell.textLabel.text = inventory.objectDescription;
  
     return cell;
@@ -149,31 +152,7 @@
     
 }
 
-
 #pragma mark - Search Bar Methods
-- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope{
-    [self.filteredFetchedInventory removeAllObjects];
-    
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.objectDescription contains[c] %@", searchText];
-    _filteredFetchedInventory = [NSMutableArray arrayWithArray:[_fetchedInventory filteredArrayUsingPredicate:predicate]];
-}
-
--(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString {
-    // Tells the table data source to reload when text changes
-    [self filterContentForSearchText:searchString scope:
-     [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
-    // Return YES to cause the search result table view to be reloaded.
-    return YES;
-}
-
--(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption {
-    // Tells the table data source to reload when scope bar selection changes
-    [self filterContentForSearchText:self.searchDisplayController.searchBar.text scope:
-     [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:searchOption]];
-    // Return YES to cause the search result table view to be reloaded.
-    return YES;
-}
-
 
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -182,6 +161,23 @@
     return YES;
 }
 
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    if ([searchText length] == 0) {
+        dataHandler.fetchedInventoryController = nil;
+    }
+    else {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"objectDescription contains[cd] %@", searchText];
+        [[dataHandler.fetchedInventoryController fetchRequest] setPredicate:predicate];
+    }
+	
+    NSError *error;
+    if (![[dataHandler loadInventoryWithFetchedResultsController] performFetch:&error]) {
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+    }
+	
+    [[self tableView] reloadData];
+}
 
 /*
 // Override to support editing the table view.
@@ -243,10 +239,10 @@
 		if ([self.searchDisplayController isActive])
 		{
 			_indexPath = [self.searchDisplayController.searchResultsTableView indexPathForSelectedRow];
-			selectedInventoryItem = [_filteredFetchedInventory objectAtIndex:_indexPath.row];
+			selectedInventoryItem = [dataHandler.fetchedInventoryController objectAtIndexPath:_indexPath];
 		} else {
 			_indexPath = [self.tableView indexPathForSelectedRow];
-			selectedInventoryItem = [_fetchedInventory objectAtIndex:_indexPath.row];
+			selectedInventoryItem = [dataHandler.fetchedInventoryController objectAtIndexPath:_indexPath];
 		}
 		idvc.currentInventoryItem = selectedInventoryItem;
 	}
