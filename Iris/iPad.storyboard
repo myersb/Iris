@@ -354,10 +354,10 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             </objects>
             <point key="canvasLocation" x="3933" y="-1476"/>
         </scene>
-        <!--View Controller-->
+        <!--Iris Action Details View Controller - History Details-->
         <scene sceneID="6iX-Uc-tDm">
             <objects>
-                <viewController id="Fdc-ih-Uta" sceneMemberID="viewController">
+                <viewController id="Fdc-ih-Uta" customClass="iris_ActionDetailsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="2Th-UI-af3"/>
                         <viewControllerLayoutGuide type="bottom" id="AsQ-Dw-sFJ"/>
@@ -365,9 +365,56 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                     <view key="view" contentMode="scaleToFill" id="oEY-WZ-f3b">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Action Long Value" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ogt-Db-fK4">
+                                <rect key="frame" x="32" y="155" width="177" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" text="Notes" translatesAutoresizingMaskIntoConstraints="NO" id="IKM-P2-wcu">
+                                <rect key="frame" x="20" y="539" width="728" height="465"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="0.87697305479999998" green="0.87697305479999998" blue="0.87697305479999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Authorized By" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jOf-Mp-Dek">
+                                <rect key="frame" x="32" y="208" width="243" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Performed Action" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yVt-qo-YN6">
+                                <rect key="frame" x="32" y="261" width="243" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="User Extension" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2wQ-IL-e8y">
+                                <rect key="frame" x="32" y="314" width="243" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Action Date" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oy9-ek-zGw">
+                                <rect key="frame" x="32" y="102" width="177" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="74X-7r-sq0"/>
+                    <navigationItem key="navigationItem" title="History Details" id="74X-7r-sq0"/>
+                    <connections>
+                        <outlet property="tfActionDate" destination="oy9-ek-zGw" id="jF4-bh-xEP"/>
+                        <outlet property="tfActionLongValue" destination="ogt-Db-fK4" id="PQa-Fx-H1h"/>
+                        <outlet property="tfAuthorizedBy" destination="jOf-Mp-Dek" id="7ve-9I-A0i"/>
+                        <outlet property="tfPerformedAction" destination="yVt-qo-YN6" id="6qh-UM-bAk"/>
+                        <outlet property="tfUserExtension" destination="2wQ-IL-e8y" id="9ko-du-h5o"/>
+                        <outlet property="tvNotes" destination="IKM-P2-wcu" id="5TZ-ev-Qyh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4oH-Iw-jHx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
