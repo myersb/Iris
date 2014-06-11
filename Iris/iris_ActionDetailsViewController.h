@@ -7,14 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "InventoryAction.h"
 
 @interface iris_ActionDetailsViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UITextField *tfActionDate;
-@property (weak, nonatomic) IBOutlet UITextField *tfActionLongValue;
-@property (weak, nonatomic) IBOutlet UITextField *tfAuthorizedBy;
-@property (weak, nonatomic) IBOutlet UITextField *tfPerformedAction;
-@property (weak, nonatomic) IBOutlet UITextField *tfUserExtension;
-@property (weak, nonatomic) IBOutlet UITextView *tvNotes;
+// UI Properties
+@property (nonatomic, weak) IBOutlet UITextField *tfActionDate;
+@property (nonatomic, weak) IBOutlet UITextField *tfActionLongValue;
+@property (nonatomic, weak) IBOutlet UITextField *tfAuthorizedBy;
+@property (nonatomic, weak) IBOutlet UITextField *tfPerformedAction;
+@property (nonatomic, weak) IBOutlet UITextField *tfUserExtension;
+@property (nonatomic, weak) IBOutlet UITextView *tvNotes;
+
+// Variable Properties
+@property (nonatomic, strong) InventoryAction *action;
 
 @end

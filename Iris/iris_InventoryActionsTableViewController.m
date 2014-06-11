@@ -8,6 +8,7 @@
 
 // Controllers Import
 #import "iris_InventoryActionsTableViewController.h"
+#import "iris_ActionDetailsViewController.h"
 
 // Data Import
 #import "InventoryAction.h"
@@ -122,7 +123,7 @@
 }
 */
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -130,7 +131,13 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+	
+	iris_ActionDetailsViewController *advc = [segue destinationViewController];
+	if ([[segue identifier] isEqualToString:@"segueToActionDetails"])
+	{
+		_indexPath = [self.tableView indexPathForSelectedRow];
+		advc.action = [_sortedActions objectAtIndex:_indexPath.row];
+	}
 }
-*/
 
 @end

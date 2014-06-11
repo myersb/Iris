@@ -14,5 +14,5 @@
 // Variable Properties
 @property (strong, nonatomic) InventoryItem *currentItem;
 @property (strong, nonatomic) NSArray *sortedActions;
-
+@property (strong, nonatomic) NSIndexPath *indexPath;
 @end

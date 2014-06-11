@@ -117,4 +117,6 @@
 	
 }
 
+- (IBAction)deleteInventoryItem:(id)sender {
+}
 @end

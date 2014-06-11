@@ -29,9 +29,11 @@
 @property (nonatomic, weak) IBOutlet UITextField *tfPurchasePrice;
 @property (nonatomic, strong) UIBarButtonItem *editButton;
 @property (nonatomic, strong) UIBarButtonItem *saveButton;
+@property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 
 // Variable Properties
 @property (strong, nonatomic) InventoryItem *currentInventoryItem;
 
 // Actions
+- (IBAction)deleteInventoryItem:(id)sender;
 @end

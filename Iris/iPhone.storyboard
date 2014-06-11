@@ -277,12 +277,25 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JWh-Fz-aen">
+                                <rect key="frame" x="37" y="362" width="44" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Delete">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="deleteInventoryItem:" destination="is8-w3-BP1" eventType="touchUpInside" id="dhL-1M-rhL"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Inventory Details" id="kdV-J1-Waj"/>
+                    <navigationItem key="navigationItem" title="Inventory Details" id="kdV-J1-Waj">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="Jmo-UP-yiD"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="actionPicker" destination="x8P-zE-Vfa" id="CcA-5U-NxG"/>
+                        <outlet property="deleteButton" destination="JWh-Fz-aen" id="3Hh-i4-5ot"/>
                         <outlet property="itemImageView" destination="wU5-qr-2Xc" id="hba-oo-zD6"/>
                         <outlet property="lblAssetTag" destination="3Vb-Uh-emr" id="Oc1-GM-A95"/>
                         <outlet property="lblItemDescription" destination="J1v-Fh-ccC" id="dZX-Er-kox"/>
