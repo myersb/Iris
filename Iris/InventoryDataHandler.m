@@ -183,7 +183,15 @@
 	return _sortedActions;
 }
 
-- (void)updateInventoryObjectWithID:(int)inventoryObjectId andAssetID:(NSString *)assetID andQuantity:(int)quantity andSerialNumber:(NSString *)serialNumber andDescription:(NSString *)description andAllowAction:(BOOL)allowActions andRetired:(BOOL)retired andPurchaseDate:(NSDate *)purchaseDate andPurchasePrice:(float)purchasePrice
+- (void)updateInventoryObjectWithID:(int)inventoryObjectId
+						 andAssetID:(NSString *)assetID
+						andQuantity:(int)quantity
+					andSerialNumber:(NSString *)serialNumber
+					 andDescription:(NSString *)description
+					 andAllowAction:(BOOL)allowActions
+						 andRetired:(BOOL)retired
+					andPurchaseDate:(NSDate *)purchaseDate
+				   andPurchasePrice:(float)purchasePrice
 {
 	// Create values for encryption
 	hashGenerator = [[MD5Hasher alloc] init];
@@ -235,7 +243,14 @@
 	inventoryItem.purchasePrice = [NSNumber numberWithFloat:purchasePrice];
 }
 
-- (void)insertInventoryObjectWithAssetID:(NSString *)assetID andQuantity:(int)quantity andSerialNumber:(NSString *)serialNumber andDescription:(NSString *)description andAllowAction:(BOOL)allowActions andRetired:(BOOL)retired andPurchaseDate:(NSDate *)purchaseDate andPurchasePrice:(float)purchasePrice
+- (void)insertInventoryObjectWithAssetID:(NSString *)assetID
+							 andQuantity:(int)quantity
+						 andSerialNumber:(NSString *)serialNumber
+						  andDescription:(NSString *)description
+						  andAllowAction:(BOOL)allowActions
+							  andRetired:(BOOL)retired
+						 andPurchaseDate:(NSDate *)purchaseDate
+						andPurchasePrice:(float)purchasePrice
 {
 	// Create values for encryption
 	hashGenerator = [[MD5Hasher alloc] init];
@@ -285,7 +300,15 @@
 
 
 
-- (void)actionWithID:(int)actionID andActionDate:(NSDate *)actionDate andActionLongValue:(NSString *)actionLongValue andActionShortValue:(NSString *)actionShortValue andNotes:(NSString *)notes andUserAuthorizingAction:(NSString *)userAuthorizingAction andUserPerformingAction:(NSString *)userPerformingAction andUserPerformingActionExt:(int)extension andInventoryObjectID:(int)inventoryObjectID
+- (void)actionWithID:(int)actionID
+	   andActionDate:(NSDate *)actionDate
+  andActionLongValue:(NSString *)actionLongValue
+ andActionShortValue:(NSString *)actionShortValue
+			andNotes:(NSString *)notes
+andUserAuthorizingAction:(NSString *)userAuthorizingAction
+andUserPerformingAction:(NSString *)userPerformingAction
+andUserPerformingActionExt:(int)extension
+andInventoryObjectID:(int)inventoryObjectID
 {
 	// Create values for encryption
 	hashGenerator = [[MD5Hasher alloc] init];

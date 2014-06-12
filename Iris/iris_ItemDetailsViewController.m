@@ -85,7 +85,6 @@
 	} else {
 		_lblItemStatus.text = @"Current Status: In";
 	}
-
 }
 
 
@@ -131,8 +130,14 @@
 	_lblAssetTag.text = [NSString stringWithFormat:@"Asset ID: %@", _tfAssetTag.text];
 	//inventoryItem.purchaseDate = @"2014-06-05T13:43:45.03";
 	
-	[dataHandler updateInventoryObjectWithID:[_currentInventoryItem.inventoryObjectID intValue] andAssetID:_tfAssetTag.text andQuantity:[_tfQuantity.text intValue] andSerialNumber:_currentInventoryItem.serialNumber andDescription:_tfItemDescription.text andAllowAction:TRUE andRetired:FALSE andPurchaseDate:[NSDate date] andPurchasePrice:[_tfPurchasePrice.text floatValue]];
-	
+	[dataHandler updateInventoryObjectWithID:[_currentInventoryItem.inventoryObjectID intValue]
+								  andAssetID:_tfAssetTag.text
+								 andQuantity:[_tfQuantity.text intValue]
+							 andSerialNumber:_currentInventoryItem.serialNumber
+							  andDescription:_tfItemDescription.text
+							  andAllowAction:TRUE andRetired:FALSE
+							 andPurchaseDate:[NSDate date]
+							andPurchasePrice:[_tfPurchasePrice.text floatValue]];
 }
 
 - (IBAction)deleteInventoryItem:(id)sender {

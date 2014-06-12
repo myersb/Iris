@@ -66,7 +66,12 @@
 	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 	[dateFormatter setDateFormat:@"YYYY-dd-MM"];
 	NSDate *date = [dateFormatter dateFromString:_tfPurchaseDate.text];
-	[dataHandler insertInventoryObjectWithAssetID:_tfAssetTag.text andQuantity:[_tfQuantity.text intValue] andSerialNumber:_tfSerialNumber.text andDescription:_tfDescription.text andAllowAction:true andRetired:false andPurchaseDate:date andPurchasePrice:[_tfPurchasePrice.text floatValue]];
-	//[dataHandler updateInventoryObjectWithID:1 andAssetID:_tfAssetTag.text andQuantity:[_tfQuantity.text intValue] andSerialNumber:_tfSerialNumber.text andDescription:_tfDescription.text andAllowAction:true andRetired:false andPurchaseDate:date andPurchasePrice:[_tfPurchasePrice.text floatValue]];
+	[dataHandler insertInventoryObjectWithAssetID:_tfAssetTag.text
+									  andQuantity:[_tfQuantity.text intValue]
+								  andSerialNumber:_tfSerialNumber.text
+								   andDescription:_tfDescription.text
+								   andAllowAction:true andRetired:false
+								  andPurchaseDate:date
+								 andPurchasePrice:[_tfPurchasePrice.text floatValue]];
 }
 @end
