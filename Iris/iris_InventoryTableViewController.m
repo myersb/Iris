@@ -12,6 +12,7 @@
 
 // Models Import
 #import "InventoryItem.h"
+#import "InventoryAction.h"
 #import "InventoryDataHandler.h"
 
 // Utilities Import
@@ -111,9 +112,26 @@
 //	if (tableView == self.searchDisplayController.searchResultsTableView) {
 //		inventory = [_filteredFetchedInventory objectAtIndex:indexPath.row];
 //	} else {
-		inventory = [dataHandler.fetchedInventoryController objectAtIndexPath:indexPath];
-	//}
+	inventory = [dataHandler.fetchedInventoryController objectAtIndexPath:indexPath];
+	
+	NSSet *actions = inventory.action;
+	NSSortDescriptor *actionsSort = [NSSortDescriptor sortDescriptorWithKey:@"actionID" ascending:YES];
+	_entity = [NSEntityDescription entityForName:@"InventoryAction" inManagedObjectContext:[self managedObjectContext]];
+	_sortedActions = [actions sortedArrayUsingDescriptors:[NSArray arrayWithObject:actionsSort]];
+	InventoryAction *action = [[InventoryAction alloc] initWithEntity:_entity insertIntoManagedObjectContext:[self managedObjectContext]];
+	
 	cell.textLabel.text = inventory.objectDescription;
+	if ([_sortedActions count] > 0) {
+		action = [_sortedActions objectAtIndex:0];
+		if ([action.actionLongValue isEqualToString:@"Check Out"]) {
+			cell.detailTextLabel.text = @"Out";
+		}
+		else if ([action.actionLongValue isEqualToString:@"Check In"]) {
+			cell.detailTextLabel.text = @"In";
+		}
+	} else {
+		cell.detailTextLabel.text = @"";
+	}
  
     return cell;
 }

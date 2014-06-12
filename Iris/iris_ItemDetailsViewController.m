@@ -12,6 +12,7 @@
 
 // Import Data
 #import "InventoryItem.h"
+#import "InventoryAction.h"
 
 // Import Models
 #import "InventoryDataHandler.h"
@@ -68,6 +69,23 @@
 	_tfAssetTag.text = _currentInventoryItem.assetID;
 	_tfQuantity.text = [NSString stringWithFormat:@"%@", _currentInventoryItem.quantity];
 	_tfPurchasePrice.text = [NSString stringWithFormat:@"%@", _currentInventoryItem.purchasePrice];
+	NSSet *actions = _currentInventoryItem.action;
+	NSSortDescriptor *actionsSort = [NSSortDescriptor sortDescriptorWithKey:@"actionID" ascending:YES];
+	_entity = [NSEntityDescription entityForName:@"InventoryAction" inManagedObjectContext:[self managedObjectContext]];
+	_sortedActions = [actions sortedArrayUsingDescriptors:[NSArray arrayWithObject:actionsSort]];
+	InventoryAction *action = [[InventoryAction alloc] initWithEntity:_entity insertIntoManagedObjectContext:[self managedObjectContext]];
+	if ([_sortedActions count] > 0) {
+		action = [_sortedActions objectAtIndex:0];
+		if ([action.actionLongValue isEqualToString:@"Check Out"]) {
+			_lblItemStatus.text = @"Current Status: Out";
+		}
+		else if ([action.actionLongValue isEqualToString:@"Check In"]) {
+			_lblItemStatus.text = @"Current Status: In";
+		}
+	} else {
+		_lblItemStatus.text = @"Current Status: In";
+	}
+
 }
 
 

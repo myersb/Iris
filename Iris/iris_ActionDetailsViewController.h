@@ -18,6 +18,8 @@
 @property (nonatomic, weak) IBOutlet UITextField *tfPerformedAction;
 @property (nonatomic, weak) IBOutlet UITextField *tfUserExtension;
 @property (nonatomic, weak) IBOutlet UITextView *tvNotes;
+@property (nonatomic, strong) UIBarButtonItem *editButton;
+@property (nonatomic, strong) UIBarButtonItem *saveButton;
 
 // Variable Properties
 @property (nonatomic, strong) InventoryAction *action;

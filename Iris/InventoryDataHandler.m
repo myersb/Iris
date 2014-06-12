@@ -283,4 +283,39 @@
 	
 }
 
+
+
+- (void)actionWithID:(int)actionID andActionDate:(NSDate *)actionDate andActionLongValue:(NSString *)actionLongValue andActionShortValue:(NSString *)actionShortValue andNotes:(NSString *)notes andUserAuthorizingAction:(NSString *)userAuthorizingAction andUserPerformingAction:(NSString *)userPerformingAction andUserPerformingActionExt:(int)extension andInventoryObjectID:(int)inventoryObjectID
+{
+	// Create values for encryption
+	hashGenerator = [[MD5Hasher alloc] init];
+	NSDictionary *hashDict = [hashGenerator createHash];
+	
+	// Setup jSON String
+	NSString *jSONString = [NSString stringWithFormat:@""];
+	NSLog(@"%@", jSONString);
+	
+	// Convert jSON string to data
+	NSData *postData = [jSONString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+	NSLog(@"%@", postData);
+	
+	// Instantiate a url request
+	NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+	NSLog(@"Request: %@", request);
+	
+	// Set the request url format
+	[request setURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", inventoryAndActionsWebservice]]];
+	[request setHTTPMethod:@"PUT"];
+	[request setHTTPBody:postData];
+	[request setValue:@"application/json" forHTTPHeaderField:@"content-type"];
+	NSLog(@"Request: %@", request);
+	
+	// Send data to the webservice
+	NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+	NSLog(@"returnData: %@", returnData);
+	NSString *result = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
+	NSLog(@"result: %@", result);
+
+}
+
 @end

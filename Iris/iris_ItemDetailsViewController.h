@@ -33,6 +33,7 @@
 
 // Variable Properties
 @property (strong, nonatomic) InventoryItem *currentInventoryItem;
+@property (strong, nonatomic) NSArray *sortedActions;
 
 // Actions
 - (IBAction)deleteInventoryItem:(id)sender;

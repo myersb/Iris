@@ -19,7 +19,7 @@
     return self;
 }
 
--(void)viewDidLoad
+- (void)viewDidLoad
 {
 	[super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -28,6 +28,43 @@
 	_tfPerformedAction.text = _action.userPerformingAction;
 	_tfUserExtension.text = [NSString stringWithFormat:@"%@", _action.userPerformingActionExt];
 	_tvNotes.text = _action.notes;
+	
+	_editButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(editDetails)];
+	_saveButton = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(saveDetails)];
+	
+	self.navigationItem.rightBarButtonItem = _editButton;
+}
+
+- (void)editDetails
+{
+	self.navigationItem.rightBarButtonItem = _saveButton;
+	_tfActionDate.borderStyle = UITextBorderStyleRoundedRect;
+	_tfActionLongValue.borderStyle = UITextBorderStyleRoundedRect;
+	_tfAuthorizedBy.borderStyle = UITextBorderStyleRoundedRect;
+	_tfPerformedAction.borderStyle = UITextBorderStyleRoundedRect;
+	_tfUserExtension.borderStyle = UITextBorderStyleRoundedRect;
+	_tfActionDate.enabled = TRUE;
+	_tfActionLongValue.enabled = TRUE;
+	_tfAuthorizedBy.enabled = TRUE;
+	_tfPerformedAction.enabled = TRUE;
+	_tfUserExtension.enabled = TRUE;
+	_tvNotes.editable = TRUE;
+}
+
+- (void)saveDetails
+{
+	self.navigationItem.rightBarButtonItem = _editButton;
+	_tfActionDate.borderStyle = UITextBorderStyleNone;
+	_tfActionLongValue.borderStyle = UITextBorderStyleNone;
+	_tfAuthorizedBy.borderStyle = UITextBorderStyleNone;
+	_tfPerformedAction.borderStyle = UITextBorderStyleNone;
+	_tfUserExtension.borderStyle = UITextBorderStyleNone;
+	_tfActionDate.enabled = FALSE;
+	_tfActionLongValue.enabled = FALSE;
+	_tfAuthorizedBy.enabled = FALSE;
+	_tfPerformedAction.enabled = FALSE;
+	_tfUserExtension.enabled = FALSE;
+	_tvNotes.editable = FALSE;
 }
 
 @end

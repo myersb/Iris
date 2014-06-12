@@ -26,5 +26,6 @@
 @property (nonatomic, strong) NSArray *fetchedInventory;
 @property (nonatomic, strong) NSMutableArray *filteredFetchedInventory;
 @property (nonatomic, strong) NSIndexPath *indexPath;
+@property (strong, nonatomic) NSArray *sortedActions;
 
 @end
