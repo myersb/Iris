@@ -295,10 +295,10 @@
 	newItem.purchaseDate = [NSDate date];
 	newItem.purchasePrice = [NSNumber numberWithFloat:purchasePrice];
 	[self.managedObjectContext save:nil];
+	_alert = [[UIAlertView alloc]initWithTitle:@"New Inventory" message:[NSString stringWithFormat:@"The item has been successfully added."] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+	[_alert show];
 	
 }
-
-
 
 - (void)actionWithID:(int)actionID
 	   andActionDate:(NSDate *)actionDate

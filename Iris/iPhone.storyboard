@@ -126,12 +126,13 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CbR-X9-McJ">
-                                <rect key="frame" x="20" y="353" width="63" height="30"/>
+                                <rect key="frame" x="237" y="294" width="63" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Add Item">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
+                                    <action selector="addItem:" destination="bF2-W8-nZF" eventType="touchUpInside" id="sZE-ay-rd1"/>
                                     <action selector="showDatePicker:" destination="bF2-W8-nZF" eventType="touchUpInside" id="dCf-6d-Nkt"/>
                                 </connections>
                             </button>

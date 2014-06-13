@@ -9,8 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "InventoryItem.h"
 
-@interface InventoryDataHandler : NSObject <NSURLConnectionDelegate>
+@interface InventoryDataHandler : NSObject <NSURLConnectionDelegate, UIAlertViewDelegate>
 
+// CoreData Properties
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong) NSFetchRequest *fetchRequest;
 @property (nonatomic, strong) NSEntityDescription *entity;
@@ -18,6 +19,9 @@
 @property (nonatomic, strong) NSSortDescriptor *sort;
 @property (nonatomic, strong) NSArray *sortDescriptors;
 @property (nonatomic, strong) NSPredicate *predicate;
+
+// UI Properties
+@property (nonatomic, strong) UIAlertView *alert;
 
 // Variable Properties
 @property (nonatomic, strong) NSArray *fetchedInventory;
