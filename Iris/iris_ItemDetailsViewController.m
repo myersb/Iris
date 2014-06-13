@@ -78,12 +78,11 @@
 		action = [_sortedActions objectAtIndex:0];
 		if ([action.actionLongValue isEqualToString:@"Check Out"]) {
 			_lblItemStatus.text = @"Current Status: Out";
-		}
-		else if ([action.actionLongValue isEqualToString:@"Check In"]) {
-			_lblItemStatus.text = @"Current Status: In";
+		} else {
+			_lblItemStatus.text = @"Current Status: Available";
 		}
 	} else {
-		_lblItemStatus.text = @"Current Status: In";
+		_lblItemStatus.text = @"Current Status: Available";
 	}
 }
 

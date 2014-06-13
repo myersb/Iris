@@ -125,12 +125,11 @@
 		action = [_sortedActions objectAtIndex:0];
 		if ([action.actionLongValue isEqualToString:@"Check Out"]) {
 			cell.detailTextLabel.text = @"Out";
-		}
-		else if ([action.actionLongValue isEqualToString:@"Check In"]) {
-			cell.detailTextLabel.text = @"In";
+		} else {
+			cell.detailTextLabel.text = @"Available";
 		}
 	} else {
-		cell.detailTextLabel.text = @"";
+		cell.detailTextLabel.text = @"Available";
 	}
  
     return cell;

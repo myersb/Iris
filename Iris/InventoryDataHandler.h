@@ -35,6 +35,6 @@
 - (NSArray *)loadInventoryActionsByInventoryItem:(InventoryItem *)inventoryItem;
 - (NSFetchedResultsController *)loadInventoryWithFetchedResultsController;
 - (NSFetchedResultsController *)loadInventoryWithFetchedResultsControllerWithPredicate:(NSPredicate *)predicate;
-- (void)updateActionWithID:(int)actionID andActionDate:(NSDate *)actionDate andActionLongValue:(NSString *)actionLongValue andActionShortValue:(NSString *)actionShortValue andNotes:(NSString *)notes andUserAuthorizingAction:(NSString *)userAuthorizingAction andUserPerformingAction:(NSString *)userPerformingAction andUserPerformingActionExt:(int)extension andInventoryObjectID:(int)inventoryObjectID;
+- (void)updateActionWithID:(int)inventoryActionID andActionDate:(NSDate *)actionDate andNotes:(NSString *)notes andUserAuthorizingAction:(NSString *)userAuthorizingAction andUserPerformingAction:(NSString *)userPerformingAction andUserPerformingActionExt:(int)extension andInventoryObjectID:(int)inventoryObjectID andUserActionID:(int)actionID andActionLongValue:(NSString *)actionLongValue;
 
 @end

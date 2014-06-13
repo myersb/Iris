@@ -81,10 +81,10 @@
 				 {
 					 // Insert all actions associated with inventory items into CoreData
 					 InventoryAction *newAction = [NSEntityDescription insertNewObjectForEntityForName:@"InventoryAction" inManagedObjectContext:[self managedObjectContext]];
-					 newAction.actionID = [NSNumber numberWithInt:[NSLocalizedString([actionItem objectForKey:@"MediaInventoryActionsId"], nil) intValue]];
+					 newAction.inventoryActionID = [NSNumber numberWithInt:[NSLocalizedString([actionItem objectForKey:@"MediaInventoryActionsId"], nil) intValue]];
 					 newAction.inventoryObjectID = [NSNumber numberWithInt:[NSLocalizedString([actionItem objectForKey:@"MediaInventoryObjectsId"], nil) intValue]];
 					 newAction.userPerformingActionExt = [NSNumber numberWithInt:[NSLocalizedString([actionItem objectForKey:@"UserPerformingActionExt"], nil) intValue]];
-					 newAction.userActionID = [NSNumber numberWithInt:[NSLocalizedString([actionItem objectForKey:@"UserActionId"], nil) intValue]];
+					 newAction.actionID = [NSNumber numberWithInt:[NSLocalizedString([actionItem objectForKey:@"actionId"], nil) intValue]];
 					 newAction.actionDate = [NSDate dateWithTimeIntervalSince1970:[NSLocalizedString([actionItem objectForKey:@"ActionDate"], nil) intValue]];
 					 newAction.userPerformingAction = NSLocalizedString([actionItem objectForKey:@"UserPerformingAction"], nil);
 					 newAction.userAuthorizingAction =  NSLocalizedString([actionItem objectForKey:@"UserAuthorizingAction"], nil);
@@ -93,7 +93,6 @@
 					 } else {
 						 newAction.notes = NSLocalizedString([actionItem objectForKey:@"Notes"], nil);
 					 }
-					 newAction.actionShortValue = NSLocalizedString([actionItem objectForKey:@"ActionShortValue"], nil);
 					 newAction.actionLongValue = NSLocalizedString([actionItem objectForKey:@"ActionLongValue"], nil);
 					 [newItem addActionObject:newAction];
 					 [newAction setValue:newItem forKeyPath:@"object"];
@@ -177,7 +176,7 @@
 	InventoryItem *selectedInventoryItem = inventoryItem;
 	
 	NSSet *actions = selectedInventoryItem.action;
-	NSSortDescriptor *actionsSort = [NSSortDescriptor sortDescriptorWithKey:@"actionID" ascending:YES];
+	NSSortDescriptor *actionsSort = [NSSortDescriptor sortDescriptorWithKey:@"inventoryActionID" ascending:YES];
 	_sortedActions = [actions sortedArrayUsingDescriptors:[NSArray arrayWithObject:actionsSort]];
 	
 	return _sortedActions;
@@ -209,7 +208,8 @@
 	NSLog(@"request: %@", request);
 	
 	// Set the request url format
-	[request setURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%d", inventoryAndActionsWebservice, inventoryObjectId]]];
+	NSString *urlString = [NSString stringWithFormat:@"%@/%d", inventoryAndActionsWebservice, inventoryObjectId];
+	[request setURL:[NSURL URLWithString:urlString]];
 	[request setHTTPMethod:@"PUT"];
 	[request setHTTPBody:putData];
 	[request setValue:@"application/json" forHTTPHeaderField:@"content-type"];
@@ -269,7 +269,8 @@
 	NSLog(@"Request: %@", request);
 	
 	// Set the request url format
-	[request setURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", inventoryAndActionsWebservice]]];
+	NSString *urlString = [NSString stringWithFormat:@"%@", inventoryAndActionsWebservice];
+	[request setURL:[NSURL URLWithString:urlString]];
 	[request setHTTPMethod:@"POST"];
 	[request setHTTPBody:postData];
 	[request setValue:@"application/json" forHTTPHeaderField:@"content-type"];
@@ -300,22 +301,22 @@
 
 
 
-- (void)updateActionWithID:(int)actionID
+- (void)updateActionWithID:(int)inventoryActionID
 	   andActionDate:(NSDate *)actionDate
-  andActionLongValue:(NSString *)actionLongValue
- andActionShortValue:(NSString *)actionShortValue
 			andNotes:(NSString *)notes
 andUserAuthorizingAction:(NSString *)userAuthorizingAction
 andUserPerformingAction:(NSString *)userPerformingAction
 andUserPerformingActionExt:(int)extension
 andInventoryObjectID:(int)inventoryObjectID
+andUserActionID:(int)actionID
+		andActionLongValue:(NSString *)actionLongValue
 {
 	// Create values for encryption
 	hashGenerator = [[MD5Hasher alloc] init];
 	NSDictionary *hashDict = [hashGenerator createHash];
 	
 	// Setup jSON String
-	NSString *jSONString = [NSString stringWithFormat:@""];
+	NSString *jSONString = [NSString stringWithFormat:@"{\"MediaInventoryActionsId\":%d,\"MediaInventoryObjectsId\":%d,\"UserPerformingActionExt\":%d,\"ActionId\":%d,\"ActionDate\":\"%@\",\"UserPerformingAction\":\"%@\",\"UserAuthorizingAction\":\"%@\",\"Notes\":\"%@\",\"UserInput\",\"%@\",\"GeneratedInput\",\"%@\"}", inventoryActionID, inventoryObjectID, extension, actionID, [NSDate date], userPerformingAction, userAuthorizingAction, notes, hashDict[@"userInput"], hashDict[@"generatedInput"]];
 	NSLog(@"%@", jSONString);
 	
 	// Convert jSON string to data
@@ -327,7 +328,10 @@ andInventoryObjectID:(int)inventoryObjectID
 	NSLog(@"Request: %@", request);
 	
 	// Set the request url format
-	[request setURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", inventoryAndActionsWebservice]]];
+	NSString *urlString = [NSString stringWithFormat:@"%@/%d/actions/%d", inventoryAndActionsWebservice, inventoryObjectID, inventoryActionID];
+	NSLog(@"%@", urlString);
+	
+	[request setURL:[NSURL URLWithString:urlString]];
 	[request setHTTPMethod:@"PUT"];
 	[request setHTTPBody:postData];
 	[request setValue:@"application/json" forHTTPHeaderField:@"content-type"];
@@ -338,7 +342,31 @@ andInventoryObjectID:(int)inventoryObjectID
 	NSLog(@"returnData: %@", returnData);
 	NSString *result = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
 	NSLog(@"result: %@", result);
-
+	
+	// Setup ManagedObjectContext
+	id delegate = [[UIApplication sharedApplication]delegate];
+	self.managedObjectContext = [delegate managedObjectContext];
+	
+	// Fetch specific record
+	_fetchRequest = [[NSFetchRequest alloc] init];
+	_entity = [NSEntityDescription entityForName:@"InventoryAction" inManagedObjectContext:[self managedObjectContext]];
+	_predicate = [NSPredicate predicateWithFormat:@"inventoryActionID = %d", inventoryActionID];
+	
+	[_fetchRequest setEntity:_entity];
+	[_fetchRequest setPredicate:_predicate];
+	
+	NSError *error = nil;
+	NSArray *inventoryResult = [[self managedObjectContext] executeFetchRequest:_fetchRequest error:&error];
+	
+	// Update record
+	InventoryAction *inventoryAction = [inventoryResult objectAtIndex:0];
+	inventoryAction.actionDate = [NSDate date];
+	inventoryAction.actionLongValue = actionLongValue;
+	inventoryAction.userAuthorizingAction = userAuthorizingAction;
+	inventoryAction.userPerformingAction = userPerformingAction;
+	inventoryAction.userPerformingActionExt = [NSNumber numberWithInt:extension];
+	inventoryAction.notes = notes;
+	[self.managedObjectContext save:nil];
 }
 
 @end

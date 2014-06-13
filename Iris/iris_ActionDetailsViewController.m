@@ -6,7 +6,18 @@
 //  Copyright (c) 2014 claytonhomes.com. All rights reserved.
 //
 
+// Controllers Import
 #import "iris_ActionDetailsViewController.h"
+
+// Models Import
+#import "InventoryDataHandler.h"
+
+@interface iris_ActionDetailsViewController ()
+{
+	InventoryDataHandler *dataHandler;
+}
+
+@end
 
 @implementation iris_ActionDetailsViewController
 
@@ -23,6 +34,8 @@
 {
 	[super viewDidLoad];
     // Do any additional setup after loading the view.
+	dataHandler = [[InventoryDataHandler alloc] init];
+	
 	_tfActionLongValue.text = _action.actionLongValue;
 	_tfAuthorizedBy.text = _action.userAuthorizingAction;
 	_tfPerformedAction.text = _action.userPerformingAction;
@@ -65,6 +78,16 @@
 	_tfPerformedAction.enabled = FALSE;
 	_tfUserExtension.enabled = FALSE;
 	_tvNotes.editable = FALSE;
+	int actionID;
+	if ([_tfActionLongValue.text isEqualToString:@"Check In"])
+	{
+		actionID = 1;
+	}
+	else if ([_tfActionLongValue.text isEqualToString:@"Check Out"])
+	{
+		actionID = 2;
+	}
+	[dataHandler updateActionWithID:[_action.inventoryActionID intValue] andActionDate:[NSDate date] andNotes:_tvNotes.text andUserAuthorizingAction:_tfAuthorizedBy.text andUserPerformingAction:_tfPerformedAction.text andUserPerformingActionExt:[_tfUserExtension.text intValue] andInventoryObjectID:[_action.inventoryObjectID intValue] andUserActionID:actionID andActionLongValue:_tfActionLongValue.text];
 }
 
 @end
