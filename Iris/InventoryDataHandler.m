@@ -128,7 +128,7 @@
 	return _fetchedInventoryController;
 }
 
-- (NSFetchedResultsController *) loadInventoryWithFetchedResultsControllerWithPredicate:(NSPredicate *)predicate
+- (NSFetchedResultsController *)loadInventoryWithFetchedResultsControllerWithPredicate:(NSPredicate *)predicate
 {
 	id delegate = [[UIApplication sharedApplication]delegate];
 	self.managedObjectContext = [delegate managedObjectContext];
@@ -300,7 +300,7 @@
 
 
 
-- (void)actionWithID:(int)actionID
+- (void)updateActionWithID:(int)actionID
 	   andActionDate:(NSDate *)actionDate
   andActionLongValue:(NSString *)actionLongValue
  andActionShortValue:(NSString *)actionShortValue
