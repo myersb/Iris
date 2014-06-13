@@ -128,7 +128,7 @@
 	return _fetchedInventoryController;
 }
 
-- (NSFetchedResultsController *) loadInventoryWithFetchedResultsControllerWithPredicate:(NSPredicate *)predicate
+- (NSFetchedResultsController *)loadInventoryWithFetchedResultsControllerWithPredicate:(NSPredicate *)predicate
 {
 	id delegate = [[UIApplication sharedApplication]delegate];
 	self.managedObjectContext = [delegate managedObjectContext];
@@ -295,12 +295,12 @@
 	newItem.purchaseDate = [NSDate date];
 	newItem.purchasePrice = [NSNumber numberWithFloat:purchasePrice];
 	[self.managedObjectContext save:nil];
-	_alert = [[UIAlertView alloc]initWithTitle:@"New Inventory" message:[NSString stringWithFormat:@"The item has been successfully added."] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-	[_alert show];
 	
 }
 
-- (void)actionWithID:(int)actionID
+
+
+- (void)updateActionWithID:(int)actionID
 	   andActionDate:(NSDate *)actionDate
   andActionLongValue:(NSString *)actionLongValue
  andActionShortValue:(NSString *)actionShortValue
