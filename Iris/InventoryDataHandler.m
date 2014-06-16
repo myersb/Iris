@@ -193,13 +193,13 @@
 					andPurchaseDate:(NSDate *)purchaseDate
 				   andPurchasePrice:(float)purchasePrice
 {
-	NSLog(@"InventoryItemID: %0.2f", purchasePrice);
+	NSLog(@"PurchaseDate: %@", purchaseDate);
 	// Create values for encryption
 	hashGenerator = [[MD5Hasher alloc] init];
 	NSDictionary *hashDict = [hashGenerator createHash];
 	
 	// Setup jSON String
-	NSString *jSONString = [NSString stringWithFormat:@"{\"MediaInventoryObjectsId\":%d,\"Quantity\":%d,\"AssetId\":\"%@\",\"SerialNumber\":\"%@\",\"Description\":\"%@\",\"AllowActions\":%d,\"Retired\":%d,\"PurchaseDate\":\"%@\",\"PurchasePrice\":%0.2f,\"UserInput\":\"%@\",\"GeneratedInput\":\"%@\"}",inventoryObjectId, quantity, assetID, serialNumber, description, allowActions, retired, @"2014-06-05T13:43:45.03", purchasePrice, hashDict[@"userInput"], hashDict[@"generatedInput"]];
+	NSString *jSONString = [NSString stringWithFormat:@"{\"MediaInventoryObjectsId\":%d,\"Quantity\":%d,\"AssetId\":\"%@\",\"SerialNumber\":\"%@\",\"Description\":\"%@\",\"AllowActions\":%d,\"Retired\":%d,\"PurchaseDate\":\"%@\",\"PurchasePrice\":%0.2f,\"UserInput\":\"%@\",\"GeneratedInput\":\"%@\"}",inventoryObjectId, quantity, assetID, serialNumber, description, allowActions, retired, purchaseDate, purchasePrice, hashDict[@"userInput"], hashDict[@"generatedInput"]];
 	NSLog(@"jSONString: %@", jSONString);
 	
 	// Convert jSON string to data

@@ -63,10 +63,14 @@
 
 - (void)displayInventoryDetails
 {
+	NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+	[dateFormat setDateFormat:@"MMM dd, YYYY"];
+	NSString *prettyDate = [dateFormat stringFromDate:_currentInventoryItem.purchaseDate];
 	// Set information for labels and text boxes
 	_lblItemDescription.text = _currentInventoryItem.objectDescription;
 	_lblAssetTag.text = [NSString stringWithFormat:@"Asset ID: %@", _currentInventoryItem.assetID];
 	_lblPurchasePrice.text = [NSString stringWithFormat:@"%@", _currentInventoryItem.purchasePrice];
+	_lblPurchaseDate.text = [NSString stringWithFormat:@"%@", prettyDate];
 	_lblQuantity.text = [NSString stringWithFormat:@"%@", _currentInventoryItem.quantity];
 	_lblSerialNumber.text = [NSString stringWithFormat:@"%@", _currentInventoryItem.serialNumber];
 	
@@ -140,14 +144,17 @@
 	
 	_lblItemDescription.text = _tfItemDescription.text;
 	_lblAssetTag.text = [NSString stringWithFormat:@"Asset ID: %@", _tfAssetTag.text];
-	
+	NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+	[dateFormat setDateFormat:@"MMM dd, YYYY"];
+	NSString *prettyDate = [dateFormat stringFromDate:_selectedDate];
+	_lblPurchaseDate.text = [NSString stringWithFormat:@"%@", prettyDate];
 	[dataHandler updateInventoryObjectWithID:[_currentInventoryItem.inventoryObjectID intValue]
 								  andAssetID:_tfAssetTag.text
 								 andQuantity:[_tfQuantity.text intValue]
 							 andSerialNumber:_currentInventoryItem.serialNumber
 							  andDescription:_tfItemDescription.text
 							  andAllowAction:TRUE andRetired:FALSE
-							 andPurchaseDate:[NSDate date]
+							 andPurchaseDate:_selectedDate
 							andPurchasePrice:[_tfPurchasePrice.text floatValue]];
 }
 
@@ -156,17 +163,14 @@
 	
 }
 
-- (IBAction)selectDate:(id)sender
+- (IBAction)showDatePicker:(id)sender
 {
-	_datePicker.hidden = FALSE;
+	_datePickerView.hidden = FALSE;
 }
 
-- (void)changeDate
+- (IBAction)selectDate:(id)sender
 {
-	NSDate *myDate = _datePicker.date;
-	NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-	[dateFormat setDateFormat:@"cccc, MMM d, hh:mm aa"];
-	NSString *prettyDate = [dateFormat stringFromDate:myDate];
-	NSLog(@"%@", prettyDate);
+	_selectedDate = _datePicker.date;
+	_datePickerView.hidden = TRUE;
 }
 @end

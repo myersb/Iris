@@ -36,12 +36,15 @@
 @property (nonatomic, strong) UIBarButtonItem *saveButton;
 @property (nonatomic, weak) IBOutlet UIButton *deleteButton;
 @property (nonatomic, weak) IBOutlet UIButton *changeDateButton;
+@property (weak, nonatomic) IBOutlet UIView *datePickerView;
 
 // Variable Properties
 @property (nonatomic, strong) InventoryItem *currentInventoryItem;
 @property (nonatomic, strong) NSArray *sortedActions;
+@property (nonatomic, strong) NSDate *selectedDate;
 
 // Actions
 - (IBAction)deleteInventoryItem:(id)sender;
+- (IBAction)showDatePicker:(id)sender;
 - (IBAction)selectDate:(id)sender;
 @end
