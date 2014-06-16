@@ -107,17 +107,12 @@
 	if ( cell == nil ) {
 		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
 	}
-	//Term *term = [self.fetchedResultsController objectAtIndexPath:indexPath];
-	InventoryItem *inventory = nil;
-//	if (tableView == self.searchDisplayController.searchResultsTableView) {
-//		inventory = [_filteredFetchedInventory objectAtIndex:indexPath.row];
-//	} else {
-	inventory = [dataHandler.fetchedInventoryController objectAtIndexPath:indexPath];
 	
-	NSSet *actions = inventory.action;
-	NSSortDescriptor *actionsSort = [NSSortDescriptor sortDescriptorWithKey:@"actionID" ascending:YES];
+	InventoryItem *inventory = nil;
+
+	inventory = [dataHandler.fetchedInventoryController objectAtIndexPath:indexPath];
+	_sortedActions = [dataHandler loadInventoryActionsByInventoryItem:inventory];
 	_entity = [NSEntityDescription entityForName:@"InventoryAction" inManagedObjectContext:[self managedObjectContext]];
-	_sortedActions = [actions sortedArrayUsingDescriptors:[NSArray arrayWithObject:actionsSort]];
 	InventoryAction *action = [[InventoryAction alloc] initWithEntity:_entity insertIntoManagedObjectContext:[self managedObjectContext]];
 	
 	cell.textLabel.text = inventory.objectDescription;

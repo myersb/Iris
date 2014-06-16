@@ -42,7 +42,7 @@
 	id delegate = [[UIApplication sharedApplication]delegate];
 	self.managedObjectContext = [delegate managedObjectContext];
 	
-	[self loadInventoryDetails];
+	[self displayInventoryDetails];
 	
 	dataHandler = [[InventoryDataHandler alloc] init];
 	
@@ -61,19 +61,28 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)loadInventoryDetails
+- (void)displayInventoryDetails
 {
+	// Set information for labels and text boxes
 	_lblItemDescription.text = _currentInventoryItem.objectDescription;
-	_tfItemDescription.text = _currentInventoryItem.objectDescription;
 	_lblAssetTag.text = [NSString stringWithFormat:@"Asset ID: %@", _currentInventoryItem.assetID];
+	_lblPurchasePrice.text = [NSString stringWithFormat:@"%@", _currentInventoryItem.purchasePrice];
+	_lblQuantity.text = [NSString stringWithFormat:@"%@", _currentInventoryItem.quantity];
+	_lblSerialNumber.text = [NSString stringWithFormat:@"%@", _currentInventoryItem.serialNumber];
+	
+	_tfItemDescription.text = _currentInventoryItem.objectDescription;
 	_tfAssetTag.text = _currentInventoryItem.assetID;
 	_tfQuantity.text = [NSString stringWithFormat:@"%@", _currentInventoryItem.quantity];
 	_tfPurchasePrice.text = [NSString stringWithFormat:@"%@", _currentInventoryItem.purchasePrice];
+	
+	// Get current status of the item
 	NSSet *actions = _currentInventoryItem.action;
 	NSSortDescriptor *actionsSort = [NSSortDescriptor sortDescriptorWithKey:@"actionID" ascending:YES];
 	_entity = [NSEntityDescription entityForName:@"InventoryAction" inManagedObjectContext:[self managedObjectContext]];
 	_sortedActions = [actions sortedArrayUsingDescriptors:[NSArray arrayWithObject:actionsSort]];
 	InventoryAction *action = [[InventoryAction alloc] initWithEntity:_entity insertIntoManagedObjectContext:[self managedObjectContext]];
+	
+	// Display current status of the item
 	if ([_sortedActions count] > 0) {
 		action = [_sortedActions objectAtIndex:0];
 		if ([action.actionLongValue isEqualToString:@"Check Out"]) {
@@ -110,6 +119,8 @@
 	_tfAssetTag.hidden = FALSE;
 	_tfQuantity.hidden = FALSE;
 	_tfPurchasePrice.hidden = FALSE;
+	_changeDateButton.hidden = FALSE;
+	_deleteButton.hidden = FALSE;
 }
 
 - (void)saveDetails
@@ -124,10 +135,11 @@
 	_tfAssetTag.hidden = TRUE;
 	_tfQuantity.hidden = TRUE;
 	_tfPurchasePrice.hidden = TRUE;
+	_changeDateButton.hidden = TRUE;
+	_deleteButton.hidden = TRUE;
 	
 	_lblItemDescription.text = _tfItemDescription.text;
 	_lblAssetTag.text = [NSString stringWithFormat:@"Asset ID: %@", _tfAssetTag.text];
-	//inventoryItem.purchaseDate = @"2014-06-05T13:43:45.03";
 	
 	[dataHandler updateInventoryObjectWithID:[_currentInventoryItem.inventoryObjectID intValue]
 								  andAssetID:_tfAssetTag.text
@@ -139,6 +151,22 @@
 							andPurchasePrice:[_tfPurchasePrice.text floatValue]];
 }
 
-- (IBAction)deleteInventoryItem:(id)sender {
+- (IBAction)deleteInventoryItem:(id)sender
+{
+	
+}
+
+- (IBAction)selectDate:(id)sender
+{
+	_datePicker.hidden = FALSE;
+}
+
+- (void)changeDate
+{
+	NSDate *myDate = _datePicker.date;
+	NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+	[dateFormat setDateFormat:@"cccc, MMM d, hh:mm aa"];
+	NSString *prettyDate = [dateFormat stringFromDate:myDate];
+	NSLog(@"%@", prettyDate);
 }
 @end

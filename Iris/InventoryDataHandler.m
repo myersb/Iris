@@ -51,7 +51,7 @@
 			 // Place all jSON data into a dictioanry
 			 NSDictionary *inventory = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
 			 NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-			 [formatter setDateFormat:@"yyyy-MM-dd"];
+			 [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
 			 NSString *dateStr;
 			 for (NSDictionary *inventoryItem in inventory)
 			 {
@@ -177,6 +177,7 @@
 	
 	NSSet *actions = selectedInventoryItem.action;
 	NSSortDescriptor *actionsSort = [NSSortDescriptor sortDescriptorWithKey:@"inventoryActionID" ascending:YES];
+	
 	_sortedActions = [actions sortedArrayUsingDescriptors:[NSArray arrayWithObject:actionsSort]];
 	
 	return _sortedActions;
@@ -192,12 +193,13 @@
 					andPurchaseDate:(NSDate *)purchaseDate
 				   andPurchasePrice:(float)purchasePrice
 {
+	NSLog(@"InventoryItemID: %0.2f", purchasePrice);
 	// Create values for encryption
 	hashGenerator = [[MD5Hasher alloc] init];
 	NSDictionary *hashDict = [hashGenerator createHash];
 	
 	// Setup jSON String
-	NSString *jSONString = [NSString stringWithFormat:@"{\"MediaInventoryObjectsId\":%d,\"Quantity\":%d,\"AssetId\":\"%@\",\"SerialNumber\":\"%@\",\"Description\":\"%@\",\"AllowActions\":%d,\"Retired\":%d,\"PurchaseDate\":\"%@\",\"PurchasePrice\":%f,\"UserInput\":\"%@\",\"GeneratedInput\":\"%@\"}",inventoryObjectId, quantity, assetID, serialNumber, description, allowActions, retired, @"2014-06-05T13:43:45.03", purchasePrice, hashDict[@"userInput"], hashDict[@"generatedInput"]];
+	NSString *jSONString = [NSString stringWithFormat:@"{\"MediaInventoryObjectsId\":%d,\"Quantity\":%d,\"AssetId\":\"%@\",\"SerialNumber\":\"%@\",\"Description\":\"%@\",\"AllowActions\":%d,\"Retired\":%d,\"PurchaseDate\":\"%@\",\"PurchasePrice\":%0.2f,\"UserInput\":\"%@\",\"GeneratedInput\":\"%@\"}",inventoryObjectId, quantity, assetID, serialNumber, description, allowActions, retired, @"2014-06-05T13:43:45.03", purchasePrice, hashDict[@"userInput"], hashDict[@"generatedInput"]];
 	NSLog(@"jSONString: %@", jSONString);
 	
 	// Convert jSON string to data
@@ -241,6 +243,8 @@
 	inventoryItem.assetID = assetID;
 	inventoryItem.quantity = [NSNumber numberWithInt:quantity];
 	inventoryItem.purchasePrice = [NSNumber numberWithFloat:purchasePrice];
+	inventoryItem.purchaseDate = [NSDate date];
+	[self.managedObjectContext save:nil];
 }
 
 - (void)insertInventoryObjectWithAssetID:(NSString *)assetID
@@ -257,7 +261,7 @@
 	NSDictionary *hashDict = [hashGenerator createHash];
 	
 	// Setup jSON String
-	NSString *jSONString = [NSString stringWithFormat:@"{\"Quantity\":%d,\"AssetId\":\"%@\",\"SerialNumber\":\"%@\",\"Description\":\"%@\",\"AllowActions\":%d,\"Retired\":%d,\"PurchaseDate\":\"%@\",\"PurchasePrice\":%f,\"UserInput\":\"%@\",\"GeneratedInput\":\"%@\"}", quantity, assetID, serialNumber, description, allowActions, retired, @"2014-06-05T13:43:45.03", purchasePrice, hashDict[@"userInput"], hashDict[@"generatedInput"]];
+	NSString *jSONString = [NSString stringWithFormat:@"{\"Quantity\":%d,\"AssetId\":\"%@\",\"SerialNumber\":\"%@\",\"Description\":\"%@\",\"AllowActions\":%d,\"Retired\":%d,\"PurchaseDate\":\"%@\",\"PurchasePrice\":%0.2f,\"UserInput\":\"%@\",\"GeneratedInput\":\"%@\"}", quantity, assetID, serialNumber, description, allowActions, retired, @"2014-06-05T13:43:45.03", purchasePrice, hashDict[@"userInput"], hashDict[@"generatedInput"]];
 	NSLog(@"%@", jSONString);
 	
 	// Convert jSON string to data
@@ -316,6 +320,7 @@ andUserActionID:(int)actionID
 	NSDictionary *hashDict = [hashGenerator createHash];
 	
 	// Setup jSON String
+	NSLog(@"%@", [NSDate date]);
 	NSString *jSONString = [NSString stringWithFormat:@"{\"MediaInventoryActionsId\":%d,\"MediaInventoryObjectsId\":%d,\"UserPerformingActionExt\":%d,\"ActionId\":%d,\"ActionDate\":\"%@\",\"UserPerformingAction\":\"%@\",\"UserAuthorizingAction\":\"%@\",\"Notes\":\"%@\",\"UserInput\",\"%@\",\"GeneratedInput\",\"%@\"}", inventoryActionID, inventoryObjectID, extension, actionID, [NSDate date], userPerformingAction, userAuthorizingAction, notes, hashDict[@"userInput"], hashDict[@"generatedInput"]];
 	NSLog(@"%@", jSONString);
 	

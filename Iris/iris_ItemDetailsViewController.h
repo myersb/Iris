@@ -22,19 +22,26 @@
 @property (nonatomic, strong) IBOutlet UILabel *lblItemDescription;
 @property (nonatomic, strong) IBOutlet UILabel *lblAssetTag;
 @property (nonatomic, strong) IBOutlet UILabel *lblItemStatus;
+@property (weak, nonatomic) IBOutlet UILabel *lblQuantity;
+@property (weak, nonatomic) IBOutlet UILabel *lblPurchasePrice;
+@property (weak, nonatomic) IBOutlet UILabel *lblPurchaseDate;
+@property (weak, nonatomic) IBOutlet UILabel *lblSerialNumber;
 @property (nonatomic, weak) IBOutlet UIPickerView *actionPicker;
+@property (nonatomic, weak) IBOutlet UIDatePicker *datePicker;
 @property (nonatomic, weak) IBOutlet UITextField *tfItemDescription;
 @property (nonatomic, weak) IBOutlet UITextField *tfAssetTag;
 @property (nonatomic, weak) IBOutlet UITextField *tfQuantity;
 @property (nonatomic, weak) IBOutlet UITextField *tfPurchasePrice;
 @property (nonatomic, strong) UIBarButtonItem *editButton;
 @property (nonatomic, strong) UIBarButtonItem *saveButton;
-@property (weak, nonatomic) IBOutlet UIButton *deleteButton;
+@property (nonatomic, weak) IBOutlet UIButton *deleteButton;
+@property (nonatomic, weak) IBOutlet UIButton *changeDateButton;
 
 // Variable Properties
-@property (strong, nonatomic) InventoryItem *currentInventoryItem;
-@property (strong, nonatomic) NSArray *sortedActions;
+@property (nonatomic, strong) InventoryItem *currentInventoryItem;
+@property (nonatomic, strong) NSArray *sortedActions;
 
 // Actions
 - (IBAction)deleteInventoryItem:(id)sender;
+- (IBAction)selectDate:(id)sender;
 @end
