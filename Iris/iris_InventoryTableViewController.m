@@ -109,22 +109,16 @@
 	}
 	
 	InventoryItem *inventory = nil;
-
+//	if (tableView == self.searchDisplayController.searchResultsTableView) {
+//		inventory = [_filteredFetchedInventory objectAtIndex:indexPath.row];
+//	} else {
 	inventory = [dataHandler.fetchedInventoryController objectAtIndexPath:indexPath];
-	_sortedActions = [dataHandler loadInventoryActionsByInventoryItem:inventory];
-	_entity = [NSEntityDescription entityForName:@"InventoryAction" inManagedObjectContext:[self managedObjectContext]];
-	InventoryAction *action = [[InventoryAction alloc] initWithEntity:_entity insertIntoManagedObjectContext:[self managedObjectContext]];
-	
+//	}
 	cell.textLabel.text = inventory.objectDescription;
-	if ([_sortedActions count] > 0) {
-		action = [_sortedActions objectAtIndex:0];
-		if ([action.actionLongValue isEqualToString:@"Check Out"]) {
-			cell.detailTextLabel.text = @"Out";
-		} else {
-			cell.detailTextLabel.text = @"Available";
-		}
-	} else {
+	if ([inventory.currentStatus isEqualToString:@"Check In"]) {
 		cell.detailTextLabel.text = @"Available";
+	} else {
+		cell.detailTextLabel.text = @"Out";
 	}
  
     return cell;
@@ -147,7 +141,11 @@
 	NSString *sectionTitle;
 	sectionTitle = [[[dataHandler.fetchedInventoryController sections]objectAtIndex:section]name];
 	
-	tempLabel.text = [NSString stringWithFormat:@"  %@", sectionTitle];
+	if ([sectionTitle isEqualToString:@"Check In"]) {
+		tempLabel.text = @"  Available";
+	} else {
+		tempLabel.text = @"  Out";
+	}
 	
 	[tempView addSubview:tempLabel];
 	

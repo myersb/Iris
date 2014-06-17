@@ -66,6 +66,7 @@
 	NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
 	[dateFormat setDateFormat:@"MMM dd, YYYY"];
 	NSString *prettyDate = [dateFormat stringFromDate:_currentInventoryItem.purchaseDate];
+	
 	// Set information for labels and text boxes
 	_lblItemDescription.text = _currentInventoryItem.objectDescription;
 	_lblAssetTag.text = [NSString stringWithFormat:@"Asset ID: %@", _currentInventoryItem.assetID];
@@ -79,23 +80,11 @@
 	_tfQuantity.text = [NSString stringWithFormat:@"%@", _currentInventoryItem.quantity];
 	_tfPurchasePrice.text = [NSString stringWithFormat:@"%@", _currentInventoryItem.purchasePrice];
 	
-	// Get current status of the item
-	NSSet *actions = _currentInventoryItem.action;
-	NSSortDescriptor *actionsSort = [NSSortDescriptor sortDescriptorWithKey:@"actionID" ascending:YES];
-	_entity = [NSEntityDescription entityForName:@"InventoryAction" inManagedObjectContext:[self managedObjectContext]];
-	_sortedActions = [actions sortedArrayUsingDescriptors:[NSArray arrayWithObject:actionsSort]];
-	InventoryAction *action = [[InventoryAction alloc] initWithEntity:_entity insertIntoManagedObjectContext:[self managedObjectContext]];
-	
 	// Display current status of the item
-	if ([_sortedActions count] > 0) {
-		action = [_sortedActions objectAtIndex:0];
-		if ([action.actionLongValue isEqualToString:@"Check Out"]) {
-			_lblItemStatus.text = @"Current Status: Out";
-		} else {
-			_lblItemStatus.text = @"Current Status: Available";
-		}
+	if ([_currentInventoryItem.currentStatus isEqualToString:@"Check In"]) {
+		_lblItemStatus.text = @"Available";
 	} else {
-		_lblItemStatus.text = @"Current Status: Available";
+		_lblItemStatus.text = @"Out";
 	}
 }
 
@@ -144,10 +133,6 @@
 	
 	_lblItemDescription.text = _tfItemDescription.text;
 	_lblAssetTag.text = [NSString stringWithFormat:@"Asset ID: %@", _tfAssetTag.text];
-	NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-	[dateFormat setDateFormat:@"MMM dd, YYYY"];
-	NSString *prettyDate = [dateFormat stringFromDate:_selectedDate];
-	_lblPurchaseDate.text = [NSString stringWithFormat:@"%@", prettyDate];
 	[dataHandler updateInventoryObjectWithID:[_currentInventoryItem.inventoryObjectID intValue]
 								  andAssetID:_tfAssetTag.text
 								 andQuantity:[_tfQuantity.text intValue]
@@ -171,6 +156,10 @@
 - (IBAction)selectDate:(id)sender
 {
 	_selectedDate = _datePicker.date;
+	NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+	[dateFormat setDateFormat:@"MMM dd, YYYY"];
+	NSString *prettyDate = [dateFormat stringFromDate:_selectedDate];
+	_lblPurchaseDate.text = [NSString stringWithFormat:@"%@", prettyDate];
 	_datePickerView.hidden = TRUE;
 }
 @end

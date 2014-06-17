@@ -2,7 +2,7 @@
 //  InventoryItem.m
 //  Iris
 //
-//  Created by Benjamin Myers on 6/5/14.
+//  Created by Benjamin Myers on 6/17/14.
 //  Copyright (c) 2014 claytonhomes.com. All rights reserved.
 //
 
@@ -16,11 +16,12 @@
 @dynamic assetID;
 @dynamic inventoryObjectID;
 @dynamic objectDescription;
+@dynamic purchaseDate;
+@dynamic purchasePrice;
 @dynamic quantity;
 @dynamic retired;
 @dynamic serialNumber;
-@dynamic purchaseDate;
-@dynamic purchasePrice;
+@dynamic currentStatus;
 @dynamic action;
 
 @end

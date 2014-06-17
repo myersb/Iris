@@ -77,25 +77,32 @@
 				 }
 				 
 				 NSDictionary *actions = [inventoryItem objectForKey:@"MediaInventoryActions"];
-				 for (id actionItem in actions)
-				 {
-					 // Insert all actions associated with inventory items into CoreData
-					 InventoryAction *newAction = [NSEntityDescription insertNewObjectForEntityForName:@"InventoryAction" inManagedObjectContext:[self managedObjectContext]];
-					 newAction.inventoryActionID = [NSNumber numberWithInt:[NSLocalizedString([actionItem objectForKey:@"MediaInventoryActionsId"], nil) intValue]];
-					 newAction.inventoryObjectID = [NSNumber numberWithInt:[NSLocalizedString([actionItem objectForKey:@"MediaInventoryObjectsId"], nil) intValue]];
-					 newAction.userPerformingActionExt = [NSNumber numberWithInt:[NSLocalizedString([actionItem objectForKey:@"UserPerformingActionExt"], nil) intValue]];
-					 newAction.actionID = [NSNumber numberWithInt:[NSLocalizedString([actionItem objectForKey:@"actionId"], nil) intValue]];
-					 newAction.actionDate = [NSDate dateWithTimeIntervalSince1970:[NSLocalizedString([actionItem objectForKey:@"ActionDate"], nil) intValue]];
-					 newAction.userPerformingAction = NSLocalizedString([actionItem objectForKey:@"UserPerformingAction"], nil);
-					 newAction.userAuthorizingAction =  NSLocalizedString([actionItem objectForKey:@"UserAuthorizingAction"], nil);
-					 if (NSLocalizedString([actionItem objectForKey:@"Notes"], nil) == (NSString *)[NSNull null]) {
-						 newAction.notes = @"";
-					 } else {
-						 newAction.notes = NSLocalizedString([actionItem objectForKey:@"Notes"], nil);
+				 if ([actions count] == 0) {
+					 newItem.currentStatus = @"Check In";
+					 NSLog(@"No Actions");
+				 } else {
+					 for (id actionItem in actions)
+					 {
+						 // Insert all actions associated with inventory items into CoreData
+						 InventoryAction *newAction = [NSEntityDescription insertNewObjectForEntityForName:@"InventoryAction" inManagedObjectContext:[self managedObjectContext]];
+						 newAction.inventoryActionID = [NSNumber numberWithInt:[NSLocalizedString([actionItem objectForKey:@"MediaInventoryActionsId"], nil) intValue]];
+						 newAction.inventoryObjectID = [NSNumber numberWithInt:[NSLocalizedString([actionItem objectForKey:@"MediaInventoryObjectsId"], nil) intValue]];
+						 newAction.userPerformingActionExt = [NSNumber numberWithInt:[NSLocalizedString([actionItem objectForKey:@"UserPerformingActionExt"], nil) intValue]];
+						 newAction.actionID = [NSNumber numberWithInt:[NSLocalizedString([actionItem objectForKey:@"actionId"], nil) intValue]];
+						 newAction.actionDate = [NSDate dateWithTimeIntervalSince1970:[NSLocalizedString([actionItem objectForKey:@"ActionDate"], nil) intValue]];
+						 newAction.userPerformingAction = NSLocalizedString([actionItem objectForKey:@"UserPerformingAction"], nil);
+						 newAction.userAuthorizingAction =  NSLocalizedString([actionItem objectForKey:@"UserAuthorizingAction"], nil);
+						 if (NSLocalizedString([actionItem objectForKey:@"Notes"], nil) == (NSString *)[NSNull null]) {
+							 newAction.notes = @"";
+						 } else {
+							 newAction.notes = NSLocalizedString([actionItem objectForKey:@"Notes"], nil);
+						 }
+						 newAction.actionLongValue = NSLocalizedString([actionItem objectForKey:@"ActionLongValue"], nil);
+						 newItem.currentStatus = NSLocalizedString([actionItem objectForKey:@"ActionLongValue"], nil);
+						 NSLog(@"%@", newItem.currentStatus);
+						 [newItem addActionObject:newAction];
+						 [newAction setValue:newItem forKeyPath:@"object"];
 					 }
-					 newAction.actionLongValue = NSLocalizedString([actionItem objectForKey:@"ActionLongValue"], nil);
-					 [newItem addActionObject:newAction];
-					 [newAction setValue:newItem forKeyPath:@"object"];
 				 }
 			 }
 			 NSError *error;
@@ -116,13 +123,14 @@
 	
 	_fetchRequest = [[NSFetchRequest alloc]init];
 	_entity = [NSEntityDescription entityForName:@"InventoryObject" inManagedObjectContext:[self managedObjectContext]];
-	_sort = [NSSortDescriptor sortDescriptorWithKey:@"objectDescription" ascending:YES];
-	_sortDescriptors = [[NSArray alloc]initWithObjects:_sort, nil];
+	_sort = [NSSortDescriptor sortDescriptorWithKey:@"currentStatus" ascending:YES];
+	_secondSort = [NSSortDescriptor sortDescriptorWithKey:@"objectDescription" ascending:YES];
+	_sortDescriptors = [[NSArray alloc]initWithObjects:_sort, _secondSort, nil];
 	
 	[_fetchRequest setEntity:_entity];
 	[_fetchRequest setSortDescriptors:_sortDescriptors];
 	
-	_fetchedInventoryController = [[NSFetchedResultsController alloc] initWithFetchRequest:_fetchRequest managedObjectContext:[self managedObjectContext] sectionNameKeyPath:@"objectDescription.stringGroupByFirstInitial" cacheName:@"Default Search"];
+	_fetchedInventoryController = [[NSFetchedResultsController alloc] initWithFetchRequest:_fetchRequest managedObjectContext:[self managedObjectContext] sectionNameKeyPath:@"currentStatus" cacheName:@"Default Search"];
 	
 	return _fetchedInventoryController;
 }
@@ -139,13 +147,14 @@
 	
 	_fetchRequest = [[NSFetchRequest alloc]init];
 	_entity = [NSEntityDescription entityForName:@"InventoryObject" inManagedObjectContext:[self managedObjectContext]];
-	_sort = [NSSortDescriptor sortDescriptorWithKey:@"objectDescription" ascending:YES];
-	_sortDescriptors = [[NSArray alloc]initWithObjects:_sort, nil];
+	_sort = [NSSortDescriptor sortDescriptorWithKey:@"currentStatus" ascending:YES];
+	_secondSort = [NSSortDescriptor sortDescriptorWithKey:@"objectDescription" ascending:YES];
+	_sortDescriptors = [[NSArray alloc]initWithObjects:_sort, _secondSort, nil];
 	
 	[_fetchRequest setEntity:_entity];
 	[_fetchRequest setSortDescriptors:_sortDescriptors];
 	
-	_fetchedInventoryController = [[NSFetchedResultsController alloc] initWithFetchRequest:_fetchRequest managedObjectContext:[self managedObjectContext] sectionNameKeyPath:@"objectDescription.stringGroupByFirstInitial" cacheName:@"Default Search"];
+	_fetchedInventoryController = [[NSFetchedResultsController alloc] initWithFetchRequest:_fetchRequest managedObjectContext:[self managedObjectContext] sectionNameKeyPath:@"currentStatus" cacheName:@"Default Search"];
 	
 	return _fetchedInventoryController;
 }
@@ -243,7 +252,7 @@
 	inventoryItem.assetID = assetID;
 	inventoryItem.quantity = [NSNumber numberWithInt:quantity];
 	inventoryItem.purchasePrice = [NSNumber numberWithFloat:purchasePrice];
-	inventoryItem.purchaseDate = [NSDate date];
+	inventoryItem.purchaseDate = purchaseDate;
 	[self.managedObjectContext save:nil];
 }
 
@@ -261,7 +270,7 @@
 	NSDictionary *hashDict = [hashGenerator createHash];
 	
 	// Setup jSON String
-	NSString *jSONString = [NSString stringWithFormat:@"{\"Quantity\":%d,\"AssetId\":\"%@\",\"SerialNumber\":\"%@\",\"Description\":\"%@\",\"AllowActions\":%d,\"Retired\":%d,\"PurchaseDate\":\"%@\",\"PurchasePrice\":%0.2f,\"UserInput\":\"%@\",\"GeneratedInput\":\"%@\"}", quantity, assetID, serialNumber, description, allowActions, retired, @"2014-06-05T13:43:45.03", purchasePrice, hashDict[@"userInput"], hashDict[@"generatedInput"]];
+	NSString *jSONString = [NSString stringWithFormat:@"{\"Quantity\":%d,\"AssetId\":\"%@\",\"SerialNumber\":\"%@\",\"Description\":\"%@\",\"AllowActions\":%d,\"Retired\":%d,\"PurchaseDate\":\"%@\",\"PurchasePrice\":%0.2f,\"UserInput\":\"%@\",\"GeneratedInput\":\"%@\"}", quantity, assetID, serialNumber, description, allowActions, retired, purchaseDate, purchasePrice, hashDict[@"userInput"], hashDict[@"generatedInput"]];
 	NSLog(@"%@", jSONString);
 	
 	// Convert jSON string to data

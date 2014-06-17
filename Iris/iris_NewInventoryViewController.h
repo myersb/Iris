@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface iris_NewInventoryViewController : UIViewController
+@interface iris_NewInventoryViewController : UIViewController <UITextFieldDelegate>
 
 // UI Properties
 @property (weak, nonatomic) IBOutlet UITextField *tfDescription;
@@ -18,8 +18,16 @@
 @property (weak, nonatomic) IBOutlet UITextField *tfPurchaseDate;
 @property (weak, nonatomic) IBOutlet UITextField *tfPurchasePrice;
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
+@property (weak, nonatomic) IBOutlet UIView *datePickerView;
+@property (weak, nonatomic) IBOutlet UILabel *lblPurchaseDate;
+
+// Variable Properties
+@property (strong, nonatomic) NSDate *selectedDate;
+@property (strong, nonatomic) UITextField *activeField;
 
 // Actions
 - (IBAction)showDatePicker:(id)sender;
 - (IBAction)addItem:(id)sender;
+- (IBAction)saveDate:(id)sender;
+- (IBAction)setActiveTextField:(id)sender;
 @end

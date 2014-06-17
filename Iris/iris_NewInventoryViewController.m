@@ -35,8 +35,12 @@
     // Do any additional setup after loading the view.
 	
 	dataHandler = [[InventoryDataHandler alloc] init];
-	
-	_datePicker.hidden = YES;
+}
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    UITouch * touch = [touches anyObject];
+    if(touch.phase == UITouchPhaseBegan) {
+        [_activeField resignFirstResponder];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -58,20 +62,43 @@
 
 - (IBAction)showDatePicker:(id)sender
 {
-	_datePicker.hidden = NO;
+	_datePickerView.hidden = FALSE;
+	[_activeField resignFirstResponder];
 }
 
 - (IBAction)addItem:(id)sender
 {
-	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-	[dateFormatter setDateFormat:@"YYYY-dd-MM"];
-	NSDate *date = [dateFormatter dateFromString:_tfPurchaseDate.text];
 	[dataHandler insertInventoryObjectWithAssetID:_tfAssetTag.text
 									  andQuantity:[_tfQuantity.text intValue]
 								  andSerialNumber:_tfSerialNumber.text
 								   andDescription:_tfDescription.text
 								   andAllowAction:true andRetired:false
-								  andPurchaseDate:date
+								  andPurchaseDate:_selectedDate
 								 andPurchasePrice:[_tfPurchasePrice.text floatValue]];
+}
+
+- (IBAction)saveDate:(id)sender
+{
+	_datePickerView.hidden = TRUE;
+	_selectedDate = _datePicker.date;
+	NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+	[dateFormat setDateFormat:@"MMM dd, YYYY"];
+	NSString *prettyDate = [dateFormat stringFromDate:_selectedDate];
+	_lblPurchaseDate.text = prettyDate;
+}
+
+- (IBAction)setActiveTextField:(id)sender
+{
+	_activeField = sender;
+}
+
+- (void)hideKeyboard
+{
+	NSLog(@"BOOM");
+	[_tfAssetTag resignFirstResponder];
+	[_tfDescription resignFirstResponder];
+	[_tfPurchasePrice resignFirstResponder];
+	[_tfQuantity resignFirstResponder];
+	[_tfSerialNumber resignFirstResponder];
 }
 @end

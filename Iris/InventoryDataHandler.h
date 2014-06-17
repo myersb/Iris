@@ -17,6 +17,7 @@
 @property (nonatomic, strong) NSEntityDescription *entity;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedInventoryController;
 @property (nonatomic, strong) NSSortDescriptor *sort;
+@property (nonatomic, strong) NSSortDescriptor *secondSort;
 @property (nonatomic, strong) NSArray *sortDescriptors;
 @property (nonatomic, strong) NSPredicate *predicate;
 
