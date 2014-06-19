@@ -145,7 +145,18 @@
 
 - (IBAction)deleteInventoryItem:(id)sender
 {
-	
+	_alert = [[UIAlertView alloc]initWithTitle:@"Delete Item" message:[NSString stringWithFormat:@"Are you sure that you want to delete %@? This process cannot be undone.", _currentInventoryItem.objectDescription] delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Delete", nil];
+	[_alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    // the user clicked one of the OK/Cancel buttons
+    if (buttonIndex == 1)
+    {
+		[dataHandler deleteInventoryObjectWithID:[_currentInventoryItem.inventoryObjectID intValue]];
+		[self.managedObjectContext deleteObject:_currentInventoryItem];
+		[self.managedObjectContext save:nil];
+    }
 }
 
 - (IBAction)showDatePicker:(id)sender

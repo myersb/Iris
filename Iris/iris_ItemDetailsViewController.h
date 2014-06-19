@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "InventoryItem.h"
 
-@interface iris_ItemDetailsViewController : UIViewController
+@interface iris_ItemDetailsViewController : UIViewController <UIAlertViewDelegate>
 
 // CoreData Properties
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
@@ -37,6 +37,7 @@
 @property (nonatomic, weak) IBOutlet UIButton *deleteButton;
 @property (nonatomic, weak) IBOutlet UIButton *changeDateButton;
 @property (weak, nonatomic) IBOutlet UIView *datePickerView;
+@property (strong, nonatomic) UIAlertView *alert;
 
 // Variable Properties
 @property (nonatomic, strong) InventoryItem *currentInventoryItem;
