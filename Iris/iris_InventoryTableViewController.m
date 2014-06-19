@@ -11,7 +11,6 @@
 #import "iris_ItemDetailsViewController.h"
 
 // Models Import
-#import "InventoryItem.h"
 #import "InventoryAction.h"
 #import "InventoryDataHandler.h"
 
@@ -60,8 +59,7 @@
 		abort();
 	}
 	_fetchedInventoryController = dataHandler.fetchedInventoryController;
-	_fetchedInventory = [dataHandler loadInventory];
-	_filteredFetchedInventory = [NSMutableArray arrayWithCapacity:[_fetchedInventory count]];
+	_fetchedInventoryController.delegate = self;
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -82,19 +80,15 @@
 {
     // Return the number of sections.
 	
-	return [[dataHandler.fetchedInventoryController sections]count];
+	return [[_fetchedInventoryController sections]count];
     //return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-//    if (tableView == self.searchDisplayController.searchResultsTableView) {
-//		return [_filteredFetchedInventory count];
-//	} else {
-		return [[[dataHandler.fetchedInventoryController sections] objectAtIndex:section]
+	return [[[_fetchedInventoryController sections] objectAtIndex:section]
 				numberOfObjects];
-//	}
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -109,17 +103,11 @@
 	}
 	
 	InventoryItem *inventory = nil;
-//	if (tableView == self.searchDisplayController.searchResultsTableView) {
-//		inventory = [_filteredFetchedInventory objectAtIndex:indexPath.row];
-//	} else {
-	inventory = [dataHandler.fetchedInventoryController objectAtIndexPath:indexPath];
-//	}
+
+	inventory = [_fetchedInventoryController objectAtIndexPath:indexPath];
 	cell.textLabel.text = inventory.objectDescription;
-	if ([inventory.currentStatus isEqualToString:@"Check In"]) {
-		cell.detailTextLabel.text = @"Available";
-	} else {
-		cell.detailTextLabel.text = @"Out";
-	}
+	cell.detailTextLabel.text = [NSString stringWithFormat:@"Asset Tag: %@", inventory.assetID];
+	
  
     return cell;
 }
@@ -139,7 +127,7 @@
 	//tempLabel.font = [UIFont boldSystemFontOfSize:fontSizeForHeaders];
 	
 	NSString *sectionTitle;
-	sectionTitle = [[[dataHandler.fetchedInventoryController sections]objectAtIndex:section]name];
+	sectionTitle = [[[_fetchedInventoryController sections]objectAtIndex:section]name];
 	
 	if ([sectionTitle isEqualToString:@"Check In"]) {
 		tempLabel.text = @"  Available";
@@ -173,11 +161,11 @@
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     if ([searchText length] == 0) {
-        dataHandler.fetchedInventoryController = nil;
+        _fetchedInventoryController = nil;
     }
     else {
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"objectDescription contains[cd] %@", searchText];
-        [[dataHandler.fetchedInventoryController fetchRequest] setPredicate:predicate];
+        [[_fetchedInventoryController fetchRequest] setPredicate:predicate];
     }
 	
     NSError *error;
@@ -188,19 +176,90 @@
     [[self tableView] reloadData];
 }
 
-/*
+
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-		
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+		_itemToDelete = [_fetchedInventoryController objectAtIndexPath:indexPath];
+		NSLog(@"%@", _itemToDelete.inventoryObjectID);
+		_alert = [[UIAlertView alloc]initWithTitle:@"Delete Item" message:[NSString stringWithFormat:@"Are you sure that you want to delete %@? This process cannot be undone.", _itemToDelete.objectDescription] delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Delete", nil];
+		[_alert show];
+    }
 }
-*/
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    // the user clicked one of the OK/Cancel buttons
+    if (buttonIndex == 1)
+    {
+		// Delete the object that was swiped
+		NSLog(@"Deleting (%@)", _itemToDelete.objectDescription);
+		NSLog(@"Delete Number: %@", _itemToDelete.inventoryObjectID);
+		[dataHandler deleteInventoryObjectWithID:[_itemToDelete.inventoryObjectID intValue]];
+		[self.managedObjectContext deleteObject:_itemToDelete];
+		[self.managedObjectContext save:nil];
+    }
+}
+
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+    [self.tableView beginUpdates];
+}
+
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
+		   atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
+	
+    switch(type) {
+        case NSFetchedResultsChangeInsert:
+            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex]
+						  withRowAnimation:UITableViewRowAnimationFade];
+            break;
+			
+        case NSFetchedResultsChangeDelete:
+            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex]
+						  withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
+	   atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
+	  newIndexPath:(NSIndexPath *)newIndexPath {
+	
+    UITableView *tableView = self.tableView;
+	
+    switch(type) {
+			
+        case NSFetchedResultsChangeInsert:
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
+							 withRowAnimation:UITableViewRowAnimationFade];
+            break;
+			
+        case NSFetchedResultsChangeDelete:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+							 withRowAnimation:UITableViewRowAnimationFade];
+            break;
+			
+//        case NSFetchedResultsChangeUpdate:
+//            [self configureCell:[tableView cellForRowAtIndexPath:indexPath]
+//					atIndexPath:indexPath];
+//            break;
+			
+        case NSFetchedResultsChangeMove:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+							 withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
+							 withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    [self.tableView endUpdates];
+}
+
 
 
 /*
@@ -248,10 +307,10 @@
 		if ([self.searchDisplayController isActive])
 		{
 			_indexPath = [self.searchDisplayController.searchResultsTableView indexPathForSelectedRow];
-			selectedInventoryItem = [dataHandler.fetchedInventoryController objectAtIndexPath:_indexPath];
+			selectedInventoryItem = [_fetchedInventoryController objectAtIndexPath:_indexPath];
 		} else {
 			_indexPath = [self.tableView indexPathForSelectedRow];
-			selectedInventoryItem = [dataHandler.fetchedInventoryController objectAtIndexPath:_indexPath];
+			selectedInventoryItem = [_fetchedInventoryController objectAtIndexPath:_indexPath];
 		}
 		idvc.currentInventoryItem = selectedInventoryItem;
 	}

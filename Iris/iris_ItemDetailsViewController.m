@@ -161,5 +161,6 @@
 	NSString *prettyDate = [dateFormat stringFromDate:_selectedDate];
 	_lblPurchaseDate.text = [NSString stringWithFormat:@"%@", prettyDate];
 	_datePickerView.hidden = TRUE;
+	NSLog(@"%@", _selectedDate);
 }
 @end

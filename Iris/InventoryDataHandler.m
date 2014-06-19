@@ -51,8 +51,10 @@
 			 // Place all jSON data into a dictioanry
 			 NSDictionary *inventory = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
 			 NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-			 [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+			 [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.S"];
+			 [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
 			 NSString *dateStr;
+			 NSDate *formattedDate;
 			 for (NSDictionary *inventoryItem in inventory)
 			 {
 				 // Insert all inventory items into CoreData
@@ -73,7 +75,11 @@
 				 if (NSLocalizedString([inventoryItem objectForKey:@"PurchaseDate"], nil) == (NSString *)[NSNull null]) {
 					 newItem.purchaseDate = [NSDate date];
 				 } else {
-					 newItem.purchaseDate = [formatter dateFromString:dateStr];
+					 dateStr = NSLocalizedString([inventoryItem objectForKey:@"PurchaseDate"], nil);
+					 formattedDate = [formatter dateFromString:dateStr];
+					 newItem.purchaseDate = formattedDate;
+					 NSLog(@"%@", dateStr);
+					 NSLog(@"%@", formattedDate);
 				 }
 				 
 				 NSDictionary *actions = [inventoryItem objectForKey:@"MediaInventoryActions"];
@@ -192,6 +198,8 @@
 	return _sortedActions;
 }
 
+#pragma mark - Inventory Object Methods
+
 - (void)updateInventoryObjectWithID:(int)inventoryObjectId
 						 andAssetID:(NSString *)assetID
 						andQuantity:(int)quantity
@@ -309,11 +317,46 @@
 	newItem.purchaseDate = [NSDate date];
 	newItem.purchasePrice = [NSNumber numberWithFloat:purchasePrice];
 	[self.managedObjectContext save:nil];
+}
+
+- (void)deleteInventoryObjectWithID:(int)inventoryObjectId
+{
+	// Create values for encryption
+	hashGenerator = [[MD5Hasher alloc] init];
+	NSDictionary *hashDict = [hashGenerator createHash];
 	
+	// Setup jSON String
+	NSLog(@"%@", [NSDate date]);
+	NSString *jSONString = [NSString stringWithFormat:@"{\"MediaInventoryObjectsId\":%d,\"UserInput\":\"%@\",\"GeneratedInput\":\"%@\"}", inventoryObjectId, hashDict[@"userInput"], hashDict[@"generatedInput"]];
+	NSLog(@"%@", jSONString);
+	
+	// Convert jSON string to data
+	NSData *deleteData = [jSONString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+	NSLog(@"%@", deleteData);
+	
+	// Instantiate a url request
+	NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+	NSLog(@"Request: %@", request);
+	
+	// Set the request url format
+	NSString *urlString = [NSString stringWithFormat:@"%@/%d", inventoryAndActionsWebservice, inventoryObjectId];
+	NSLog(@"%@", urlString);
+	
+	[request setURL:[NSURL URLWithString:urlString]];
+	[request setHTTPMethod:@"DELETE"];
+	[request setHTTPBody:deleteData];
+	[request setValue:@"application/json" forHTTPHeaderField:@"content-type"];
+	NSLog(@"Request: %@", request);
+	
+	// Send data to the webservice
+	NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+	NSLog(@"returnData: %@", returnData);
+	NSString *result = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
+	NSLog(@"result: %@", result);
 }
 
 
-
+#pragma mark - Inventory Actions Methods
 - (void)updateActionWithID:(int)inventoryActionID
 	   andActionDate:(NSDate *)actionDate
 			andNotes:(NSString *)notes

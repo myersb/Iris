@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "InventoryItem.h"
 
-@interface iris_InventoryTableViewController : UITableViewController <UISearchBarDelegate, UISearchDisplayDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
+@interface iris_InventoryTableViewController : UITableViewController <UISearchBarDelegate, UISearchDisplayDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, NSFetchedResultsControllerDelegate>
 
 // CoreData Properties
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
@@ -27,5 +28,6 @@
 @property (nonatomic, strong) NSMutableArray *filteredFetchedInventory;
 @property (nonatomic, strong) NSIndexPath *indexPath;
 @property (strong, nonatomic) NSArray *sortedActions;
+@property (nonatomic, strong) InventoryItem *itemToDelete;
 
 @end
