@@ -259,6 +259,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <outlet property="tfPurchasePrice" destination="PdZ-kH-YOU" id="6Oa-A2-cER"/>
                         <outlet property="tfQuantity" destination="Igx-F6-mPe" id="12m-ep-37o"/>
                         <outlet property="tfSerialNumber" destination="aoS-Ff-BxW" id="x2O-A6-nwq"/>
+                        <segue destination="nyX-i9-C7X" kind="modal" identifier="segueFromNewToItemInventory" id="AXa-D6-mx6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fsY-Vs-wdf" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -358,10 +359,11 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1eA-8u-P3g">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1eA-8u-P3g">
                                 <rect key="frame" x="20" y="532" width="44" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Delete">
+                                    <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -459,6 +461,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <outlet property="tfItemDescription" destination="h90-Is-chQ" id="vXV-iV-amU"/>
                         <outlet property="tfPurchasePrice" destination="Sfq-zb-1DH" id="HOW-7S-5yy"/>
                         <outlet property="tfQuantity" destination="yOc-ec-2b6" id="HoE-vm-w6y"/>
+                        <segue destination="nyX-i9-C7X" kind="modal" identifier="segueFromDeleteToItemInventory" id="3jV-3j-5BF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3gJ-pp-bsE" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -562,6 +565,17 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1WT-gI-fZq">
+                                <rect key="frame" x="254" y="78" width="44" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Delete">
+                                    <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="deleteAction:" destination="wJz-jd-tDH" eventType="touchUpInside" id="8FI-uS-9Kd"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -573,16 +587,18 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <outlet property="tfPerformedAction" destination="Rjq-yd-CG1" id="2or-Hg-PtK"/>
                         <outlet property="tfUserExtension" destination="2nt-NB-gZS" id="ayv-e6-NKt"/>
                         <outlet property="tvNotes" destination="0iD-av-Dd1" id="8Xx-zV-aiD"/>
+                        <segue destination="nyX-i9-C7X" kind="modal" identifier="segueFromActionDeleteToInventory" id="86u-rE-myl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sdp-UJ-itm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2265" y="-735"/>
+            <point key="canvasLocation" x="2319" y="-735"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="c9E-NG-G4C">
             <objects>
                 <navigationController definesPresentationContext="YES" id="nyX-i9-C7X" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="LQG-69-uF0"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ghy-6Y-VH2">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -600,4 +616,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="86u-rE-myl"/>
+    </inferredMetricsTieBreakers>
 </document>

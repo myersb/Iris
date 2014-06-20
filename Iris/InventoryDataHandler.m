@@ -314,8 +314,9 @@
 	newItem.serialNumber = serialNumber;
 	newItem.allowsActions = [NSNumber numberWithBool:allowActions];
 	newItem.retired = [NSNumber numberWithBool:retired];
-	newItem.purchaseDate = [NSDate date];
+	newItem.purchaseDate = purchaseDate;
 	newItem.purchasePrice = [NSNumber numberWithFloat:purchasePrice];
+	newItem.currentStatus = @"Check In";
 	[self.managedObjectContext save:nil];
 }
 
@@ -424,6 +425,44 @@ andUserActionID:(int)actionID
 	inventoryAction.userPerformingActionExt = [NSNumber numberWithInt:extension];
 	inventoryAction.notes = notes;
 	[self.managedObjectContext save:nil];
+}
+
+
+
+- (void)deleteInventoryActionWithInventoryID:(int)inventoryId andActionId:(int)inventoryActionId
+{
+	// Create values for encryption
+	hashGenerator = [[MD5Hasher alloc] init];
+	NSDictionary *hashDict = [hashGenerator createHash];
+	
+	// Setup jSON String
+	NSLog(@"BRBSEDA%d", inventoryActionId);
+	NSString *jSONString = [NSString stringWithFormat:@"{\"UserInput\":\"%@\",\"GeneratedInput\":\"%@\"}", hashDict[@"userInput"], hashDict[@"generatedInput"]];
+	NSLog(@"%@", jSONString);
+	
+	// Convert jSON string to data
+	NSData *deleteData = [jSONString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+	NSLog(@"%@", deleteData);
+	
+	// Instantiate a url request
+	NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+	NSLog(@"Request: %@", request);
+	
+	// Set the request url format
+	NSString *urlString = [NSString stringWithFormat:@"%@/%d/actions/%d", inventoryAndActionsWebservice, inventoryId, inventoryActionId];
+	NSLog(@"%@", urlString);
+	
+	[request setURL:[NSURL URLWithString:urlString]];
+	[request setHTTPMethod:@"DELETE"];
+	[request setHTTPBody:deleteData];
+	[request setValue:@"application/json" forHTTPHeaderField:@"content-type"];
+	NSLog(@"Request: %@", request);
+	
+	// Send data to the webservice
+	NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+	NSLog(@"returnData: %@", returnData);
+	NSString *result = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
+	NSLog(@"result: %@", result);
 }
 
 @end

@@ -10,9 +10,6 @@
 #import "iris_InventoryActionsTableViewController.h"
 #import "iris_ActionDetailsViewController.h"
 
-// Data Import
-#import "InventoryAction.h"
-
 // Models Import
 #import "InventoryDataHandler.h"
 
@@ -36,9 +33,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+	
     dataHandler = [[InventoryDataHandler alloc] init];
 	_sortedActions = [dataHandler loadInventoryActionsByInventoryItem:_currentItem];
+	
+	id delegate = [[UIApplication sharedApplication]delegate];
+	self.managedObjectContext = [delegate managedObjectContext];
 }
 
 - (void)didReceiveMemoryWarning
@@ -61,13 +61,6 @@
     return [_sortedActions count];
 }
 
-- (void)loadInventoryActions
-{
-	NSSet *actions = _currentItem.action;
-	NSSortDescriptor *actionsSort = [NSSortDescriptor sortDescriptorWithKey:@"actionID" ascending:YES];
-	_sortedActions = [actions sortedArrayUsingDescriptors:[NSArray arrayWithObject:actionsSort]];
-}
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -76,11 +69,10 @@
 	if ( cell == nil ) {
 		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
 	}
-    InventoryAction *action = nil;
-	action = [_sortedActions objectAtIndex:indexPath.row];
+	_action = [_sortedActions objectAtIndex:indexPath.row];
     // Configure the cell...
-    cell.textLabel.text = action.actionLongValue;
-	cell.detailTextLabel.text = action.userPerformingAction;
+    cell.textLabel.text = _action.actionLongValue;
+	cell.detailTextLabel.text = _action.userPerformingAction;
     return cell;
 }
 
@@ -94,18 +86,39 @@
 }
 */
 
-/*
+
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	[tableView beginUpdates];
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationFade];
+		_action = [_sortedActions objectAtIndex:indexPath.row];
+		_fetchRequest = [[NSFetchRequest alloc] init];
+		_entity = [NSEntityDescription entityForName:@"InventoryAction" inManagedObjectContext:[self managedObjectContext]];
+		_predicate = [NSPredicate predicateWithFormat:@"inventoryActionID == %@", _action.inventoryActionID];
+		NSLog(@"%@", _action.inventoryActionID);
+		
+		[_fetchRequest setEntity:_entity];
+		[_fetchRequest setPredicate:_predicate];
+		
+		NSError *error;
+		_fetchedResults = [[self managedObjectContext] executeFetchRequest:_fetchRequest error:&error];
+		
+		_objectToDelete = [_fetchedResults objectAtIndex:0];
+		
+		[[self managedObjectContext] deleteObject:_objectToDelete];
+		[self.managedObjectContext save:nil];
+		[dataHandler loadInventoryActionsByInventoryItem:_currentItem];
+		[dataHandler deleteInventoryActionWithInventoryID:_currentItem.inventoryObjectID andActionId:[_action.inventoryActionID intValue]];
+		
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+    }
+	[tableView endUpdates];
+	[tableView reloadData];
 }
-*/
 
 /*
 // Override to support rearranging the table view.
@@ -137,6 +150,7 @@
 	{
 		_indexPath = [self.tableView indexPathForSelectedRow];
 		advc.action = [_sortedActions objectAtIndex:_indexPath.row];
+		advc.currentItem = _currentItem;
 	}
 }
 

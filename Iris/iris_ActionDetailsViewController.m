@@ -34,6 +34,9 @@
 {
 	[super viewDidLoad];
     // Do any additional setup after loading the view.
+	id delegate = [[UIApplication sharedApplication]delegate];
+	self.managedObjectContext = [delegate managedObjectContext];
+	
 	dataHandler = [[InventoryDataHandler alloc] init];
 	
 	_tfActionLongValue.text = _action.actionLongValue;
@@ -90,4 +93,38 @@
 	[dataHandler updateActionWithID:[_action.inventoryActionID intValue] andActionDate:[NSDate date] andNotes:_tvNotes.text andUserAuthorizingAction:_tfAuthorizedBy.text andUserPerformingAction:_tfPerformedAction.text andUserPerformingActionExt:[_tfUserExtension.text intValue] andInventoryObjectID:[_action.inventoryObjectID intValue] andUserActionID:actionID andActionLongValue:_tfActionLongValue.text];
 }
 
+- (IBAction)deleteAction:(id)sender
+{
+	_alert = [[UIAlertView alloc]initWithTitle:@"Delete Item" message:[NSString stringWithFormat:@"Are you sure that you want to delete this action? This process cannot be undone."] delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Delete", nil];
+	[_alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    // the user clicked one of the OK/Cancel buttons
+    if (buttonIndex == 1)
+    {
+		_fetchRequest = [[NSFetchRequest alloc] init];
+		_entity = [NSEntityDescription entityForName:@"InventoryAction" inManagedObjectContext:[self managedObjectContext]];
+		_predicate = [NSPredicate predicateWithFormat:@"inventoryActionID == %@", _action.inventoryActionID];
+		
+		[_fetchRequest setEntity:_entity];
+		[_fetchRequest setPredicate:_predicate];
+		
+		NSError *error;
+		_fetchedResults = [[self managedObjectContext] executeFetchRequest:_fetchRequest error:&error];
+		
+		_objectToDelete = [_fetchedResults objectAtIndex:0];
+		__block InventoryAction *action = nil;
+		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
+		^{
+			[[self managedObjectContext] deleteObject:_objectToDelete];
+			[self.managedObjectContext save:nil];
+			[dataHandler deleteInventoryActionWithInventoryID:[_currentItem.inventoryObjectID intValue] andActionId:[action.inventoryActionID intValue]];
+			
+			dispatch_sync(dispatch_get_main_queue(), ^{
+				[self performSegueWithIdentifier:@"segueFromActionDeleteToInventory" sender:self];
+			});
+		});
+    }
+}
 @end

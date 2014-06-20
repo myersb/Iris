@@ -68,13 +68,20 @@
 
 - (IBAction)addItem:(id)sender
 {
-	[dataHandler insertInventoryObjectWithAssetID:_tfAssetTag.text
-									  andQuantity:[_tfQuantity.text intValue]
-								  andSerialNumber:_tfSerialNumber.text
-								   andDescription:_tfDescription.text
-								   andAllowAction:true andRetired:false
-								  andPurchaseDate:_selectedDate
-								 andPurchasePrice:[_tfPurchasePrice.text floatValue]];
+	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
+	^{
+		[dataHandler insertInventoryObjectWithAssetID:_tfAssetTag.text
+										  andQuantity:[_tfQuantity.text intValue]
+									  andSerialNumber:_tfSerialNumber.text
+									   andDescription:_tfDescription.text
+									   andAllowAction:true andRetired:false
+									  andPurchaseDate:_selectedDate
+									 andPurchasePrice:[_tfPurchasePrice.text floatValue]];
+		dispatch_sync(dispatch_get_main_queue(), ^{
+			[self performSegueWithIdentifier:@"segueFromNewToItemInventory" sender:self];
+		});
+	});
+				
 }
 
 - (IBAction)saveDate:(id)sender

@@ -153,9 +153,16 @@
     // the user clicked one of the OK/Cancel buttons
     if (buttonIndex == 1)
     {
-		[dataHandler deleteInventoryObjectWithID:[_currentInventoryItem.inventoryObjectID intValue]];
-		[self.managedObjectContext deleteObject:_currentInventoryItem];
-		[self.managedObjectContext save:nil];
+		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
+	    ^{
+			[dataHandler deleteInventoryObjectWithID:[_currentInventoryItem.inventoryObjectID intValue]];
+			[self.managedObjectContext deleteObject:_currentInventoryItem];
+			[self.managedObjectContext save:nil];
+			
+			dispatch_sync(dispatch_get_main_queue(), ^{
+				[self performSegueWithIdentifier:@"segueFromDeleteToItemInventory" sender:self];
+			});
+		});
     }
 }
 
