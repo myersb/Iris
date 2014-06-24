@@ -111,7 +111,7 @@
 		[[self managedObjectContext] deleteObject:_objectToDelete];
 		[self.managedObjectContext save:nil];
 		[dataHandler loadInventoryActionsByInventoryItem:_currentItem];
-		[dataHandler deleteInventoryActionWithInventoryID:_currentItem.inventoryObjectID andActionId:[_action.inventoryActionID intValue]];
+		[dataHandler deleteInventoryActionWithInventoryID:[_currentItem.inventoryObjectID intValue] andActionId:[_action.inventoryActionID intValue]];
 		
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view

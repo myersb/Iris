@@ -51,7 +51,7 @@
 			 // Place all jSON data into a dictioanry
 			 NSDictionary *inventory = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
 			 NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-			 [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.S"];
+			 [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
 			 [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
 			 NSString *dateStr;
 			 NSDate *formattedDate;
@@ -436,7 +436,6 @@ andUserActionID:(int)actionID
 	NSDictionary *hashDict = [hashGenerator createHash];
 	
 	// Setup jSON String
-	NSLog(@"BRBSEDA%d", inventoryActionId);
 	NSString *jSONString = [NSString stringWithFormat:@"{\"UserInput\":\"%@\",\"GeneratedInput\":\"%@\"}", hashDict[@"userInput"], hashDict[@"generatedInput"]];
 	NSLog(@"%@", jSONString);
 	

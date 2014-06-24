@@ -38,7 +38,6 @@
 	self.managedObjectContext = [delegate managedObjectContext];
 	
 	dataHandler = [[InventoryDataHandler alloc] init];
-	
 	_tfActionLongValue.text = _action.actionLongValue;
 	_tfAuthorizedBy.text = _action.userAuthorizingAction;
 	_tfPerformedAction.text = _action.userPerformingAction;
@@ -114,17 +113,11 @@
 		_fetchedResults = [[self managedObjectContext] executeFetchRequest:_fetchRequest error:&error];
 		
 		_objectToDelete = [_fetchedResults objectAtIndex:0];
-		__block InventoryAction *action = nil;
-		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
-		^{
-			[[self managedObjectContext] deleteObject:_objectToDelete];
-			[self.managedObjectContext save:nil];
-			[dataHandler deleteInventoryActionWithInventoryID:[_currentItem.inventoryObjectID intValue] andActionId:[action.inventoryActionID intValue]];
+		[dataHandler deleteInventoryActionWithInventoryID:[_currentItem.inventoryObjectID intValue] andActionId:[_action.inventoryActionID intValue]];
+		[[self managedObjectContext] deleteObject:_objectToDelete];
+		[self.managedObjectContext save:nil];
 			
-			dispatch_sync(dispatch_get_main_queue(), ^{
-				[self performSegueWithIdentifier:@"segueFromActionDeleteToInventory" sender:self];
-			});
-		});
+		[self performSegueWithIdentifier:@"segueFromActionDeleteToInventory" sender:self];
     }
 }
 @end
