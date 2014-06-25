@@ -13,6 +13,7 @@
 #import "CoreDataHandler.h"
 #import "InventoryDataHandler.h"
 #import "MD5Hasher.h"
+#import "UserLogin.h"
 
 @interface iris_MenuViewController ()
 {
@@ -20,6 +21,7 @@
 	InventoryDataHandler *dataHandler;
 	CoreDataHandler *coreDataHandler;
 	MD5Hasher *hashGenerator;
+	UserLogin *userLoginInstance;
 }
 @end
 
@@ -44,19 +46,10 @@
     internetReachable = [[Reachability alloc] init];
 	dataHandler = [[InventoryDataHandler alloc] init];
 	hashGenerator = [[MD5Hasher alloc] init];
+	userLoginInstance = [[UserLogin alloc] init];
 	
-	// Run Methods
-    [internetReachable checkConnection];
-	
-	// Check for internet availability
-    if (internetReachable.isConnected) {
-        NSLog(@"Now witness the firepower of this fully ARMED and OPERATIONAL battle station!");
-        [dataHandler downloadInventoryAndActions];
-    } else {
-        NSLog(@"WHERE IS THE INTERWEBS?");
-		_alert = [[UIAlertView alloc]initWithTitle:@"Connection Not Available" message:@"To download and/or update the inventory list you must have a working internet connection. Please check your internet connection and try again" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil, nil];
-		[_alert show];
-    }
+	_tfUsername.delegate = self;
+	_tfPassword.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning
@@ -64,6 +57,40 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    _activeField = textField;
+    [_scrollView setContentOffset:CGPointMake(0,textField.center.y-280) animated:YES];
+}
+
+// called when click on the retun button.
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+	
+	
+    NSInteger nextTag = textField.tag + 1;
+    // Try to find next responder
+    UIResponder *nextResponder = [textField.superview viewWithTag:nextTag];
+	
+    if (nextResponder) {
+        [_scrollView setContentOffset:CGPointMake(0,textField.center.y-80) animated:YES];
+        // Found next responder, so set it.
+        [nextResponder becomeFirstResponder];
+    } else {
+        [_scrollView setContentOffset:CGPointMake(0,0) animated:YES];
+        [textField resignFirstResponder];
+        return YES;
+    }
+	
+    return NO;
+}
+
+
+//- (void)textFieldDidBeginEditing:(UITextField *)textField {
+//	
+//    _scrollView.contentOffset = CGPointMake(0, textField.frame.origin.y - 80);
+//}
 
 /*
 #pragma mark - Navigation
@@ -75,4 +102,27 @@
     // Pass the selected object to the new view controller.
 }
 */
+- (IBAction)login:(id)sender
+{
+	
+	
+	// Run Methods
+    [internetReachable checkConnection];
+	
+	// Check for internet availability
+    if (internetReachable.isConnected) {
+        NSLog(@"Now witness the firepower of this fully ARMED and OPERATIONAL battle station!");
+		BOOL canSegue = [userLoginInstance validateLoginWithUsername:_tfUsername.text andPassword:_tfPassword.text];
+		if (canSegue) {
+			[self performSegueWithIdentifier:@"loginSegue" sender:self];
+		} else {
+			_alert = [[UIAlertView alloc]initWithTitle:@"Login Error" message:@"The username and/or password that was entered was incorrect. Please try again." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+			[_alert show];
+		}
+    } else {
+        NSLog(@"WHERE IS THE INTERWEBS?");
+		_alert = [[UIAlertView alloc]initWithTitle:@"Connection Not Available" message:@"To login you must have a working internet connection. Please check your internet connection and try again" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil, nil];
+		[_alert show];
+    }
+}
 @end

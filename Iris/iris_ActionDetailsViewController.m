@@ -64,6 +64,7 @@
 	_tfPerformedAction.enabled = TRUE;
 	_tfUserExtension.enabled = TRUE;
 	_tvNotes.editable = TRUE;
+	_deleteButton.hidden = FALSE;
 }
 
 - (void)saveDetails
@@ -80,6 +81,7 @@
 	_tfPerformedAction.enabled = FALSE;
 	_tfUserExtension.enabled = FALSE;
 	_tvNotes.editable = FALSE;
+	_deleteButton.hidden = TRUE;
 	int actionID;
 	if ([_tfActionLongValue.text isEqualToString:@"Check In"])
 	{

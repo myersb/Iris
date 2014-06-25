@@ -114,6 +114,7 @@
 	_tfPurchasePrice.hidden = FALSE;
 	_changeDateButton.hidden = FALSE;
 	_deleteButton.hidden = FALSE;
+	_datePicker.hidden = FALSE;
 }
 
 - (void)saveDetails
@@ -130,6 +131,7 @@
 	_tfPurchasePrice.hidden = TRUE;
 	_changeDateButton.hidden = TRUE;
 	_deleteButton.hidden = TRUE;
+	_datePicker.hidden = TRUE;
 	
 	_lblItemDescription.text = _tfItemDescription.text;
 	_lblAssetTag.text = [NSString stringWithFormat:@"Asset ID: %@", _tfAssetTag.text];

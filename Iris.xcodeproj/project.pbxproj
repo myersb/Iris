@@ -10,6 +10,8 @@
 		B516422F193E5D1D00CB358B /* MD5Hasher.m in Sources */ = {isa = PBXBuildFile; fileRef = B516422E193E5D1D00CB358B /* MD5Hasher.m */; };
 		B5164232193F5C3D00CB358B /* iris_NewInventoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5164231193F5C3D00CB358B /* iris_NewInventoryViewController.m */; };
 		B5ACD24E1950B93C00BF3508 /* InventoryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = B5ACD24D1950B93C00BF3508 /* InventoryItem.m */; };
+		B5ACD252195B105200BF3508 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = B5ACD251195B105200BF3508 /* logo.png */; };
+		B5ACD258195B114600BF3508 /* UserLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = B5ACD257195B114600BF3508 /* UserLogin.m */; };
 		B5AD4F5919361D5000217486 /* iris_InventoryActionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5AD4F5819361D5000217486 /* iris_InventoryActionsTableViewController.m */; };
 		B5AD4F5C1936645800217486 /* InventoryDataHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B5AD4F5B1936645800217486 /* InventoryDataHandler.m */; };
 		B5AD4F5F193664B200217486 /* CoreDataHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B5AD4F5E193664B200217486 /* CoreDataHandler.m */; };
@@ -58,6 +60,9 @@
 		B5164231193F5C3D00CB358B /* iris_NewInventoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iris_NewInventoryViewController.m; path = Iris/iris_NewInventoryViewController.m; sourceTree = "<group>"; };
 		B5ACD24C1950B93C00BF3508 /* InventoryItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InventoryItem.h; path = Iris/InventoryItem.h; sourceTree = "<group>"; };
 		B5ACD24D1950B93C00BF3508 /* InventoryItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InventoryItem.m; path = Iris/InventoryItem.m; sourceTree = "<group>"; };
+		B5ACD251195B105200BF3508 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		B5ACD256195B114600BF3508 /* UserLogin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserLogin.h; path = Iris/UserLogin.h; sourceTree = "<group>"; };
+		B5ACD257195B114600BF3508 /* UserLogin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserLogin.m; path = Iris/UserLogin.m; sourceTree = "<group>"; };
 		B5AD4F5719361D5000217486 /* iris_InventoryActionsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iris_InventoryActionsTableViewController.h; path = Iris/iris_InventoryActionsTableViewController.h; sourceTree = "<group>"; };
 		B5AD4F5819361D5000217486 /* iris_InventoryActionsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iris_InventoryActionsTableViewController.m; path = Iris/iris_InventoryActionsTableViewController.m; sourceTree = "<group>"; };
 		B5AD4F5A1936645800217486 /* InventoryDataHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InventoryDataHandler.h; path = Iris/InventoryDataHandler.h; sourceTree = "<group>"; };
@@ -180,6 +185,7 @@
 		B5EB7CEB190952FE004FEDD2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				B5ACD251195B105200BF3508 /* logo.png */,
 				B5EB7CEC190952FE004FEDD2 /* Iris-Info.plist */,
 				B5EB7CED190952FE004FEDD2 /* InfoPlist.strings */,
 				B5EB7CF0190952FE004FEDD2 /* main.m */,
@@ -221,6 +227,8 @@
 		B5EB7D18190953BE004FEDD2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				B5ACD256195B114600BF3508 /* UserLogin.h */,
+				B5ACD257195B114600BF3508 /* UserLogin.m */,
 				B5AD4F5A1936645800217486 /* InventoryDataHandler.h */,
 				B5AD4F5B1936645800217486 /* InventoryDataHandler.m */,
 				B5AD4F5D193664B200217486 /* CoreDataHandler.h */,
@@ -340,6 +348,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5EB7CEF190952FE004FEDD2 /* InfoPlist.strings in Resources */,
+				B5ACD252195B105200BF3508 /* logo.png in Resources */,
 				B5EB7D1B1909544B004FEDD2 /* iPad.storyboard in Resources */,
 				B5EB7CFA190952FE004FEDD2 /* Images.xcassets in Resources */,
 				B5EB7D1D1909545E004FEDD2 /* iPhone.storyboard in Resources */,
@@ -361,6 +370,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5ACD258195B114600BF3508 /* UserLogin.m in Sources */,
 				B5AD4F5F193664B200217486 /* CoreDataHandler.m in Sources */,
 				B5EB7CF8190952FE004FEDD2 /* Iris.xcdatamodeld in Sources */,
 				B5AD4F5919361D5000217486 /* iris_InventoryActionsTableViewController.m in Sources */,

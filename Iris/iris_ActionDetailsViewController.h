@@ -27,6 +27,7 @@
 @property (nonatomic, weak) IBOutlet UITextView *tvNotes;
 @property (nonatomic, strong) UIBarButtonItem *editButton;
 @property (nonatomic, strong) UIBarButtonItem *saveButton;
+@property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 @property (nonatomic, strong) UIAlertView *alert;
 
 // Variable Properties

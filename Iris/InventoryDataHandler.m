@@ -374,7 +374,7 @@ andUserActionID:(int)actionID
 	
 	// Setup jSON String
 	NSLog(@"%@", [NSDate date]);
-	NSString *jSONString = [NSString stringWithFormat:@"{\"MediaInventoryActionsId\":%d,\"MediaInventoryObjectsId\":%d,\"UserPerformingActionExt\":%d,\"ActionId\":%d,\"ActionDate\":\"%@\",\"UserPerformingAction\":\"%@\",\"UserAuthorizingAction\":\"%@\",\"Notes\":\"%@\",\"UserInput\",\"%@\",\"GeneratedInput\",\"%@\"}", inventoryActionID, inventoryObjectID, extension, actionID, [NSDate date], userPerformingAction, userAuthorizingAction, notes, hashDict[@"userInput"], hashDict[@"generatedInput"]];
+	NSString *jSONString = [NSString stringWithFormat:@"{\"MediaInventoryActionsId\":%d,\"MediaInventoryObjectsId\":%d,\"UserPerformingActionExt\":%d,\"ActionId\":%d,\"ActionDate\":\"%@\",\"UserPerformingAction\":\"%@\",\"UserAuthorizingAction\":\"%@\",\"Notes\":\"%@\",\"UserInput\":\"%@\",\"GeneratedInput\":\"%@\"}", inventoryActionID, inventoryObjectID, extension, actionID, [NSDate date], userPerformingAction, userAuthorizingAction, notes, hashDict[@"userInput"], hashDict[@"generatedInput"]];
 	NSLog(@"%@", jSONString);
 	
 	// Convert jSON string to data

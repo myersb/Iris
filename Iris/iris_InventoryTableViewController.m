@@ -193,8 +193,6 @@
     if (buttonIndex == 1)
     {
 		// Delete the object that was swiped
-		NSLog(@"Deleting (%@)", _itemToDelete.objectDescription);
-		NSLog(@"Delete Number: %@", _itemToDelete.inventoryObjectID);
 		[dataHandler deleteInventoryObjectWithID:[_itemToDelete.inventoryObjectID intValue]];
 		[self.managedObjectContext deleteObject:_itemToDelete];
 		[self.managedObjectContext save:nil];
