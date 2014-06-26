@@ -34,8 +34,6 @@
 	self.managedObjectContext = [delegate managedObjectContext];
 	
 	coreDataHandler = [[CoreDataHandler alloc] init];
-	[coreDataHandler clearEntity:@"InventoryObject" withFetchRequest:_fetchRequest];
-	[coreDataHandler clearEntity:@"InventoryAction" withFetchRequest:_fetchRequest];
 	
 	NSString *urlString = [NSString stringWithFormat:@"%@", inventoryAndActionsWebservice];
     NSURL *url = [NSURL URLWithString:urlString];
@@ -47,6 +45,8 @@
 	 {
 		 if (data.length > 0 && connectionError == nil)
 		 {
+			 [coreDataHandler clearEntity:@"InventoryObject" withFetchRequest:_fetchRequest];
+			 [coreDataHandler clearEntity:@"InventoryAction" withFetchRequest:_fetchRequest];
 			 NSLog(@"WE HAS THE DATAS");
 			 // Place all jSON data into a dictioanry
 			 NSDictionary *inventory = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
