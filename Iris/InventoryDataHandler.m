@@ -78,14 +78,11 @@
 					 dateStr = NSLocalizedString([inventoryItem objectForKey:@"PurchaseDate"], nil);
 					 formattedDate = [formatter dateFromString:dateStr];
 					 newItem.purchaseDate = formattedDate;
-					 NSLog(@"%@", dateStr);
-					 NSLog(@"%@", formattedDate);
 				 }
 				 
 				 NSDictionary *actions = [inventoryItem objectForKey:@"MediaInventoryActions"];
 				 if ([actions count] == 0) {
 					 newItem.currentStatus = @"Check In";
-					 NSLog(@"No Actions");
 				 } else {
 					 for (id actionItem in actions)
 					 {
@@ -105,7 +102,6 @@
 						 }
 						 newAction.actionLongValue = NSLocalizedString([actionItem objectForKey:@"ActionLongValue"], nil);
 						 newItem.currentStatus = NSLocalizedString([actionItem objectForKey:@"ActionLongValue"], nil);
-						 NSLog(@"%@", newItem.currentStatus);
 						 [newItem addActionObject:newAction];
 						 [newAction setValue:newItem forKeyPath:@"object"];
 					 }
@@ -371,9 +367,8 @@ andUserActionID:(int)actionID
 	// Create values for encryption
 	hashGenerator = [[MD5Hasher alloc] init];
 	NSDictionary *hashDict = [hashGenerator createHash];
-	
+	NSLog(@"%@", actionLongValue);
 	// Setup jSON String
-	NSLog(@"%@", [NSDate date]);
 	NSString *jSONString = [NSString stringWithFormat:@"{\"MediaInventoryActionsId\":%d,\"MediaInventoryObjectsId\":%d,\"UserPerformingActionExt\":%d,\"ActionId\":%d,\"ActionDate\":\"%@\",\"UserPerformingAction\":\"%@\",\"UserAuthorizingAction\":\"%@\",\"Notes\":\"%@\",\"UserInput\":\"%@\",\"GeneratedInput\":\"%@\"}", inventoryActionID, inventoryObjectID, extension, actionID, [NSDate date], userPerformingAction, userAuthorizingAction, notes, hashDict[@"userInput"], hashDict[@"generatedInput"]];
 	NSLog(@"%@", jSONString);
 	

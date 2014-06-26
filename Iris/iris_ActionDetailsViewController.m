@@ -83,11 +83,11 @@
 	_tvNotes.editable = FALSE;
 	_deleteButton.hidden = TRUE;
 	int actionID;
-	if ([_tfActionLongValue.text isEqualToString:@"Check In"])
+	if ([_tfActionLongValue.text isEqualToString:@"Check Out"])
 	{
 		actionID = 1;
 	}
-	else if ([_tfActionLongValue.text isEqualToString:@"Check Out"])
+	else if ([_tfActionLongValue.text isEqualToString:@"Check In"])
 	{
 		actionID = 2;
 	}
