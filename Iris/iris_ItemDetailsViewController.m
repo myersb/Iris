@@ -133,6 +133,10 @@
 	_deleteButton.hidden = TRUE;
 	_datePicker.hidden = TRUE;
 	
+	if (!_selectedDate) {
+		_selectedDate = _currentInventoryItem.purchaseDate;
+	}
+	
 	_lblItemDescription.text = _tfItemDescription.text;
 	_lblAssetTag.text = [NSString stringWithFormat:@"Asset ID: %@", _tfAssetTag.text];
 	[dataHandler updateInventoryObjectWithID:[_currentInventoryItem.inventoryObjectID intValue]
