@@ -18,6 +18,9 @@
 		B5B20B6F1948CA2B00557B90 /* iris_ActionDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B20B6E1948CA2B00557B90 /* iris_ActionDetailsViewController.m */; };
 		B5B20B75194B58D400557B90 /* InventoryAction.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B20B74194B58D400557B90 /* InventoryAction.m */; };
 		B5B91EC219100D86008388D5 /* iris_ItemDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B91EC119100D86008388D5 /* iris_ItemDetailsViewController.m */; };
+		B5C0ED1E196AE741004F967A /* colorBar.png in Resources */ = {isa = PBXBuildFile; fileRef = B5C0ED1B196AE741004F967A /* colorBar.png */; };
+		B5C0ED1F196AE741004F967A /* irisLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = B5C0ED1C196AE741004F967A /* irisLogo.png */; };
+		B5C0ED20196AE741004F967A /* viewInventoryBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = B5C0ED1D196AE741004F967A /* viewInventoryBtn.png */; };
 		B5EB7CE3190952FE004FEDD2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5EB7CE2190952FE004FEDD2 /* Foundation.framework */; };
 		B5EB7CE5190952FE004FEDD2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5EB7CE4190952FE004FEDD2 /* CoreGraphics.framework */; };
 		B5EB7CE7190952FE004FEDD2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5EB7CE6190952FE004FEDD2 /* UIKit.framework */; };
@@ -75,6 +78,9 @@
 		B5B20B74194B58D400557B90 /* InventoryAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InventoryAction.m; path = Iris/InventoryAction.m; sourceTree = "<group>"; };
 		B5B91EC019100D86008388D5 /* iris_ItemDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iris_ItemDetailsViewController.h; path = Iris/iris_ItemDetailsViewController.h; sourceTree = "<group>"; };
 		B5B91EC119100D86008388D5 /* iris_ItemDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iris_ItemDetailsViewController.m; path = Iris/iris_ItemDetailsViewController.m; sourceTree = "<group>"; };
+		B5C0ED1B196AE741004F967A /* colorBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = colorBar.png; sourceTree = "<group>"; };
+		B5C0ED1C196AE741004F967A /* irisLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = irisLogo.png; sourceTree = "<group>"; };
+		B5C0ED1D196AE741004F967A /* viewInventoryBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = viewInventoryBtn.png; sourceTree = "<group>"; };
 		B5EB7CDF190952FE004FEDD2 /* Iris.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Iris.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5EB7CE2190952FE004FEDD2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B5EB7CE4190952FE004FEDD2 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -131,6 +137,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B5C0ED1A196AE72F004F967A /* images */ = {
+			isa = PBXGroup;
+			children = (
+				B5C0ED1B196AE741004F967A /* colorBar.png */,
+				B5C0ED1C196AE741004F967A /* irisLogo.png */,
+				B5C0ED1D196AE741004F967A /* viewInventoryBtn.png */,
+			);
+			name = images;
+			sourceTree = "<group>";
+		};
 		B5EB7CD6190952FE004FEDD2 = {
 			isa = PBXGroup;
 			children = (
@@ -185,6 +201,7 @@
 		B5EB7CEB190952FE004FEDD2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				B5C0ED1A196AE72F004F967A /* images */,
 				B5ACD251195B105200BF3508 /* logo.png */,
 				B5EB7CEC190952FE004FEDD2 /* Iris-Info.plist */,
 				B5EB7CED190952FE004FEDD2 /* InfoPlist.strings */,
@@ -348,10 +365,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5EB7CEF190952FE004FEDD2 /* InfoPlist.strings in Resources */,
+				B5C0ED1F196AE741004F967A /* irisLogo.png in Resources */,
 				B5ACD252195B105200BF3508 /* logo.png in Resources */,
 				B5EB7D1B1909544B004FEDD2 /* iPad.storyboard in Resources */,
+				B5C0ED20196AE741004F967A /* viewInventoryBtn.png in Resources */,
 				B5EB7CFA190952FE004FEDD2 /* Images.xcassets in Resources */,
 				B5EB7D1D1909545E004FEDD2 /* iPhone.storyboard in Resources */,
+				B5C0ED1E196AE741004F967A /* colorBar.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
