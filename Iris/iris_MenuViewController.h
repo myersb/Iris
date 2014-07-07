@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *tfUsername;
 @property (strong, nonatomic) IBOutlet UITextField *tfPassword;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIView *loadingView;
 
 // Variable Properties
 @property (strong, nonatomic) UITextField *activeField;

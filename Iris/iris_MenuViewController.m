@@ -111,18 +111,30 @@
 	
 	// Check for internet availability
     if (internetReachable.isConnected) {
+		_loadingView.hidden = NO;
         NSLog(@"Now witness the firepower of this fully ARMED and OPERATIONAL battle station!");
-		BOOL canSegue = [userLoginInstance validateLoginWithUsername:_tfUsername.text andPassword:_tfPassword.text];
-		if (canSegue) {
-			[self performSegueWithIdentifier:@"loginSegue" sender:self];
-		} else {
-			_alert = [[UIAlertView alloc]initWithTitle:@"Login Error" message:@"The username and/or password that was entered was incorrect. Please try again." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-			[_alert show];
-		}
+		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void){
+			BOOL canSegue = [userLoginInstance validateLoginWithUsername:_tfUsername.text andPassword:_tfPassword.text];
+			dispatch_async(dispatch_get_main_queue(), ^{
+				if (canSegue) {
+					[self performSegueWithIdentifier:@"loginSegue" sender:self];
+				} else {
+					_alert = [[UIAlertView alloc]initWithTitle:@"Login Error" message:@"The username and/or password that was entered was incorrect. Please try again." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+					[_alert show];
+				}
+			});
+		});
     } else {
         NSLog(@"WHERE IS THE INTERWEBS?");
 		_alert = [[UIAlertView alloc]initWithTitle:@"Connection Not Available" message:@"To login you must have a working internet connection. Please check your internet connection and try again" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil, nil];
 		[_alert show];
     }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+	if (buttonIndex == 0) {
+		_loadingView.hidden = YES;
+	}
 }
 @end

@@ -159,6 +159,7 @@
     // the user clicked one of the OK/Cancel buttons
     if (buttonIndex == 1)
     {
+		_waitView.hidden = NO;
 		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
 	    ^{
 			[dataHandler deleteInventoryObjectWithID:[_currentInventoryItem.inventoryObjectID intValue]];

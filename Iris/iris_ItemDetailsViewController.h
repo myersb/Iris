@@ -38,6 +38,7 @@
 @property (nonatomic, weak) IBOutlet UIButton *changeDateButton;
 @property (weak, nonatomic) IBOutlet UIView *datePickerView;
 @property (strong, nonatomic) UIAlertView *alert;
+@property (weak, nonatomic) IBOutlet UIView *waitView;
 
 // Variable Properties
 @property (nonatomic, strong) InventoryItem *currentInventoryItem;
