@@ -115,11 +115,11 @@
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
 	UIView *tempView = [[UIView alloc]initWithFrame:CGRectMake(0,200,320,244)];
-	//tempView.backgroundColor=[UIColor clearColor];
+	//tempView.backgroundColor = [UIColor colorWithRed:(53/255.0) green:(190/255.0) blue:(132/255.0) alpha:1.0];
 	
 	UILabel *tempLabel = [[UILabel alloc]initWithFrame:CGRectMake(0,0,320,32)];
-	//tempLabel.backgroundColor = [UIColor colorWithRed:(112/255.0) green:(18/255.0) blue:(17/255.0) alpha:1.0];
-    tempLabel.backgroundColor = [UIColor darkGrayColor];
+	tempLabel.backgroundColor = [UIColor colorWithRed:(53/255.0) green:(190/255.0) blue:(132/255.0) alpha:1.0];
+    //tempLabel.backgroundColor = [UIColor darkGrayColor];
 	//tempLabel.shadowColor = [UIColor blackColor];
 	//tempLabel.shadowOffset = CGSizeMake(0,2);
 	tempLabel.textColor = [UIColor whiteColor]; //here you can change the text color of header.
