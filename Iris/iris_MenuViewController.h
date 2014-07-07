@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface iris_MenuViewController : UIViewController <UIAlertViewDelegate, UITextFieldDelegate>
+@interface iris_MenuViewController : UIViewController <UIAlertViewDelegate, UITextFieldDelegate, UIScrollViewDelegate>
 
 // UI Properties
 @property (nonatomic, strong) UIAlertView *alert;

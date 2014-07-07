@@ -53,6 +53,8 @@
 	
 	_tfItemDescription.enabled = FALSE;
 	_tfAssetTag.enabled = FALSE;
+	
+	_waitView.layer.cornerRadius = 10.0;
 }
 
 - (void)didReceiveMemoryWarning

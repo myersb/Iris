@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		B516422F193E5D1D00CB358B /* MD5Hasher.m in Sources */ = {isa = PBXBuildFile; fileRef = B516422E193E5D1D00CB358B /* MD5Hasher.m */; };
 		B5164232193F5C3D00CB358B /* iris_NewInventoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5164231193F5C3D00CB358B /* iris_NewInventoryViewController.m */; };
+		B523BCA7196B028800F833DC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B523BCA6196B028800F833DC /* QuartzCore.framework */; };
 		B5ACD24E1950B93C00BF3508 /* InventoryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = B5ACD24D1950B93C00BF3508 /* InventoryItem.m */; };
 		B5ACD252195B105200BF3508 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = B5ACD251195B105200BF3508 /* logo.png */; };
 		B5ACD258195B114600BF3508 /* UserLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = B5ACD257195B114600BF3508 /* UserLogin.m */; };
@@ -61,6 +62,7 @@
 		B516422E193E5D1D00CB358B /* MD5Hasher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MD5Hasher.m; sourceTree = "<group>"; };
 		B5164230193F5C3D00CB358B /* iris_NewInventoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iris_NewInventoryViewController.h; path = Iris/iris_NewInventoryViewController.h; sourceTree = "<group>"; };
 		B5164231193F5C3D00CB358B /* iris_NewInventoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iris_NewInventoryViewController.m; path = Iris/iris_NewInventoryViewController.m; sourceTree = "<group>"; };
+		B523BCA6196B028800F833DC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B5ACD24C1950B93C00BF3508 /* InventoryItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InventoryItem.h; path = Iris/InventoryItem.h; sourceTree = "<group>"; };
 		B5ACD24D1950B93C00BF3508 /* InventoryItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InventoryItem.m; path = Iris/InventoryItem.m; sourceTree = "<group>"; };
 		B5ACD251195B105200BF3508 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B523BCA7196B028800F833DC /* QuartzCore.framework in Frameworks */,
 				B5EB7CE5190952FE004FEDD2 /* CoreGraphics.framework in Frameworks */,
 				B5EB7CE9190952FE004FEDD2 /* CoreData.framework in Frameworks */,
 				B5EB7CE7190952FE004FEDD2 /* UIKit.framework in Frameworks */,
@@ -169,6 +172,7 @@
 		B5EB7CE1190952FE004FEDD2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B523BCA6196B028800F833DC /* QuartzCore.framework */,
 				B516422B193E175800CB358B /* libcorecrypto.dylib */,
 				B516421D193E119200CB358B /* libcommonCrypto.dylib */,
 				B5EB7CE2190952FE004FEDD2 /* Foundation.framework */,

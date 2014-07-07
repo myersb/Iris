@@ -50,6 +50,12 @@
 	
 	_tfUsername.delegate = self;
 	_tfPassword.delegate = self;
+	
+	_loadingView.layer.cornerRadius = 10.0;
+	_scrollView.delegate = self;
+	
+	UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+	[self.scrollView addGestureRecognizer:gestureRecognizer];
 }
 
 - (void)didReceiveMemoryWarning
@@ -67,8 +73,6 @@
 // called when click on the retun button.
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-	
-	
     NSInteger nextTag = textField.tag + 1;
     // Try to find next responder
     UIResponder *nextResponder = [textField.superview viewWithTag:nextTag];
@@ -86,22 +90,11 @@
     return NO;
 }
 
-
-//- (void)textFieldDidBeginEditing:(UITextField *)textField {
-//	
-//    _scrollView.contentOffset = CGPointMake(0, textField.frame.origin.y - 80);
-//}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void) hideKeyboard {
+	[_activeField resignFirstResponder];
+	[_scrollView setContentOffset:CGPointMake(0,0) animated:YES];
 }
-*/
+
 - (IBAction)login:(id)sender
 {
 	
