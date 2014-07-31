@@ -31,16 +31,19 @@
     NSString *postString = [NSString stringWithFormat:@"username=%@&password=%@", username, password];
 	
     // setup request header
-    [request addValue:[NSString stringWithFormat:@"%lu", (unsigned long)[postString length]] forHTTPHeaderField:@"Content-length"];
+    //[request addValue:[NSString stringWithFormat:@"%lu", (unsigned long)[postString length]] forHTTPHeaderField:@"Content-length"];
 	
     // Setup the Body of hte post
     [request setHTTPBody:[postString dataUsingEncoding:NSUTF8StringEncoding]];
+	NSString *requestBodyString = [[NSString alloc] initWithData:request.HTTPBody encoding:NSUTF8StringEncoding];
+	NSLog(@"REQUEST: %@", requestBodyString);
 	
     // Post data and put the returned data into a variable
     NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil ];
 	
     // Stick the encoded returned data into a variable
     NSString *returnString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
+	NSLog(@"RS: %@", returnString);
 	
     // Serialize the jSON return
 	NSDictionary *jSON = [NSJSONSerialization JSONObjectWithData:returnData options:kNilOptions error:nil];

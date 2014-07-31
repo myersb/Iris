@@ -141,6 +141,8 @@
 	
 	_lblItemDescription.text = _tfItemDescription.text;
 	_lblAssetTag.text = [NSString stringWithFormat:@"Asset ID: %@", _tfAssetTag.text];
+	_lblPurchasePrice.text = _tfPurchasePrice.text;
+	_lblQuantity.text = _tfQuantity.text;
 	[dataHandler updateInventoryObjectWithID:[_currentInventoryItem.inventoryObjectID intValue]
 								  andAssetID:_tfAssetTag.text
 								 andQuantity:[_tfQuantity.text intValue]

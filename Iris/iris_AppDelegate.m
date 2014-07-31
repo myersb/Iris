@@ -16,6 +16,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+	CGColorRef irisTeal = [[UIColor colorWithRed:0.2078431372549 green:0.74509803921569 blue:0.51764705882353 alpha:1] CGColor];
+	[[UINavigationBar appearance] setTintColor:[UIColor colorWithCGColor:irisTeal]];
+	[[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"navBackground.png"] forBarMetrics:UIBarMetricsDefault];
     return YES;
 }
 

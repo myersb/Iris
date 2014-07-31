@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface iris_NewInventoryViewController : UIViewController <UITextFieldDelegate>
+@interface iris_NewInventoryViewController : UIViewController <UITextFieldDelegate, UIScrollViewDelegate>
 
 // UI Properties
 @property (weak, nonatomic) IBOutlet UITextField *tfDescription;
@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
 @property (weak, nonatomic) IBOutlet UIView *datePickerView;
 @property (weak, nonatomic) IBOutlet UILabel *lblPurchaseDate;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 // Variable Properties
 @property (strong, nonatomic) NSDate *selectedDate;

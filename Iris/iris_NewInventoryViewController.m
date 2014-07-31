@@ -35,7 +35,13 @@
     // Do any additional setup after loading the view.
 	
 	dataHandler = [[InventoryDataHandler alloc] init];
+	
+	UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+	[self.scrollView addGestureRecognizer:gestureRecognizer];
+    [_scrollView setContentOffset:CGPointMake(0,66) animated:YES];
+
 }
+
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch * touch = [touches anyObject];
     if(touch.phase == UITouchPhaseBegan) {
@@ -49,16 +55,36 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+	if (textField.center.y > 280) {
+		[_scrollView setContentOffset:CGPointMake(0,textField.center.y-276) animated:YES];
+	}
 }
-*/
+
+// called when click on the retun button.
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    NSInteger nextTag = textField.tag + 1;
+    // Try to find next responder
+    UIResponder *nextResponder = [textField.superview viewWithTag:nextTag];
+    if (nextResponder) {
+        [_scrollView setContentOffset:CGPointMake(0,textField.center.y-80) animated:YES];
+        // Found next responder, so set it.
+        [nextResponder becomeFirstResponder];
+    } else {
+        [_scrollView setContentOffset:CGPointMake(0,0) animated:YES];
+        [textField resignFirstResponder];
+        return YES;
+    }
+	
+    return NO;
+}
+
+- (void) hideKeyboard {
+	[_activeField resignFirstResponder];
+	[_scrollView setContentOffset:CGPointMake(0,0) animated:YES];
+}
 
 - (IBAction)showDatePicker:(id)sender
 {
@@ -97,15 +123,5 @@
 - (IBAction)setActiveTextField:(id)sender
 {
 	_activeField = sender;
-}
-
-- (void)hideKeyboard
-{
-	NSLog(@"BOOM");
-	[_tfAssetTag resignFirstResponder];
-	[_tfDescription resignFirstResponder];
-	[_tfPurchasePrice resignFirstResponder];
-	[_tfQuantity resignFirstResponder];
-	[_tfSerialNumber resignFirstResponder];
 }
 @end

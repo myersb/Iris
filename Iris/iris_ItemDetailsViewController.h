@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "InventoryItem.h"
 
-@interface iris_ItemDetailsViewController : UIViewController <UIAlertViewDelegate>
+@interface iris_ItemDetailsViewController : UIViewController <UIAlertViewDelegate, UITextFieldDelegate, UIScrollViewDelegate>
 
 // CoreData Properties
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;

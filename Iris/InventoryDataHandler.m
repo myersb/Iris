@@ -18,7 +18,8 @@
 #import "Reachability.h"
 #import "MD5Hasher.h"
 
-#define inventoryAndActionsWebservice @"http://cmhinfo.pubdev.com/api/mediainventory"
+#define inventoryAndActionsWebserviceDev @"http://cmhinfo.pubdev.com/api/mediainventory"
+#define inventoryKitAndActionsWebserviceDev @"http://cmhinfo.pubdev.com/api/mediainventorykit"
 
 @implementation InventoryDataHandler
 {
@@ -35,7 +36,7 @@
 	
 	coreDataHandler = [[CoreDataHandler alloc] init];
 	
-	NSString *urlString = [NSString stringWithFormat:@"%@", inventoryAndActionsWebservice];
+	NSString *urlString = [NSString stringWithFormat:@"%@", inventoryAndActionsWebserviceDev];
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"GET"];
@@ -113,7 +114,7 @@
 	 }];
 }
 
-- (NSFetchedResultsController *) loadInventoryWithFetchedResultsController
+- (NSFetchedResultsController *)loadInventoryWithFetchedResultsController
 {
 	id delegate = [[UIApplication sharedApplication]delegate];
 	self.managedObjectContext = [delegate managedObjectContext];
@@ -223,7 +224,7 @@
 	NSLog(@"request: %@", request);
 	
 	// Set the request url format
-	NSString *urlString = [NSString stringWithFormat:@"%@/%d", inventoryAndActionsWebservice, inventoryObjectId];
+	NSString *urlString = [NSString stringWithFormat:@"%@/%d", inventoryAndActionsWebserviceDev, inventoryObjectId];
 	[request setURL:[NSURL URLWithString:urlString]];
 	[request setHTTPMethod:@"PUT"];
 	[request setHTTPBody:putData];
@@ -286,7 +287,7 @@
 	NSLog(@"Request: %@", request);
 	
 	// Set the request url format
-	NSString *urlString = [NSString stringWithFormat:@"%@", inventoryAndActionsWebservice];
+	NSString *urlString = [NSString stringWithFormat:@"%@", inventoryAndActionsWebserviceDev];
 	[request setURL:[NSURL URLWithString:urlString]];
 	[request setHTTPMethod:@"POST"];
 	[request setHTTPBody:postData];
@@ -336,7 +337,7 @@
 	NSLog(@"Request: %@", request);
 	
 	// Set the request url format
-	NSString *urlString = [NSString stringWithFormat:@"%@/%d", inventoryAndActionsWebservice, inventoryObjectId];
+	NSString *urlString = [NSString stringWithFormat:@"%@/%d", inventoryAndActionsWebserviceDev, inventoryObjectId];
 	NSLog(@"%@", urlString);
 	
 	[request setURL:[NSURL URLWithString:urlString]];
@@ -381,7 +382,7 @@ andUserActionID:(int)actionID
 	NSLog(@"Request: %@", request);
 	
 	// Set the request url format
-	NSString *urlString = [NSString stringWithFormat:@"%@/%d/actions/%d", inventoryAndActionsWebservice, inventoryObjectID, inventoryActionID];
+	NSString *urlString = [NSString stringWithFormat:@"%@/%d/actions/%d", inventoryAndActionsWebserviceDev, inventoryObjectID, inventoryActionID];
 	NSLog(@"%@", urlString);
 	
 	[request setURL:[NSURL URLWithString:urlString]];
@@ -443,7 +444,7 @@ andUserActionID:(int)actionID
 	NSLog(@"Request: %@", request);
 	
 	// Set the request url format
-	NSString *urlString = [NSString stringWithFormat:@"%@/%d/actions/%d", inventoryAndActionsWebservice, inventoryId, inventoryActionId];
+	NSString *urlString = [NSString stringWithFormat:@"%@/%d/actions/%d", inventoryAndActionsWebserviceDev, inventoryId, inventoryActionId];
 	NSLog(@"%@", urlString);
 	
 	[request setURL:[NSURL URLWithString:urlString]];

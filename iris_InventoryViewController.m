@@ -1,13 +1,12 @@
 //
-//  iris_InventoryTableViewController.m
+//  iris_InventoryViewController.m
 //  Iris
 //
-//  Created by Benjamin Myers on 4/24/14.
+//  Created by Benjamin Myers on 7/7/14.
 //  Copyright (c) 2014 claytonhomes.com. All rights reserved.
 //
 
-// Controllers Import
-#import "iris_InventoryTableViewController.h"
+#import "iris_InventoryViewController.h"
 #import "iris_ItemDetailsViewController.h"
 
 // Models Import
@@ -17,26 +16,19 @@
 // Utilities Import
 #import "Reachability.h"
 
-@interface iris_InventoryTableViewController ()
+@interface iris_InventoryViewController ()
 {
 	InventoryDataHandler *dataHandler;
 	Reachability *internetReachable;
 }
+
 @end
 
-@implementation NSString (FetchedGroupByString)
-- (NSString *)stringGroupByFirstInitial {
-    if (!self.length || self.length == 1)
-        return self;
-    return [self substringToIndex:1];
-}
-@end
+@implementation iris_InventoryViewController
 
-@implementation iris_InventoryTableViewController
-
-- (id)initWithStyle:(UITableViewStyle)style
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithStyle:style];
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
     }
@@ -88,14 +80,14 @@
 {
     // Return the number of rows in the section.
 	return [[[_fetchedInventoryController sections] objectAtIndex:section]
-				numberOfObjects];
+			numberOfObjects];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
     // Configure the cell...
- 
+	
 	static NSString *CellIdentifier = @"Cell";
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 	if ( cell == nil ) {
@@ -103,12 +95,12 @@
 	}
 	
 	InventoryItem *inventory = nil;
-
+	
 	inventory = [_fetchedInventoryController objectAtIndexPath:indexPath];
 	cell.textLabel.text = inventory.objectDescription;
 	cell.detailTextLabel.text = [NSString stringWithFormat:@"Asset Tag: %@", inventory.assetID];
 	
- 
+	
     return cell;
 }
 
@@ -162,6 +154,13 @@
 {
     if ([searchText length] == 0) {
         _fetchedInventoryController = nil;
+		
+		NSError *error;
+		if (![[dataHandler loadInventoryWithFetchedResultsController] performFetch:&error]) {
+			NSLog(@"An error has occurred: %@", error);
+			abort();
+		}
+		_fetchedInventoryController = dataHandler.fetchedInventoryController;
     }
     else {
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"objectDescription contains[cd] %@", searchText];
@@ -173,9 +172,22 @@
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
     }
 	
-    [[self tableView] reloadData];
+    [self.tableView reloadData];
 }
 
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+	
+	_fetchedInventoryController = nil;
+	
+	NSError *error;
+    if (![[dataHandler loadInventoryWithFetchedResultsController] performFetch:&error]) {
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+    }
+	_fetchedInventoryController = dataHandler.fetchedInventoryController;
+	
+    [self.tableView reloadData];
+}
 
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -239,10 +251,10 @@
 							 withRowAnimation:UITableViewRowAnimationFade];
             break;
 			
-//        case NSFetchedResultsChangeUpdate:
-//            [self configureCell:[tableView cellForRowAtIndexPath:indexPath]
-//					atIndexPath:indexPath];
-//            break;
+			//        case NSFetchedResultsChangeUpdate:
+			//            [self configureCell:[tableView cellForRowAtIndexPath:indexPath]
+			//					atIndexPath:indexPath];
+			//            break;
 			
         case NSFetchedResultsChangeMove:
             [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
@@ -261,27 +273,27 @@
 
 
 /*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
+ // Override to support rearranging the table view.
+ - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+ {
+ }
+ */
 
 /*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
+ // Override to support conditional rearranging of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ // Return NO if you do not want the item to be re-orderable.
+ return YES;
+ }
+ */
 
 #pragma mark - Navigation
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
 {
 	if ([identifier isEqualToString: @"segueFromInventoryListToNewInventory"]) {
-	
+		
 		// Run Methods
 		[internetReachable checkConnection];
 		
@@ -311,14 +323,6 @@
 			selectedInventoryItem = [_fetchedInventoryController objectAtIndexPath:_indexPath];
 		}
 		idvc.currentInventoryItem = selectedInventoryItem;
-	}
-	if ([[segue identifier] isEqualToString:@"segueFromInventoryToNewInventory"])
-	{
-		self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc]
-												 initWithTitle:@"List"
-												 style:UIBarButtonItemStylePlain
-												 target:nil
-												 action:nil];
 	}
 }
 

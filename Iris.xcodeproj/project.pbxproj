@@ -7,9 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B50082D71989554300E00916 /* navBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = B50082D61989554300E00916 /* navBackground.png */; };
+		B50082D919895FA600E00916 /* itemDetailsBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = B50082D819895FA600E00916 /* itemDetailsBackground.png */; };
+		B50082DF198A9BF500E00916 /* iconAvailable.png in Resources */ = {isa = PBXBuildFile; fileRef = B50082DA198A9BF500E00916 /* iconAvailable.png */; };
+		B50082E0198A9BF500E00916 /* iconHistory.png in Resources */ = {isa = PBXBuildFile; fileRef = B50082DB198A9BF500E00916 /* iconHistory.png */; };
+		B50082E1198A9BF500E00916 /* iconRetired.png in Resources */ = {isa = PBXBuildFile; fileRef = B50082DC198A9BF500E00916 /* iconRetired.png */; };
+		B50082E2198A9BF500E00916 /* iconTrashCan.png in Resources */ = {isa = PBXBuildFile; fileRef = B50082DD198A9BF500E00916 /* iconTrashCan.png */; };
+		B50082E3198A9BF500E00916 /* iconUnavailable.png in Resources */ = {isa = PBXBuildFile; fileRef = B50082DE198A9BF500E00916 /* iconUnavailable.png */; };
+		B50082E5198AD69B00E00916 /* iconCalendar.png in Resources */ = {isa = PBXBuildFile; fileRef = B50082E4198AD69B00E00916 /* iconCalendar.png */; };
 		B516422F193E5D1D00CB358B /* MD5Hasher.m in Sources */ = {isa = PBXBuildFile; fileRef = B516422E193E5D1D00CB358B /* MD5Hasher.m */; };
 		B5164232193F5C3D00CB358B /* iris_NewInventoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5164231193F5C3D00CB358B /* iris_NewInventoryViewController.m */; };
 		B523BCA7196B028800F833DC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B523BCA6196B028800F833DC /* QuartzCore.framework */; };
+		B523BCAA196B11FE00F833DC /* iris_InventoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B523BCA9196B11FE00F833DC /* iris_InventoryViewController.m */; };
 		B5ACD24E1950B93C00BF3508 /* InventoryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = B5ACD24D1950B93C00BF3508 /* InventoryItem.m */; };
 		B5ACD252195B105200BF3508 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = B5ACD251195B105200BF3508 /* logo.png */; };
 		B5ACD258195B114600BF3508 /* UserLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = B5ACD257195B114600BF3508 /* UserLogin.m */; };
@@ -56,6 +65,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B50082D61989554300E00916 /* navBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navBackground.png; sourceTree = "<group>"; };
+		B50082D819895FA600E00916 /* itemDetailsBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = itemDetailsBackground.png; sourceTree = "<group>"; };
+		B50082DA198A9BF500E00916 /* iconAvailable.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconAvailable.png; sourceTree = "<group>"; };
+		B50082DB198A9BF500E00916 /* iconHistory.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconHistory.png; sourceTree = "<group>"; };
+		B50082DC198A9BF500E00916 /* iconRetired.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconRetired.png; sourceTree = "<group>"; };
+		B50082DD198A9BF500E00916 /* iconTrashCan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconTrashCan.png; sourceTree = "<group>"; };
+		B50082DE198A9BF500E00916 /* iconUnavailable.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconUnavailable.png; sourceTree = "<group>"; };
+		B50082E4198AD69B00E00916 /* iconCalendar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconCalendar.png; sourceTree = "<group>"; };
 		B516421D193E119200CB358B /* libcommonCrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcommonCrypto.dylib; path = usr/lib/system/libcommonCrypto.dylib; sourceTree = SDKROOT; };
 		B516422B193E175800CB358B /* libcorecrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcorecrypto.dylib; path = usr/lib/system/libcorecrypto.dylib; sourceTree = SDKROOT; };
 		B516422D193E5D1D00CB358B /* MD5Hasher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MD5Hasher.h; sourceTree = "<group>"; };
@@ -63,6 +80,8 @@
 		B5164230193F5C3D00CB358B /* iris_NewInventoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iris_NewInventoryViewController.h; path = Iris/iris_NewInventoryViewController.h; sourceTree = "<group>"; };
 		B5164231193F5C3D00CB358B /* iris_NewInventoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iris_NewInventoryViewController.m; path = Iris/iris_NewInventoryViewController.m; sourceTree = "<group>"; };
 		B523BCA6196B028800F833DC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		B523BCA8196B11FE00F833DC /* iris_InventoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iris_InventoryViewController.h; sourceTree = "<group>"; };
+		B523BCA9196B11FE00F833DC /* iris_InventoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iris_InventoryViewController.m; sourceTree = "<group>"; };
 		B5ACD24C1950B93C00BF3508 /* InventoryItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InventoryItem.h; path = Iris/InventoryItem.h; sourceTree = "<group>"; };
 		B5ACD24D1950B93C00BF3508 /* InventoryItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InventoryItem.m; path = Iris/InventoryItem.m; sourceTree = "<group>"; };
 		B5ACD251195B105200BF3508 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
@@ -143,6 +162,14 @@
 		B5C0ED1A196AE72F004F967A /* images */ = {
 			isa = PBXGroup;
 			children = (
+				B50082E4198AD69B00E00916 /* iconCalendar.png */,
+				B50082DA198A9BF500E00916 /* iconAvailable.png */,
+				B50082DB198A9BF500E00916 /* iconHistory.png */,
+				B50082DC198A9BF500E00916 /* iconRetired.png */,
+				B50082DD198A9BF500E00916 /* iconTrashCan.png */,
+				B50082DE198A9BF500E00916 /* iconUnavailable.png */,
+				B50082D819895FA600E00916 /* itemDetailsBackground.png */,
+				B50082D61989554300E00916 /* navBackground.png */,
 				B5C0ED1B196AE741004F967A /* colorBar.png */,
 				B5C0ED1C196AE741004F967A /* irisLogo.png */,
 				B5C0ED1D196AE741004F967A /* viewInventoryBtn.png */,
@@ -276,6 +303,8 @@
 				B5164231193F5C3D00CB358B /* iris_NewInventoryViewController.m */,
 				B5B20B6D1948CA2B00557B90 /* iris_ActionDetailsViewController.h */,
 				B5B20B6E1948CA2B00557B90 /* iris_ActionDetailsViewController.m */,
+				B523BCA8196B11FE00F833DC /* iris_InventoryViewController.h */,
+				B523BCA9196B11FE00F833DC /* iris_InventoryViewController.m */,
 			);
 			name = Controllers;
 			path = ..;
@@ -369,13 +398,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5EB7CEF190952FE004FEDD2 /* InfoPlist.strings in Resources */,
+				B50082E0198A9BF500E00916 /* iconHistory.png in Resources */,
+				B50082D71989554300E00916 /* navBackground.png in Resources */,
 				B5C0ED1F196AE741004F967A /* irisLogo.png in Resources */,
 				B5ACD252195B105200BF3508 /* logo.png in Resources */,
 				B5EB7D1B1909544B004FEDD2 /* iPad.storyboard in Resources */,
+				B50082E5198AD69B00E00916 /* iconCalendar.png in Resources */,
+				B50082E2198A9BF500E00916 /* iconTrashCan.png in Resources */,
 				B5C0ED20196AE741004F967A /* viewInventoryBtn.png in Resources */,
 				B5EB7CFA190952FE004FEDD2 /* Images.xcassets in Resources */,
+				B50082E1198A9BF500E00916 /* iconRetired.png in Resources */,
 				B5EB7D1D1909545E004FEDD2 /* iPhone.storyboard in Resources */,
 				B5C0ED1E196AE741004F967A /* colorBar.png in Resources */,
+				B50082E3198A9BF500E00916 /* iconUnavailable.png in Resources */,
+				B50082DF198A9BF500E00916 /* iconAvailable.png in Resources */,
+				B50082D919895FA600E00916 /* itemDetailsBackground.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -410,6 +447,7 @@
 				D7CC54D8192CE7DC005AFA5D /* Reachability.m in Sources */,
 				B5164232193F5C3D00CB358B /* iris_NewInventoryViewController.m in Sources */,
 				B5B20B6F1948CA2B00557B90 /* iris_ActionDetailsViewController.m in Sources */,
+				B523BCAA196B11FE00F833DC /* iris_InventoryViewController.m in Sources */,
 				B516422F193E5D1D00CB358B /* MD5Hasher.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
