@@ -311,6 +311,12 @@
 			selectedInventoryItem = [_fetchedInventoryController objectAtIndexPath:_indexPath];
 		}
 		idvc.currentInventoryItem = selectedInventoryItem;
+		
+		self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc]
+												 initWithTitle:@"List"
+												 style:UIBarButtonItemStylePlain
+												 target:nil
+												 action:nil];
 	}
 	if ([[segue identifier] isEqualToString:@"segueFromInventoryToNewInventory"])
 	{

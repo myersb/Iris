@@ -55,12 +55,50 @@
 	_tfAssetTag.enabled = FALSE;
 	
 	_waitView.layer.cornerRadius = 10.0;
+	
+	UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+	[self.scrollView addGestureRecognizer:gestureRecognizer];
+    [_scrollView setContentOffset:CGPointMake(0,66) animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+	_activeField = textField;
+	if (textField.center.y > 280) {
+		[_scrollView setContentOffset:CGPointMake(0,textField.center.y-276) animated:YES];
+	}
+}
+
+// called when click on the retun button.
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    NSInteger nextTag = textField.tag + 1;
+    // Try to find next responder
+    UIResponder *nextResponder = [textField.superview viewWithTag:nextTag];
+    if (nextResponder) {
+        [_scrollView setContentOffset:CGPointMake(0,textField.center.y-80) animated:YES];
+        // Found next responder, so set it.
+        [nextResponder becomeFirstResponder];
+    } else {
+        [_scrollView setContentOffset:CGPointMake(0,0) animated:YES];
+        [textField resignFirstResponder];
+        return YES;
+    }
+	
+    return NO;
+}
+
+- (void) hideKeyboard {
+	[_activeField resignFirstResponder];
+	[_scrollView setContentOffset:CGPointMake(0,0) animated:YES];
 }
 
 - (void)displayInventoryDetails
@@ -81,6 +119,7 @@
 	_tfAssetTag.text = _currentInventoryItem.assetID;
 	_tfQuantity.text = [NSString stringWithFormat:@"%@", _currentInventoryItem.quantity];
 	_tfPurchasePrice.text = [NSString stringWithFormat:@"%@", _currentInventoryItem.purchasePrice];
+	_tfSerialNumber.text = _currentInventoryItem.serialNumber;
 	
 	// Display current status of the item
 	if ([_currentInventoryItem.currentStatus isEqualToString:@"Check In"]) {
@@ -110,13 +149,22 @@
 	_tfAssetTag.enabled = TRUE;
 	_tfQuantity.enabled = TRUE;
 	_tfPurchasePrice.enabled = TRUE;
+	_tfSerialNumber.enabled = TRUE;
 	_tfItemDescription.hidden= FALSE;
 	_tfAssetTag.hidden = FALSE;
 	_tfQuantity.hidden = FALSE;
 	_tfPurchasePrice.hidden = FALSE;
+	_tfSerialNumber.hidden = FALSE;
 	_changeDateButton.hidden = FALSE;
 	_deleteButton.hidden = FALSE;
 	_datePicker.hidden = FALSE;
+	
+	_lblItemDescription.hidden= TRUE;
+	_lblAssetTag.hidden = TRUE;
+	_lblQuantity.hidden = TRUE;
+	_lblPurchasePrice.hidden = TRUE;
+	_lblSerialNumber.hidden = TRUE;
+
 }
 
 - (void)saveDetails
@@ -127,13 +175,21 @@
 	_tfAssetTag.enabled = FALSE;
 	_tfQuantity.enabled = FALSE;
 	_tfPurchasePrice.enabled = FALSE;
-	_tfItemDescription.hidden= TRUE;
+	_tfSerialNumber.enabled = FALSE;
+	_tfItemDescription.hidden = TRUE;
 	_tfAssetTag.hidden = TRUE;
 	_tfQuantity.hidden = TRUE;
 	_tfPurchasePrice.hidden = TRUE;
+	_tfSerialNumber.hidden = TRUE;
 	_changeDateButton.hidden = TRUE;
 	_deleteButton.hidden = TRUE;
 	_datePicker.hidden = TRUE;
+	
+	_lblItemDescription.hidden = FALSE;
+	_lblAssetTag.hidden = FALSE;
+	_lblQuantity.hidden = FALSE;
+	_lblPurchasePrice.hidden = FALSE;
+	_lblSerialNumber.hidden = FALSE;
 	
 	if (!_selectedDate) {
 		_selectedDate = _currentInventoryItem.purchaseDate;
@@ -143,6 +199,7 @@
 	_lblAssetTag.text = [NSString stringWithFormat:@"Asset ID: %@", _tfAssetTag.text];
 	_lblPurchasePrice.text = _tfPurchasePrice.text;
 	_lblQuantity.text = _tfQuantity.text;
+	
 	[dataHandler updateInventoryObjectWithID:[_currentInventoryItem.inventoryObjectID intValue]
 								  andAssetID:_tfAssetTag.text
 								 andQuantity:[_tfQuantity.text intValue]

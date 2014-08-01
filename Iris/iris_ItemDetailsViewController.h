@@ -32,6 +32,7 @@
 @property (nonatomic, weak) IBOutlet UITextField *tfAssetTag;
 @property (nonatomic, weak) IBOutlet UITextField *tfQuantity;
 @property (nonatomic, weak) IBOutlet UITextField *tfPurchasePrice;
+@property (weak, nonatomic) IBOutlet UITextField *tfSerialNumber;
 @property (nonatomic, strong) UIBarButtonItem *editButton;
 @property (nonatomic, strong) UIBarButtonItem *saveButton;
 @property (nonatomic, weak) IBOutlet UIButton *deleteButton;
@@ -39,11 +40,13 @@
 @property (weak, nonatomic) IBOutlet UIView *datePickerView;
 @property (strong, nonatomic) UIAlertView *alert;
 @property (weak, nonatomic) IBOutlet UIView *waitView;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 // Variable Properties
 @property (nonatomic, strong) InventoryItem *currentInventoryItem;
 @property (nonatomic, strong) NSArray *sortedActions;
 @property (nonatomic, strong) NSDate *selectedDate;
+@property (strong, nonatomic) UITextField *activeField;
 
 // Actions
 - (IBAction)deleteInventoryItem:(id)sender;
